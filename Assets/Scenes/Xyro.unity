@@ -1276,6 +1276,30 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 2955128776212168006, guid: 1a7686198900dbd4980a87ae689fad2f, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -17.4
+      objectReference: {fileID: 0}
+    - target: {fileID: 2955128776212168006, guid: 1a7686198900dbd4980a87ae689fad2f, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2955128776212168006, guid: 1a7686198900dbd4980a87ae689fad2f, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2955128776212168006, guid: 1a7686198900dbd4980a87ae689fad2f, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6159948094451974691, guid: 1a7686198900dbd4980a87ae689fad2f, type: 3}
+      propertyPath: botCurb
+      value: 
+      objectReference: {fileID: 1641698270}
+    - target: {fileID: 6159948094451974691, guid: 1a7686198900dbd4980a87ae689fad2f, type: 3}
+      propertyPath: topCurb
+      value: 
+      objectReference: {fileID: 1974035792}
     - target: {fileID: 6159948094451974691, guid: 1a7686198900dbd4980a87ae689fad2f, type: 3}
       propertyPath: playerTransforms.Array.size
       value: 0
