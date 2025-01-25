@@ -21,7 +21,7 @@ public class CoinGeneration : MonoBehaviour
     void Update()
     {
         if(Input.GetKeyDown(KeyCode.P)){
-            CreateRectangle(3,5,Random.value,0.1f,0.3f);
+            CreateCurve(5,0.4f,Random.value,curve1,0.3f);
         }
     }
 
@@ -52,6 +52,12 @@ public class CoinGeneration : MonoBehaviour
 
     
     IEnumerator CoinsGeneration(float[][] coins, float horizontalSpace){
+        /*
+        for (int i = 0; i < coins.Length; i++){
+            string rowText = string.Join(" ", coins[i]); // Convertit la ligne en texte
+            Debug.Log(rowText); // Affichage dans la console Unity
+        }*/
+
         for (int i = 0; i < coins.Length; i++){
             CreateCoins(coins[i]);
             yield return new WaitForSeconds(horizontalSpace);
@@ -79,6 +85,27 @@ public class CoinGeneration : MonoBehaviour
 
     void CreateRectangle(int height, int width, float position, float verticalSpace, float horizontalSpace){
         float[][] coins = CreateRectangleAux(height, width, position, verticalSpace);
+        StartCoroutine(CoinsGeneration(coins, horizontalSpace));
+    }
+
+    
+
+    float[][] CreateCurveAux(int width, float height, float position, AnimationCurve curve){
+        float[][] mat = new float[width][];
+
+        for (int i = 0; i < width; i++){
+            float x = ((float)i)/(width-1);
+            float[] temp = {1 - curve.Evaluate(x)*height - position/2};
+            Debug.Log(string.Format("{0}", curve.Evaluate(x)*height));
+            mat[i] = temp;
+        }
+
+        return mat;
+
+    }
+
+    void CreateCurve(int width, float height, float position, AnimationCurve curve, float horizontalSpace){
+        float[][] coins = CreateCurveAux(width, height, position, curve);
         StartCoroutine(CoinsGeneration(coins, horizontalSpace));
     }
 
