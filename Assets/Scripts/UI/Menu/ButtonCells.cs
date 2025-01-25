@@ -1,6 +1,7 @@
 using System;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.Serialization;
 
 namespace UI.Menu
 {
@@ -10,7 +11,8 @@ namespace UI.Menu
         private const int OptionsCellID = 25;
         private const int QuitCellID = 27;
 
-        [SerializeField] private UnityEvent OptionEvent;
+        [SerializeField] private UnityEvent OptionOpenEvent;
+        [SerializeField] private UnityEvent OptionQuitEvent;
 
         private CellManager cellManager;
         
@@ -35,8 +37,13 @@ namespace UI.Menu
 
             if (cellID == OptionsCellID)
             {
-                OptionEvent?.Invoke();
+                OptionOpenEvent?.Invoke();
             }
+        }
+
+        public void CloseMenu()
+        {
+            OptionQuitEvent?.Invoke();
         }
     }
 }

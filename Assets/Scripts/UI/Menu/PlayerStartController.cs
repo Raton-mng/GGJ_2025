@@ -85,6 +85,14 @@ namespace UI.Menu
                 _buttonCell.Select(currentCellID);
             }
         }
+        
+        public void OnEscapeMenu(InputAction.CallbackContext context)
+        {
+            if (context.action.triggered)
+            {
+                _buttonCell.CloseMenu();
+            }
+        }
 
         private IEnumerator DontMoveTooFast()
         {
