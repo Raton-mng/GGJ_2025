@@ -124,10 +124,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a3d20b7696d11af47a855a407c9c9491, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _hud: {fileID: 8715606349471961274, guid: b004bdba3b85e02448e985e5a9b3a783, type: 3}
+  coinManager: {fileID: 0}
   baseHorizontalSpeed: 10
   baseVerticalSpeed: 10
   baseTurningSpeed: 600
+  accelerateModifier: 0
+  decelerateModifier: 0
   myID: 0
+  deathUpCurve:
+    serializedVersion: 2
+    m_Curve: []
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!1 &8149366306158835436
 GameObject:
   m_ObjectHideFlags: 0

@@ -41,7 +41,7 @@ public class TrailCollider : MonoBehaviour
 
             if (Physics.SphereCast(startPosition, width, direction, out hit, distance, LayerMask.GetMask("Curbs")))
             {
-                evenement.Invoke();
+                evenement?.Invoke();
                 otherRb = hit.rigidbody;
                 return;
             }
