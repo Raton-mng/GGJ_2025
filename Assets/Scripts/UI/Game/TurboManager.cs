@@ -33,6 +33,11 @@ public class TurboManager : MonoBehaviour
         return _turbo;
     }
 
+    public void GainTurbo(float t)
+    {
+        _turbo = Mathf.Clamp01(_turbo + t);
+    }
+
     public void UseTurbo ()
     {
         _turbo -= _consumption * Time.deltaTime;

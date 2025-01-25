@@ -6,7 +6,7 @@ public class TrailCollider : MonoBehaviour
 {
 
     TrailRenderer trailRenderer;
-    public float detectionRange = 1.0f;
+    float detectionRange;
 
     public UnityEvent evenement;
     public Rigidbody otherRb;
@@ -14,6 +14,7 @@ public class TrailCollider : MonoBehaviour
     private void Start()
     {
         trailRenderer = GetComponent<TrailRenderer>();
+        detectionRange = trailRenderer.startWidth;
     }
 
     private void FixedUpdate()
@@ -46,8 +47,6 @@ public class TrailCollider : MonoBehaviour
 
             RaycastHit hit;
 
-            Gizmos.color = Color.magenta;
-            Gizmos.DrawWireSphere(transform.position, detectionRange);
             if (Physics.SphereCast(startPosition, width, direction, out hit, distance, LayerMask.GetMask("Curbs")))
             {
                 evenement.Invoke();
@@ -60,8 +59,8 @@ public class TrailCollider : MonoBehaviour
 
     private void OnDrawGizmosSelected()
     {
-        Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(transform.position, detectionRange);
+        Gizmos.color = Color.magenta;
+        Gizmos.DrawWireSphere(transform.position, 1);
     }
 
 }
