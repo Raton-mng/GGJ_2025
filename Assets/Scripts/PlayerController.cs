@@ -1,9 +1,13 @@
 using System.Collections;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
 public class PlayerController : MonoBehaviour
 {
+    [SerializeField] private GameObject _hud;
+    private TurboManager _turboManager;
+
     [SerializeField] private float baseHorizontalSpeed;
     [SerializeField] private float baseVerticalSpeed;
     [SerializeField] private float baseTurningSpeed;
@@ -22,16 +26,21 @@ public class PlayerController : MonoBehaviour
     public int myID;
 
     void Start(){
+        GameObject playerHUD = Instantiate(_hud);
+        _turboManager = playerHUD.GetComponentInChildren<TurboManager>();
         currentHorizontalSpeed = baseHorizontalSpeed;
         currentVerticalSpeed = baseVerticalSpeed;
         currentTurningSpeed = baseTurningSpeed;
     }
 
     void Update(){
-        if (_boostingUse>0.03){
+        if (_boostingUse>0.03 && _turboManager.GetTurbo() > 0){
             Accelerate(baseHorizontalSpeed*2);
-        } else if (_boostingUse<-0.03){
+            _turboManager.UseTurbo();
+        } else if (_boostingUse<-0.03 && _turboManager.GetTurbo() > 0)
+        {
             Accelerate(baseHorizontalSpeed*0.75f);
+            _turboManager.UseTurbo();
         } else {
             if (transform.position.x < -0.1){
                 currentHorizontalSpeed = baseHorizontalSpeed*1.1f;
