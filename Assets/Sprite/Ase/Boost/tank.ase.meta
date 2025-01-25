@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 64388a229d76f04428eb6c8ca6f3efdd
+guid: 07d74740d8d844a41bb21e8c576fb14b
 ScriptedImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -122,9 +122,9 @@ ScriptedImporter:
     tessellationDetail: 0
     uvTransform: {x: 0, y: 0}
   animatedSpriteImportData:
-  - name: purpledown
+  - name: Frame_0
     originalName: 
-    pivot: {x: 0.51282054, y: -0.025641028}
+    pivot: {x: 0.5, y: 0}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
     customData: 
@@ -132,9 +132,9 @@ ScriptedImporter:
       serializedVersion: 2
       x: 4
       y: 4
-      width: 39
-      height: 39
-    spriteID: 497e396ec18f9bb4ab821f9bff41ca46
+      width: 20
+      height: 120
+    spriteID: 5293eec2ba8e07a479b0ff6477b000b8
     spriteBone: []
     spriteOutline: []
     vertices: []
@@ -143,24 +143,54 @@ ScriptedImporter:
     edges: []
     tessellationDetail: 0
     uvTransform: {x: 4, y: 4}
+  - name: Frame_1
+    originalName: 
+    pivot: {x: 0.5, y: 0}
+    alignment: 9
+    border: {x: 0, y: 0, z: 0, w: 0}
+    customData: 
+    rect:
+      serializedVersion: 2
+      x: 32
+      y: 4
+      width: 20
+      height: 120
+    spriteID: 6bf98cb9dcc7a324bb619762db1bbfd4
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 32, y: 4}
   spriteSheetImportData: []
   asepriteLayers:
   - layerIndex: 0
-    guid: -1041933348
-    name: purpledown
+    guid: -719173086
+    name: tank
     layerFlags: 0
     layerType: 0
     blendMode: 0
     cells:
-    - name: purpledown
+    - name: Frame_0
       frameIndex: 0
       additiveSortOrder: 0
       cellRect:
         x: 0
-        y: 1
-        width: 39
-        height: 39
-      spriteId: 497e396ec18f9bb4ab821f9bff41ca46
+        y: 0
+        width: 20
+        height: 120
+      spriteId: 5293eec2ba8e07a479b0ff6477b000b8
+    - name: Frame_1
+      frameIndex: 1
+      additiveSortOrder: 0
+      cellRect:
+        x: 0
+        y: 0
+        width: 20
+        height: 120
+      spriteId: 6bf98cb9dcc7a324bb619762db1bbfd4
     linkedCells: []
     parentIndex: -1
   platformSettings:
@@ -179,4 +209,4 @@ ScriptedImporter:
   generatePhysicsShape: 0
   secondarySpriteTextures: []
   spritePackingTag: 
-  canvasSize: {x: 40, y: 40}
+  canvasSize: {x: 20, y: 120}

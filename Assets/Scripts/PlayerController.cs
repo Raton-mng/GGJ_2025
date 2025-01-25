@@ -8,7 +8,7 @@ public class PlayerController : MonoBehaviour
     public GameObject _hud;
     private TurboManager _turboManager;
     public CoinManager coinManager;
-
+    
     [SerializeField] private float baseHorizontalSpeed;
     [SerializeField] private float baseVerticalSpeed;
     [SerializeField] private float baseTurningSpeed;
@@ -27,12 +27,13 @@ public class PlayerController : MonoBehaviour
     
     public int myID;
 
+    public bool isDeath = false;
     private AnimationCurve deathUpCurve;
 
     void Start(){
-        /*GameObject playerHUD = Instantiate(_hud);
+        GameObject playerHUD = Instantiate(_hud);
         _turboManager = playerHUD.GetComponentInChildren<TurboManager>();
-        coinManager = playerHUD.GetComponentInChildren<CoinManager>();*/
+        coinManager = playerHUD.GetComponentInChildren<CoinManager>();
         currentHorizontalSpeed = baseHorizontalSpeed;
         currentVerticalSpeed = baseVerticalSpeed;
         currentTurningSpeed = baseTurningSpeed;
@@ -41,6 +42,9 @@ public class PlayerController : MonoBehaviour
     }
 
     void Update(){
+        if (isDeath){
+            return;
+        }
         if (Input.GetKeyDown(KeyCode.O)){
             DieUp();
         }
@@ -97,6 +101,11 @@ public class PlayerController : MonoBehaviour
     }
 
 
+    public void OnPauseMenu(InputAction.CallbackContext context)
+    {
+        Pause.Instance.OnPauseButton();
+    }
+
     public void LookTo(float target, float speed){
         transform.rotation = Quaternion.RotateTowards(
             transform.rotation,
@@ -137,17 +146,27 @@ public class PlayerController : MonoBehaviour
     }
 
     private void DieUp(){
+        isDeath = true;
         StartCoroutine(ExplodeUp());
+    }
+
+    private void DieDown(){
+        isDeath = true;
+        StartCoroutine(ExplodeDown());
     }
 
     IEnumerator ExplodeUp(){
         float currentTime = 0f;
         float startY = transform.localPosition.y;
         float duration = deathUpCurve.keys[deathUpCurve.keys.Length - 1].time - deathUpCurve.keys[0].time;
-        float top = 2f;
+        float top = 3.5f;
         
         while (true){
-            transform.localPosition = new Vector3(transform.localPosition.x, startY + deathUpCurve.Evaluate(currentTime)*top, transform.localPosition.z);
+            if (currentTime >=1f){
+                transform.Rotate(new Vector3(0f, 0, 500f) * Time.deltaTime);  
+            }
+            
+            transform.localPosition = new Vector3(transform.localPosition.x-Time.deltaTime*2f, startY + deathUpCurve.Evaluate(currentTime)*top, transform.localPosition.z);
             yield return null;
             currentTime += Time.deltaTime;
             if (currentTime > duration){
@@ -155,6 +174,31 @@ public class PlayerController : MonoBehaviour
             }
         }
     }
+
+    IEnumerator ExplodeDown(){
+        float currentTime = 0f;
+        float currentX = transform.localPosition.x;
+        float currentY = transform.localPosition.y;
+        float currentZ = transform.localPosition.z;
+        
+        while (true){
+            transform.localPosition = new Vector3(currentX, currentY, currentZ);
+            if (currentTime >=1f){
+                currentY -= Time.deltaTime * 4f; 
+                transform.localPosition = new Vector3(currentX, currentY, currentZ);
+            } else {
+                transform.localPosition = new Vector3(currentX + (Random.value * 0.5f - 0.25f), currentY + (Random.value * 0.5f - 0.25f), currentZ + (Random.value * 0.5f - 0.25f));
+            }
+            
+            yield return null;
+            currentTime += Time.deltaTime;
+            currentX -= Time.deltaTime*2f;
+            if (currentTime > 6f){
+                break;
+            }
+        }
+    }
+
 
     public bool IsDead()
     {
@@ -164,25 +208,17 @@ public class PlayerController : MonoBehaviour
     void InitDeathCurve(){
 
         deathUpCurve = new AnimationCurve();
-        // Ajouter une première section, qui commence en 0 et augmente rapidement jusqu'à 1 en 1 seconde
-        // Utilisation d'une fonction exponentielle pour une montée rapide et un ralentissement vers 1
-        deathUpCurve.AddKey(0f, 0f);      // t=0, valeur=0
-        deathUpCurve.AddKey(0.1f, 1f);      // t=1, valeur=1
 
-        // Ajouter une seconde section linéaire, de 1 à -5 en 15 secondes
-        deathUpCurve.AddKey(0.1f, 1f);      // t=1, valeur=1 (point de départ de la descente)
-        deathUpCurve.AddKey(5f, -5f);    // t=16, valeur=-5 (fin de la descente)
+        Keyframe key1 = new Keyframe(0f, 0f, 0f, 0f); // Tangentes = 1 (pente constante)
+        Keyframe key2 = new Keyframe(1f, 0f, 0f, 0f); // Même pente pour assurer la linéarité
+        Keyframe key3 = new Keyframe(1.1f, 1f, -5f, 5f); // Même pente pour assurer la linéarité
+        Keyframe key4 = new Keyframe(5f, -5f, 0f, 0f); // Même pente pour assurer la linéarité
 
-        // Personnaliser les tangentes pour la première section pour ralentir avant d'atteindre 1
-        Keyframe key1 = deathUpCurve.keys[1];
-        key1.inTangent = -5f;  // Pour créer un effet de ralenti avant de stabiliser à 1
-        key1.outTangent = 5f;  // Tangente sortante pour une montée rapide
-        deathUpCurve.MoveKey(1, key1);
+        // Ajouter les keyframes à la courbe
 
-        // Personnaliser la tangente de la seconde section pour la rendre linéaire
-        Keyframe key2 = deathUpCurve.keys[2];
-        key2.inTangent = 0f;   // Tangente linéaire
-        key2.outTangent = 0f;  // Tangente linéaire
-        deathUpCurve.MoveKey(2, key2);
+        deathUpCurve.AddKey(key1);      // t=0, valeur=0
+        deathUpCurve.AddKey(key2);      // t=1, valeur=1
+        deathUpCurve.AddKey(key3);      // t=1, valeur=1
+        deathUpCurve.AddKey(key4);      // t=1, valeur=1
     }
 }
