@@ -5,7 +5,7 @@ using UnityEngine.InputSystem;
 
 public class PlayerController : MonoBehaviour
 {
-    [SerializeField] private GameObject _hud;
+    public GameObject _hud;
     private TurboManager _turboManager;
     public CoinManager coinManager;
 
@@ -23,6 +23,7 @@ public class PlayerController : MonoBehaviour
     private float _boostingUse;
 
     private bool _isInversed;
+    private bool _isDead;
     
     public int myID;
 
@@ -143,5 +144,10 @@ public class PlayerController : MonoBehaviour
             yield return null;
             currentTime += Time.deltaTime;
         }
+    }
+
+    public bool IsDead()
+    {
+        return _isDead;
     }
 }

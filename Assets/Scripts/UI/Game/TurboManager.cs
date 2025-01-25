@@ -1,5 +1,4 @@
 using UnityEngine;
-using static UnityEngine.Rendering.DebugUI;
 
 public class TurboManager : MonoBehaviour
 {
@@ -24,6 +23,7 @@ public class TurboManager : MonoBehaviour
     {
         if(_turbo < _maxTurbo)
         {
+            //TODO: Add turbo with area
         }
         _anchorMax.anchorMax = new(0.5f, _turbo / _maxTurbo);
     }

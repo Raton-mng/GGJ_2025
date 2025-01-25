@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using static SingleContract;
 
-public class ContractSlideIn : MonoBehaviour
+public class ShopManager : MonoBehaviour
 {
     [Header("Transforms for Movement")]
     public RectTransform startTransform; // Point de départ hors champ
@@ -44,7 +44,7 @@ public class ContractSlideIn : MonoBehaviour
     private Coroutine autoHideCoroutine; // Référence à la coroutine de disparition automatique
     private int playerCount = 2; // Nombre de joueurs (variable static du script PlayerController)
     private int votedPlayer = 0; // Joueur qui a voté
-    private bool shopActive = false; // Indique si le shop est actif
+    public static bool ShopActive { get; set;}
 
 
     private void Update()
@@ -132,11 +132,11 @@ public class ContractSlideIn : MonoBehaviour
     // Fonction pour déclencher l'animation
     public void TriggerContractAppearance()
     {
-        if (shopActive)
+        if (ShopActive)
         {
             return;
         }
-        shopActive = true;
+        ShopActive = true;
 
         // Réinitialiser
         foreach (var contract in contracts)
@@ -443,7 +443,7 @@ public class ContractSlideIn : MonoBehaviour
         }
 
         contractsReady = false;
-        shopActive = false;
+        ShopActive = false;
     }
 
 
