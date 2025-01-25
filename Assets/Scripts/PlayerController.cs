@@ -17,6 +17,8 @@ public class PlayerController : MonoBehaviour
     private bool _isGoingUp;
     private float _boostingUse;
 
+    private bool _isInversed;
+    
     public int myID;
 
     void Start(){
@@ -86,7 +88,7 @@ public class PlayerController : MonoBehaviour
 
     public void OnMove(InputAction.CallbackContext context)
     {
-        _isGoingUp = context.action.WasPerformedThisFrame();
+        _isGoingUp = _isInversed ? !context.action.WasPerformedThisFrame() : context.action.WasPerformedThisFrame();
     }
 
     public void OnMenuing(InputAction.CallbackContext context)
@@ -105,5 +107,13 @@ public class PlayerController : MonoBehaviour
         accelerateModifier *= boostModifierModifier;
         yield return new WaitForSeconds(timer);
         accelerateModifier = baseBoost;
+    }
+    
+    public IEnumerator InverseControls(float timer)
+    {
+        _isGoingUp = !_isGoingUp;
+        _isInversed = true;
+        yield return new WaitForSeconds(timer);
+        _isInversed = false;
     }
 }

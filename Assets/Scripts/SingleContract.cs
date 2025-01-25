@@ -2,6 +2,7 @@ using System;
 using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
+using System.Collections.Generic;
 
 public class SingleContract : MonoBehaviour
 {
@@ -98,7 +99,11 @@ public class SingleContract : MonoBehaviour
     
     private void ReverseControls(int playerID)
     {
-        
+        List<PlayerController> otherPlayers = _playerManager.GetOtherPlayers(playerID);
+        foreach (PlayerController otherPlayer in otherPlayers)
+        {
+            
+        }
     }
     
     private void PushEveryoneUp(int playerID)

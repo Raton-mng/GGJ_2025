@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Events;
 using UnityEngine.InputSystem;
 
 public class PlayerManager : MonoBehaviour
@@ -46,5 +45,15 @@ public class PlayerManager : MonoBehaviour
             if (player.myID == playerID) return player;
         }
         return null;
+    }
+
+    public List<PlayerController> GetOtherPlayers(int playerID)
+    {
+        List<PlayerController> otherPlayers = new List<PlayerController>();
+        foreach (PlayerController player in _players)
+        {
+            if (player.myID != playerID) otherPlayers.Add(player);
+        }
+        return otherPlayers;
     }
 }
