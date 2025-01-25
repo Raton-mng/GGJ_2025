@@ -31,9 +31,9 @@ public class PlayerController : MonoBehaviour
     private AnimationCurve deathUpCurve;
 
     void Start(){
-        /*GameObject playerHUD = Instantiate(_hud);
+        GameObject playerHUD = Instantiate(_hud);
         _turboManager = playerHUD.GetComponentInChildren<TurboManager>();
-        coinManager = playerHUD.GetComponentInChildren<CoinManager>();*/
+        coinManager = playerHUD.GetComponentInChildren<CoinManager>();
         currentHorizontalSpeed = baseHorizontalSpeed;
         currentVerticalSpeed = baseVerticalSpeed;
         currentTurningSpeed = baseTurningSpeed;
@@ -46,7 +46,7 @@ public class PlayerController : MonoBehaviour
             return;
         }
         if (Input.GetKeyDown(KeyCode.O)){
-            DieDown();
+            DieUp();
         }
         if (_boostingUse>0.03 && _turboManager.GetTurbo() > 0){
             Accelerate(baseHorizontalSpeed*2);
