@@ -38,6 +38,11 @@ namespace UI.Menu
             cellList[currentCellID].SetOutlineActive(true);
         }
 
+        public int GetCurrentCellID()
+        {
+            return currentCellID;
+        }
+
         private void Update()
         {
             if (Input.GetKeyDown(KeyCode.RightArrow))

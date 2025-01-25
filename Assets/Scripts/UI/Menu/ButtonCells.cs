@@ -5,9 +5,9 @@ namespace UI.Menu
 {
     public class ButtonCells : MonoBehaviour
     {
-        [SerializeField] private int playCellID;
-        [SerializeField] private int optionsCellID;
-        [SerializeField] private int quitCellID;
+        private const int PlayCellID = 23;
+        private const int OptionsCellID = 25;
+        private const int QuitCellID = 27;
 
         private CellManager cellManager;
         
@@ -18,9 +18,24 @@ namespace UI.Menu
 
         private void Start()
         {
-            cellManager.SetCellText(playCellID, "Play");
-            cellManager.SetCellText(optionsCellID, "Options");
-            cellManager.SetCellText(quitCellID, "Quit");
+            cellManager.SetCellText(PlayCellID, "Play");
+            cellManager.SetCellText(OptionsCellID, "Options");
+            cellManager.SetCellText(QuitCellID, "Quit");
+        }
+
+        private void Update()
+        {
+            if (Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.KeypadEnter))
+            {
+                switch (cellManager.GetCurrentCellID())
+                {
+                    case PlayCellID:
+                        SceneManager.StartGame();
+                        break;
+                    default:
+                        break;
+                }
+            }
         }
     }
 }

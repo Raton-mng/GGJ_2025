@@ -20,12 +20,12 @@ namespace UI.Menu
             }
         }
 
-        public void StartGame()
+        public static void StartGame()
         {
             UnityEngine.SceneManagement.SceneManager.LoadScene("_Main");
         }
 
-        public void MainMenu()
+        public static void MainMenu()
         {
             UnityEngine.SceneManagement.SceneManager.LoadScene("_Menu");
         }

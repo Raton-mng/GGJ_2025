@@ -3,19 +3,17 @@ using UnityEngine;
 
 namespace UI.Menu
 {
-    [RequireComponent(typeof(TMP_InputField))]
     public class Cell : MonoBehaviour
     {
 
         [SerializeField] private GameObject outline;
 
-        private TMP_InputField inputField; 
+        private TextMeshProUGUI inputField; 
     
         private void Awake()
         {
             SetOutlineActive(false);
-            inputField = GetComponent<TMP_InputField>();
-            inputField.interactable = false;
+            inputField = GetComponentInChildren<TextMeshProUGUI>();
         }
 
         public void SetOutlineActive(bool active)

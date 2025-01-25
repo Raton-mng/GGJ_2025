@@ -2166,9 +2166,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3a8e6b4dff675ed43916ba2114a3d2ed, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playCellID: 24
-  optionsCellID: 26
-  quitCellID: 28
+  playCellID: 23
+  optionsCellID: 25
+  quitCellID: 27
 --- !u!1001 &1038980081
 PrefabInstance:
   m_ObjectHideFlags: 0
