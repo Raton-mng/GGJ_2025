@@ -1,8 +1,6 @@
-using System.Collections;
 using UnityEngine;
-using UnityEngine.InputSystem;
 
-public class PlayerController : MonoBehaviour
+public class PlayerMove : MonoBehaviour
 {
     [SerializeField] private float baseHorizontalSpeed;
     [SerializeField] private float baseVerticalSpeed;
@@ -11,11 +9,6 @@ public class PlayerController : MonoBehaviour
     private float currentVerticalSpeed;
     private float currentTurningSpeed;
 
-    private bool _isGoingUp;
-    private float _boostingUse;
-
-    public int myID;
-
     void Start(){
         currentHorizontalSpeed = baseHorizontalSpeed;
         currentVerticalSpeed = baseVerticalSpeed;
@@ -23,9 +16,9 @@ public class PlayerController : MonoBehaviour
     }
 
     void Update(){
-        if (_boostingUse>0.03){
+        if (Input.GetKey(KeyCode.Space)){
             Accelerate(baseHorizontalSpeed*2);
-        } else if (_boostingUse<-0.03){
+        } else if (Input.GetKey(KeyCode.C)){
             Accelerate(baseHorizontalSpeed*0.75f);
         } else {
             if (transform.position.x < -0.1){
@@ -39,7 +32,7 @@ public class PlayerController : MonoBehaviour
                 transform.position = pos;
             }
         }
-        if (_isGoingUp){
+        if (Input.GetKey(KeyCode.W)){
             GoUp(currentHorizontalSpeed, currentVerticalSpeed);
         } else {
             GoDown(currentHorizontalSpeed, currentVerticalSpeed);
@@ -72,6 +65,10 @@ public class PlayerController : MonoBehaviour
 
     }
 
+    public void Decelerate(float newSpeed){
+        
+    }
+
 
     public void LookTo(float target, float speed){
         transform.rotation = Quaternion.RotateTowards(
@@ -79,20 +76,5 @@ public class PlayerController : MonoBehaviour
             Quaternion.Euler(0f, 0f, target),
             speed * Time.deltaTime
         );
-    }
-
-    public void OnMove(InputAction.CallbackContext context)
-    {
-        _isGoingUp = context.action.WasPerformedThisFrame();
-    }
-
-    public void OnMenuing(InputAction.CallbackContext context)
-    {
-        Debug.Log(context.action.ReadValue<float>());
-    }
-
-    public void OnBoosting(InputAction.CallbackContext context)
-    {
-        _boostingUse = context.action.ReadValue<float>();
     }
 }
