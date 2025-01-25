@@ -7,6 +7,7 @@ public class PlayerController : MonoBehaviour
 {
     [SerializeField] private GameObject _hud;
     private TurboManager _turboManager;
+    public CoinManager coinManager;
 
     [SerializeField] private float baseHorizontalSpeed;
     [SerializeField] private float baseVerticalSpeed;
@@ -28,6 +29,7 @@ public class PlayerController : MonoBehaviour
     void Start(){
         GameObject playerHUD = Instantiate(_hud);
         _turboManager = playerHUD.GetComponentInChildren<TurboManager>();
+        coinManager = playerHUD.GetComponentInChildren<CoinManager>();
         currentHorizontalSpeed = baseHorizontalSpeed;
         currentVerticalSpeed = baseVerticalSpeed;
         currentTurningSpeed = baseTurningSpeed;
