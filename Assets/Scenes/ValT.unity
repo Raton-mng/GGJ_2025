@@ -320,6 +320,22 @@ PrefabInstance:
       propertyPath: m_Name
       value: ShopManager
       objectReference: {fileID: 0}
+    - target: {fileID: 8968440456273862278, guid: 5a7fbb420c3786b46a27b08a6f315cf8, type: 3}
+      propertyPath: effectCoast.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 8968440456273862278, guid: 5a7fbb420c3786b46a27b08a6f315cf8, type: 3}
+      propertyPath: 'effectCoast.Array.data[0]'
+      value: 12
+      objectReference: {fileID: 0}
+    - target: {fileID: 8968440456273862278, guid: 5a7fbb420c3786b46a27b08a6f315cf8, type: 3}
+      propertyPath: 'effectCoast.Array.data[1]'
+      value: 12
+      objectReference: {fileID: 0}
+    - target: {fileID: 8968440456273862278, guid: 5a7fbb420c3786b46a27b08a6f315cf8, type: 3}
+      propertyPath: 'effectCoast.Array.data[2]'
+      value: 12
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
