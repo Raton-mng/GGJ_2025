@@ -9,6 +9,8 @@ public class PlayerController : MonoBehaviour
 
     private bool _isGoingUp;
 
+    public int myID;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
