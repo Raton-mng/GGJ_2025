@@ -27,9 +27,12 @@ public class ContractSlideIn : MonoBehaviour
     public float[] effectWeights; // Pondérations pour les probabilités des effets
     public bool allowDuplicateEffects; // Permettre des effets dupliqués
 
+    [Header("Multiplayer Settings")]
+    public Sprite[] cursorSprites; // Sprites pour différencier les curseurs
+    private GameObject[] cursors;  // Tableau pour stocker les curseurs
+    private int[] selectedIndices; // Indices sélectionnés pour chaque joueur
+
     private readonly List<SingleContract> contracts = new();
-    private GameObject cursor;
-    private int selectedIndex = 0;
     private bool contractsReady = false;
     private readonly List<ContractEffect> assignedEffects = new();
     private Coroutine autoHideCoroutine; // Référence à la coroutine de disparition automatique
@@ -41,24 +44,75 @@ public class ContractSlideIn : MonoBehaviour
 
     private void Update()
     {
-        if (contractsReady && Input.GetKeyDown(KeyCode.Z))
+        if (contractsReady)
         {
-            // Déplacer le curseur vers le contrat suivant
-            selectedIndex = (selectedIndex + 1) % numberOfContracts;
-            cursor.GetComponent<RectTransform>().position = contracts[selectedIndex].GetComponent<RectTransform>().position;
+            if (Input.GetKeyDown(KeyCode.Z)) MoveCursor(0, false);  // Exemple pour le joueur 1, monter
+            if (Input.GetKeyDown(KeyCode.S)) MoveCursor(0, true); // Exemple pour le joueur 1, descendre
+            if (Input.GetKeyDown(KeyCode.UpArrow)) MoveCursor(1, false);  // Exemple pour le joueur 2, monter
+            if (Input.GetKeyDown(KeyCode.DownArrow)) MoveCursor(1, true); // Exemple pour le joueur 2, descendre
         }
 
-        if (contractsReady && Input.GetKeyDown(KeyCode.A))
+        if (contractsReady)
         {
-            SingleContract selectedContract = contracts[selectedIndex].GetComponent<SingleContract>();
+            // Exemple pour le joueur 1
+            if (Input.GetKeyDown(KeyCode.A)) ActivateCardEffect(0);
 
-            if (!selectedContract.GetIsSelected())
+            // Ajoute d'autres contrôles pour d'autres joueurs
+            if (Input.GetKeyDown(KeyCode.K)) ActivateCardEffect(1);
+        }
+    }
+
+    public void MoveCursor(int playerIndex, bool moveUp)
+    {
+        if (playerIndex < 0 || playerIndex >= cursors.Length || cursors[playerIndex] == null) return; // Validation de l'index et vérification du curseur
+
+        // Calcul du nouvel indice sélectionné
+        int direction = moveUp ? -1 : 1; // Haut (-1) ou bas (+1)
+        selectedIndices[playerIndex] = (selectedIndices[playerIndex] + direction + numberOfContracts) % numberOfContracts;
+
+        // Mettre à jour la position du curseur
+        if (contracts[selectedIndices[playerIndex]] != null) // Vérification du contrat
+        {
+            cursors[playerIndex].GetComponent<RectTransform>().position = contracts[selectedIndices[playerIndex]].GetComponent<RectTransform>().position;
+        }
+    }
+
+    public void ActivateCardEffect(int playerIndex)
+    {
+        if (playerIndex < 0 || playerIndex >= cursors.Length || cursors[playerIndex] == null) return; // Validation de l'index et vérification du curseur
+
+        int selectedIndex = selectedIndices[playerIndex];
+        if (selectedIndex < 0 || selectedIndex >= contracts.Count || contracts[selectedIndex] == null) return; // Vérification du contrat
+
+        SingleContract selectedContract = contracts[selectedIndex].GetComponent<SingleContract>();
+
+        if (selectedContract != null && !selectedContract.GetIsSelected())
+        {
+            selectedContract.SelectContract(playerIndex);
+
+            // Rétrécir et désactiver le curseur
+            StartCoroutine(FadeOutCursor(playerIndex));
+
+            // Empêcher les autres joueurs de sélectionner des cartes
+            contractsReady = false;
+
+            // Réorganiser les curseurs si nécessaire
+            for (int i = 0; i < cursors.Length; i++)
             {
-                selectedContract.SelectContract();
-                StartCoroutine(HideContractsAndCursor());
+                if (i != playerIndex && selectedIndices[i] == selectedIndex)
+                {
+                    MoveCursor(i, true); // Déplace le curseur vers le haut
+                }
+            }
+
+            // Vérifier si tous les joueurs ont sélectionné une carte
+            if (AreAllContractsSelected())
+            {
+                StartCoroutine(HideContractsAndCursors());
             }
         }
     }
+
 
     // Fonction pour déclencher l'animation
     public void TriggerContractAppearance()
@@ -71,13 +125,7 @@ public class ContractSlideIn : MonoBehaviour
         contracts.Clear();
         assignedEffects.Clear();
 
-        if (cursor != null)
-        {
-            Destroy(cursor);
-        }
-
         contractsReady = false;
-        selectedIndex = 0;
 
         // Créer les contrats
         for (int i = 0; i < numberOfContracts; i++)
@@ -95,8 +143,17 @@ public class ContractSlideIn : MonoBehaviour
         }
 
         // Créer le curseur
-        cursor = Instantiate(cursorPrefab, startTransform.position, Quaternion.identity, transform);
-        cursor.transform.SetAsFirstSibling(); // S'assurer que le curseur est derrière les contrats
+        int playerCount = 2; // Nombre de joueurs (variable static du script PlayerController)
+        cursors = new GameObject[playerCount];
+        selectedIndices = new int[playerCount];
+
+        for (int i = 0; i < playerCount; i++)
+        {
+            GameObject playerCursor = Instantiate(cursorPrefab, startTransform.position, Quaternion.identity, transform);
+            playerCursor.GetComponent<Image>().sprite = cursorSprites[i]; // Associer un sprite différent
+            cursors[i] = playerCursor;
+            selectedIndices[i] = 0; // Initialiser à la première carte
+        }
 
         // Lancer l'animation
         StartCoroutine(SlideContracts());
@@ -120,7 +177,7 @@ public class ContractSlideIn : MonoBehaviour
         }
 
         // Si le délai est écoulé sans sélection, cacher les contrats et le curseur
-        StartCoroutine(HideContractsAndCursor());
+        StartCoroutine(HideContractsAndCursors());
     }
 
     private IEnumerator SlideContracts()
@@ -163,7 +220,10 @@ public class ContractSlideIn : MonoBehaviour
                 contracts[i].GetComponent<RectTransform>().position = Vector3.Lerp(initialPositions[i], targetPositions[i], t);
             }
 
-            cursor.GetComponent<RectTransform>().position = Vector3.Lerp(startPosition, targetPositions[selectedIndex], t);
+            for (int i = 0; i < cursors.Length; i++)
+            {
+                cursors[i].GetComponent<RectTransform>().position = Vector3.Lerp(startPosition, targetPositions[selectedIndices[i]], t);
+            }
 
             yield return null;
         }
@@ -174,7 +234,6 @@ public class ContractSlideIn : MonoBehaviour
             contracts[i].GetComponent<RectTransform>().position = targetPositions[i];
         }
 
-        cursor.GetComponent<RectTransform>().position = targetPositions[selectedIndex];
         contractsReady = true;
     }
 
@@ -224,7 +283,41 @@ public class ContractSlideIn : MonoBehaviour
         return ContractEffect.None; // Valeur par défaut au cas où
     }
 
-    private IEnumerator HideContractsAndCursor()
+    private bool AreAllContractsSelected()
+    {
+        foreach (var contract in contracts)
+        {
+            if (contract != null && !contract.GetIsSelected())
+            {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    private IEnumerator FadeOutCursor(int playerIndex)
+    {
+        GameObject cursor = cursors[playerIndex];
+        Vector3 initialScale = cursor.transform.localScale;
+
+        float elapsedTime = 0f;
+        float duration = 0.5f; // Durée de l'animation
+
+        while (elapsedTime < duration)
+        {
+            elapsedTime += Time.deltaTime;
+            float t = elapsedTime / duration;
+
+            // Rétrécir le curseur
+            cursor.transform.localScale = Vector3.Lerp(initialScale, Vector3.zero, t);
+
+            yield return null;
+        }
+        contractsReady = true; // Permettre aux autres joueurs de sélectionner des cartes
+        cursor.SetActive(false); // Désactiver le curseur
+    }
+
+    private IEnumerator HideContractsAndCursors()
     {
         contractsReady = false;
         float elapsedTime = 0f;
@@ -239,44 +332,41 @@ public class ContractSlideIn : MonoBehaviour
             }
         }
 
-        Vector3 initialCursorScale = cursor.transform.localScale;
-
-        float cursorHideDuration = slideDuration / 8f; // Vitesseplus rapide pour le curseur
+        float cursorHideDuration = slideDuration / 8f;
 
         while (elapsedTime < slideDuration)
         {
             elapsedTime += Time.deltaTime;
             float tContracts = elapsedTime / slideDuration;
-            float tCursor = Mathf.Clamp01(elapsedTime / cursorHideDuration); // Limiter la valeur de t pour le curseur
 
             for (int i = 0; i < numberOfContracts; i++)
             {
-                print(contracts[i].GetIsSelected());
                 if (contracts[i] != null && !contracts[i].GetIsSelected())
                 {
                     contracts[i].GetComponent<RectTransform>().position = Vector3.Lerp(initialPositions[i], startPosition, tContracts);
                 }
             }
 
-            if (cursor != null)
-            {
-                // Le curseur reste immobile et rétrécit
-                cursor.transform.localScale = Vector3.Lerp(initialCursorScale, Vector3.zero, tCursor);
-            }
-
             yield return null;
         }
 
-        // Détruire les contrats restants et le curseur
+        // Détruire les contrats restants
         foreach (var contract in contracts)
         {
             if (contract != null) Destroy(contract);
         }
 
         contracts.Clear();
-        if (cursor != null) Destroy(cursor);
+
+        // Détruire tous les curseurs
+        foreach (var cursor in cursors)
+        {
+            if (cursor != null) Destroy(cursor);
+        }
+
         contractsReady = false;
     }
+
 
 
 }
