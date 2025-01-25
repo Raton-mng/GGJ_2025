@@ -1,16 +1,15 @@
 using System.Collections.Generic;
 using UnityEngine;
-using static UnityEditor.Experimental.GraphView.GraphView;
 
 public class CameraFollowCurb : MonoBehaviour
 {
-    [SerializeField] List<Transform> playerTransforms = new List<Transform>();
+    public List<Transform> playerTransforms = new List<Transform>();
     [SerializeField] Camera Camera;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        List<PlayerController> players = PlayerManager.Instance.GetOtherPlayers(-1); // permet de récupérer toute la liste des joueurs
-        foreach (PlayerController player in players)
+        List<GameObject> players = PlayerManager.Instance.GetPlayers(); // permet de récupérer toute la liste des joueurs
+        foreach (GameObject player in players)
         {
             playerTransforms.Add(player.transform);
         }
@@ -19,6 +18,15 @@ public class CameraFollowCurb : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        // Debug.Log("count : " + playerTransforms.Count);
+
+        if (playerTransforms.Count == 0) return;
+        if (playerTransforms.Count == 1)
+        {
+            transform.position = playerTransforms[0].position;
+            Camera.orthographicSize = 1f;
+        }
+
         float y = 0f;
         float minY = float.MaxValue;
         float maxY = float.MinValue;
