@@ -16,7 +16,6 @@ public class BoundingCurb : MonoBehaviour
     {
         float r1 = Random.value -0.5f; float r2 = Random.value -0.5f;
         float d = curbs[0].position.y - curbs[1].position.y;
-        Debug.Log(d);
         // Les deux randoms permettent de garder la même taille, ou alors on a 
         if (d >= translationMaxAmplitude)
         {
