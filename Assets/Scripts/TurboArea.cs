@@ -1,5 +1,8 @@
+using Unity.VisualScripting.Antlr3.Runtime.Misc;
 using UnityEngine;
 
+
+[RequireComponent(typeof(TrailCollider))]
 public class TurboArea : MonoBehaviour
 {
     private float turboFillDuration = 5f;
@@ -10,19 +13,26 @@ public class TurboArea : MonoBehaviour
 
     [SerializeField] private float frequencyAcceleration = 1f;
 
+    TrailCollider coll;
+
+    [SerializeField] private float cooldown = 0.1f;
+
+
+    private void Start()
+    {
+        coll = GetComponent<TrailCollider>();
+        coll.evenement.AddListener(OnTrailCollision);
+    }
 
     // Update is called once per frame
     void Update()
     {
-        turboFillDuration = baseDuration + amplitude * (1-Mathf.Exp(-Time.time / tau));
+        turboFillDuration = baseDuration + amplitude * (1 - Mathf.Exp(-Time.time / tau));
+
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    private void OnTrailCollision()
     {
-        /*PlayerStats stats;
-        if (collision.TryGetComponent(out stats))
-        {
-            stats.power += turboFillDuration * Time.deltaTime;
-        }*/
+        coll.otherRb.GetComponent<TurboManager>().GainTurbo( Time.deltaTime / turboFillDuration );
     }
 }

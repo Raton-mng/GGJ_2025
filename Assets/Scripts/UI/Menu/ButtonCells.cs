@@ -23,18 +23,11 @@ namespace UI.Menu
             cellManager.SetCellText(QuitCellID, "Quit");
         }
 
-        private void Update()
+        public static void Select(int cellID)
         {
-            if (Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.KeypadEnter))
+            if (cellID == PlayCellID && CellManager.Instance.players.Count >= 2)
             {
-                switch (cellManager.GetCurrentCellID())
-                {
-                    case PlayCellID:
-                        SceneManager.StartGame();
-                        break;
-                    default:
-                        break;
-                }
+                SceneManager.StartGame();
             }
         }
     }

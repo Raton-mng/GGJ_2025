@@ -9,6 +9,10 @@ public class PlayerCurb : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+        int id = GetComponent<PlayerController>().myID;
+        transform.parent = CurbManager.m_Instance.transform;
+        transform.localPosition = -5f * Vector3.forward + id * Vector3.up;
+
         StartCoroutine(Update());
 
         IEnumerator Update()
@@ -22,10 +26,11 @@ public class PlayerCurb : MonoBehaviour
         }
     }
 
-    private void Update()
-    {
-        if (Input.GetMouseButton(0)) transform.position += (Vector3)Vector2.up * Time.deltaTime;
-        if (Input.GetMouseButton(1)) transform.position += (Vector3)Vector2.down * Time.deltaTime;
-    }
-
+    /* Debug Tools : --------------------- 
+        private void Update()
+        {
+            if (Input.GetMouseButton(0)) transform.position += (Vector3)Vector2.up * Time.deltaTime;
+            if (Input.GetMouseButton(1)) transform.position += (Vector3)Vector2.down * Time.deltaTime;
+        }
+     ----------------------------------- */
 }
