@@ -34,10 +34,10 @@ public class PlayerManager : MonoBehaviour
 
     private void OnLoad(Scene scene, LoadSceneMode lsm)
     {
-        Debug.Log(_players.Count);
+        //Debug.Log(_players.Count);
         for (int i = 0; i < _players.Count; i++)
         {
-            Debug.Log(_players.Count + "; i = " + i);
+            //Debug.Log(_players.Count + "; i = " + i);
             GameObject player = _players[i];
             Transform playerChild = player.transform.GetChild(0);
             if (playerChild.TryGetComponent(out PlayerStartController psc))
@@ -70,6 +70,8 @@ public class PlayerManager : MonoBehaviour
         //player.transform.SetParent(transform);
         
        _players.Add(player);
+        Debug.Log("PrTOUTE " + _players.Count);
+
     }
 
     public void OnRemovePlayer(PlayerInput removedInput)
