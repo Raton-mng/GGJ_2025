@@ -9,11 +9,6 @@ public class CoinManager : MonoBehaviour
     void Start()
     {
         _coinNumber = 0;
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
         _coins.text = "X" + _coinNumber;
     }
 
@@ -25,10 +20,12 @@ public class CoinManager : MonoBehaviour
     public void EarnCoins(int value)
     {
         _coinNumber += value;
+        _coins.text = "X" + _coinNumber;
     }
 
     public void UseCoins(int value)
     {
         _coinNumber -= value;
+        _coins.text = "X" + _coinNumber;
     }
 }
