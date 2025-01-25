@@ -3,6 +3,7 @@ using UnityEngine;
 public class CoinController : MonoBehaviour
 {
     private float speed = 5f;
+    [SerializeField] int value;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -21,6 +22,9 @@ public class CoinController : MonoBehaviour
     }
 
     void OnTriggerEnter2D(Collider2D col){
+        GameObject player = col.gameObject;
+        CoinManager wallet = player.GetComponent<CoinManager>();
+        wallet.EarnCoins(value);
         Debug.Log("nique ta mere");
         Destroy(gameObject);
     }
