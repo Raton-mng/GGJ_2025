@@ -9,6 +9,8 @@ public class PlayerCurb : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+        transform.parent = CurbManager.m_Instance.transform;
+
         StartCoroutine(Update());
 
         IEnumerator Update()

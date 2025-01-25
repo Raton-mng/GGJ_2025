@@ -51,15 +51,15 @@ public class PlayerController : MonoBehaviour
             Accelerate(baseHorizontalSpeed*0.75f);
             _turboManager.UseTurbo();
         } else {
-            if (transform.position.x < -0.1){
+            if (transform.localPosition.x < -0.1){
                 currentHorizontalSpeed = baseHorizontalSpeed*1.1f;
-            } else if (transform.position.x > 0.1){
+            } else if (transform.localPosition.x > 0.1){
                 currentHorizontalSpeed = baseHorizontalSpeed*0.9f;
             } else {   
                 currentHorizontalSpeed = baseHorizontalSpeed;
-                Vector3 pos = transform.position;
+                Vector3 pos = transform.localPosition;
                 pos.x = 0f;
-                transform.position = pos;
+                transform.localPosition = pos;
             }
         }
         if (_isGoingUp){
@@ -68,9 +68,9 @@ public class PlayerController : MonoBehaviour
             GoDown(currentHorizontalSpeed, currentVerticalSpeed);
         }
         
-        Vector3 tempPos = transform.position;
+        Vector3 tempPos = transform.localPosition;
         tempPos.x += (currentHorizontalSpeed - baseHorizontalSpeed) * Time.deltaTime;
-        transform.position = tempPos;
+        transform.localPosition = tempPos;
     }
 
 
@@ -78,9 +78,9 @@ public class PlayerController : MonoBehaviour
         float targetAngle = Mathf.Atan(dy/dx) * 180 / Mathf.PI;
         LookTo(targetAngle, currentTurningSpeed);
 
-        Vector3 pos = transform.position;
+        Vector3 pos = transform.localPosition;
         pos.y += dy * Time.deltaTime;
-        transform.position = pos;
+        transform.localPosition = pos;
         
         return false;
     }
@@ -141,12 +141,12 @@ public class PlayerController : MonoBehaviour
 
     IEnumerator ExplodeUp(){
         float currentTime = 0f;
-        float startY = transform.position.y;
+        float startY = transform.localPosition.y;
         float duration = deathUpCurve.keys[deathUpCurve.keys.Length - 1].time - deathUpCurve.keys[0].time;
         float top = 2f;
         
         while (true){
-            transform.position = new Vector3(transform.position.x, startY + deathUpCurve.Evaluate(currentTime)*top, transform.position.z);
+            transform.localPosition = new Vector3(transform.localPosition.x, startY + deathUpCurve.Evaluate(currentTime)*top, transform.localPosition.z);
             yield return null;
             currentTime += Time.deltaTime;
             if (currentTime > duration){
