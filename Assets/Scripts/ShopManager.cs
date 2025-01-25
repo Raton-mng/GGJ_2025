@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using static SingleContract;
 
-public class ContractSlideIn : MonoBehaviour
+public class ShopManager : MonoBehaviour
 {
     [Header("Transforms for Movement")]
     public RectTransform startTransform; // Point de départ hors champ
@@ -22,9 +22,12 @@ public class ContractSlideIn : MonoBehaviour
     [Header("Contracts Parameters")]
     public int numberOfContracts; // Nombre de contrats à afficher
     public float autoHideDelay = 5f; // Temps d'attente avant de cacher automatiquement le shop
+    public float timeBetweenContracts = 15f; // Temps entre chaque apparition de contrat
+    public float firstApparitionTime = 5f; // Temps entre chaque apparition de contrat
 
     [Header("Contract Effects")]
     public Sprite[] effectSprites; // Tableau de sprites correspondant aux effets
+    public int[] effectCoast; // Tableau de sprites correspondant aux effets
     public float[] effectWeights; // Pondérations pour les probabilités des effets
     public bool allowDuplicateEffects; // Permettre des effets dupliqués
 
@@ -44,14 +47,26 @@ public class ContractSlideIn : MonoBehaviour
     private Coroutine autoHideCoroutine; // Référence à la coroutine de disparition automatique
     private int playerCount = 2; // Nombre de joueurs (variable static du script PlayerController)
     private int votedPlayer = 0; // Joueur qui a voté
-    private bool shopActive = false; // Indique si le shop est actif
+    public static bool ShopActive { get; set;}
 
+    private void Start()
+    {
+        StartCoroutine(LoopContractApparance());
+    }
+
+    private IEnumerator LoopContractApparance()
+    {
+        yield return new WaitForSeconds(firstApparitionTime);
+        TriggerContractAppearance();
+        yield return new WaitForSeconds(timeBetweenContracts-firstApparitionTime);
+
+        StartCoroutine(LoopContractApparance());
+    }
 
     private void Update()
     {
         if(Input.GetKeyDown(KeyCode.Space))
         {
-            TriggerContractAppearance();
         }
         if (contractsReady)
         {
@@ -99,9 +114,13 @@ public class ContractSlideIn : MonoBehaviour
         if (selectedIndex < 0 || selectedIndex >= contracts.Count || contracts[selectedIndex] == null) return; // Vérification du contrat
 
         SingleContract selectedContract = contracts[selectedIndex];
+        int coast = selectedContract.GetCoast();
 
-        if (selectedContract != null && !selectedContract.GetIsSelected())
+        if(coast > PlayerManager.Instance.GetPlayer(playerIndex).coinManager.GetCoins()) return;
+
+        if (!selectedContract.GetIsSelected())
         {
+            PlayerManager.Instance.GetPlayer(playerIndex).coinManager.UseCoins(coast);
             selectedContract.SelectContract(playerIndex);
 
             // Rétrécir et désactiver le curseur
@@ -132,11 +151,11 @@ public class ContractSlideIn : MonoBehaviour
     // Fonction pour déclencher l'animation
     public void TriggerContractAppearance()
     {
-        if (shopActive)
+        if (ShopActive)
         {
             return;
         }
-        shopActive = true;
+        ShopActive = true;
 
         // Réinitialiser
         foreach (var contract in contracts)
@@ -194,7 +213,7 @@ public class ContractSlideIn : MonoBehaviour
             assignedEffects.Add(effect);
 
             // Configurer le contrat
-            contractScript.SetEffect(effect, effectSprites[(int)effect]);
+            contractScript.SetEffect(effect, effectSprites[(int)effect], effectCoast[(int)effect]);
         }
 
         // Créer les curseurs
@@ -443,7 +462,7 @@ public class ContractSlideIn : MonoBehaviour
         }
 
         contractsReady = false;
-        shopActive = false;
+        ShopActive = false;
     }
 
 

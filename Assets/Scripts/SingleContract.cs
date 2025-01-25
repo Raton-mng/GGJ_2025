@@ -19,6 +19,7 @@ public class SingleContract : MonoBehaviour
 
     public ContractEffect effectType;
     private bool isSelected = false;
+    private int coast;
 
     private PlayerManager _playerManager;
 
@@ -27,10 +28,11 @@ public class SingleContract : MonoBehaviour
         _playerManager = PlayerManager.Instance;
     }
 
-    public void SetEffect(ContractEffect effect, Sprite sprite)
+    public void SetEffect(ContractEffect effect, Sprite sprite, int coast)
     {
         effectType = effect;
         GetComponent<Image>().sprite = sprite;
+        this.coast = coast;
     }
     public void SelectContract(int playerID)
     {
@@ -63,6 +65,11 @@ public class SingleContract : MonoBehaviour
     public bool GetIsSelected()
     {
         return isSelected;
+    }
+
+    public int GetCoast()
+    {
+        return coast;
     }
 
     private IEnumerator FadeOutAndDestroy()

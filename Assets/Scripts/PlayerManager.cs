@@ -98,6 +98,11 @@ public class PlayerManager : MonoBehaviour
         return otherPlayers;
     }
 
+    public List<GameObject> GetPlayers()
+    {
+        return _players;
+    }
+
     public int GetPlayerCount()
     {
         return _players.Count;
