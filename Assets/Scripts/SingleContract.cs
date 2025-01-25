@@ -6,10 +6,12 @@ public class SingleContract : MonoBehaviour
 {
     public enum ContractEffect
     {
-        None,
-        SlowOpponent,
-        BoostPlayer,
-        ReverseControls
+        BoostBoost,
+        MoreLife,
+        ReverseControls,
+        PushEveryoneUp,
+        ImmediateJump,
+        Steal
     }
 
     public ContractEffect effectType;
@@ -20,8 +22,7 @@ public class SingleContract : MonoBehaviour
         effectType = effect;
         GetComponent<Image>().sprite = sprite;
     }
-
-    public void SelectContract(int playerId)
+    public void SelectContract(int playerID)
     {
         isSelected = true;
         print(GetIsSelected());
@@ -52,5 +53,35 @@ public class SingleContract : MonoBehaviour
         }
 
         Destroy(gameObject);
+    }
+
+    private void BoostBoost(int playerID)
+    {
+        
+    }
+    
+    private void MoreLife(int playerID)
+    {
+        
+    }
+    
+    private void ReverseControls(int playerID)
+    {
+        
+    }
+    
+    private void PushEveryoneUp(int playerID)
+    {
+        
+    }
+    
+    private void ImmediateJump(int playerID)
+    {
+        
+    }
+    
+    private void Steal(int playerID)
+    {
+        
     }
 }
