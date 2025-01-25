@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
@@ -6,6 +7,7 @@ public class SingleContract : MonoBehaviour
 {
     public enum ContractEffect
     {
+        None,
         BoostBoost,
         MoreLife,
         ReverseControls,
@@ -17,6 +19,13 @@ public class SingleContract : MonoBehaviour
     public ContractEffect effectType;
     private bool isSelected = false;
 
+    private PlayerManager _playerManager;
+
+    private void Start()
+    {
+        _playerManager = PlayerManager.Instance;
+    }
+
     public void SetEffect(ContractEffect effect, Sprite sprite)
     {
         effectType = effect;
@@ -27,6 +36,27 @@ public class SingleContract : MonoBehaviour
         isSelected = true;
         print(GetIsSelected());
         StartCoroutine(FadeOutAndDestroy());
+        switch (effectType)
+        {
+            case ContractEffect.BoostBoost :
+                BoostBoost(playerID);
+                break;
+            case ContractEffect.MoreLife :
+                MoreLife(playerID);
+                break;
+            case ContractEffect.ReverseControls :
+                ReverseControls(playerID);
+                break;
+            case ContractEffect.PushEveryoneUp :
+                PushEveryoneUp(playerID);
+                break;
+            case ContractEffect.ImmediateJump :
+                ImmediateJump(playerID);
+                break;
+            default :
+                Steal(playerID);
+                break;
+        }
     }
 
     public bool GetIsSelected()
@@ -57,7 +87,8 @@ public class SingleContract : MonoBehaviour
 
     private void BoostBoost(int playerID)
     {
-        
+        PlayerController player =  _playerManager.GetPlayer(playerID);
+        StartCoroutine(player.BoostTheBoost(2, 5));
     }
     
     private void MoreLife(int playerID)

@@ -11,6 +11,9 @@ public class PlayerController : MonoBehaviour
     private float currentVerticalSpeed;
     private float currentTurningSpeed;
 
+    [SerializeField] private float accelerateModifier;
+    [SerializeField] private float decelerateModifier;
+
     private bool _isGoingUp;
     private float _boostingUse;
 
@@ -94,5 +97,13 @@ public class PlayerController : MonoBehaviour
     public void OnBoosting(InputAction.CallbackContext context)
     {
         _boostingUse = context.action.ReadValue<float>();
+    }
+
+    public IEnumerator BoostTheBoost(float boostModifierModifier, float timer)
+    {
+        float baseBoost = accelerateModifier;
+        accelerateModifier *= boostModifierModifier;
+        yield return new WaitForSeconds(timer);
+        accelerateModifier = baseBoost;
     }
 }

@@ -38,4 +38,13 @@ public class PlayerManager : MonoBehaviour
             if (player.myID > oldID) player.myID -= 1;
         }
     }
+
+    public PlayerController GetPlayer(int playerID)
+    {
+        foreach (PlayerController player in _players)
+        {
+            if (player.myID == playerID) return player;
+        }
+        return null;
+    }
 }
