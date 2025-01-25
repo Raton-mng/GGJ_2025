@@ -13,7 +13,7 @@ public class ContractSlideIn : MonoBehaviour
 
     [Header("Animation Settings")]
     public float slideDuration; // Temps pour parcourir la distance
-    public float contractSpacing; // Espacement entre les contrats (en pixels)
+    public float cursorFadeDuration = 0.3f; // Durée de l'animation
 
     [Header("Contract Prefab")]
     public GameObject contractPrefab; // Prefab à utiliser pour les contrats (UI Image)
@@ -98,7 +98,7 @@ public class ContractSlideIn : MonoBehaviour
         int selectedIndex = selectedIndices[playerIndex];
         if (selectedIndex < 0 || selectedIndex >= contracts.Count || contracts[selectedIndex] == null) return; // Vérification du contrat
 
-        SingleContract selectedContract = contracts[selectedIndex].GetComponent<SingleContract>();
+        SingleContract selectedContract = contracts[selectedIndex];
 
         if (selectedContract != null && !selectedContract.GetIsSelected())
         {
@@ -141,7 +141,7 @@ public class ContractSlideIn : MonoBehaviour
         // Réinitialiser
         foreach (var contract in contracts)
         {
-            Destroy(contract);
+            Destroy(contract.gameObject);
         }
         contracts.Clear();
         assignedEffects.Clear();
@@ -151,45 +151,8 @@ public class ContractSlideIn : MonoBehaviour
         // Lancer l'animation de clignotement avant de faire apparaître le shop
         StartCoroutine(BlinkSignal(() =>
         {
-            // Une fois le clignotement terminé, le shop apparaît
-            // Créer les contrats
-            for (int i = 0; i < numberOfContracts; i++)
-            {
-                GameObject contract = Instantiate(contractPrefab, startTransform.position, Quaternion.identity, transform);
-                SingleContract contractScript = contract.AddComponent<SingleContract>();
-                contracts.Add(contractScript);
-
-                // Assigner un effet aléatoire avec pondération
-                ContractEffect effect = GetRandomEffect();
-                assignedEffects.Add(effect);
-
-                // Configurer le contrat
-                contractScript.SetEffect(effect, effectSprites[(int)effect]);
-            }
-
-            // Créer les curseurs
-            playerCount = PlayerManager.Instance.GetPlayerCount();
-            votedPlayer = 0; // Réinitialiser le joueur qui a voté
-            cursors = new GameObject[playerCount];
-            selectedIndices = new int[playerCount];
-
-            for (int i = 0; i < playerCount; i++)
-            {
-                GameObject playerCursor = Instantiate(cursorPrefab, startTransform.position, Quaternion.identity, transform);
-                playerCursor.GetComponent<Image>().sprite = cursorSprites[i]; // Associer un sprite différent
-                cursors[i] = playerCursor;
-                selectedIndices[i] = 0; // Initialiser à la première carte
-            }
-
-            // Lancer l'animation d'apparition
-            StartCoroutine(SlideContracts());
-
-            // Lancer la coroutine d'auto-hide
-            if (autoHideCoroutine != null)
-            {
-                StopCoroutine(autoHideCoroutine);
-            }
-            autoHideCoroutine = StartCoroutine(AutoHideShop());
+            // Une fois que le shop doit apparaître (avant la fin totale du clignotement), le shop commence à se générer
+            StartShopAppearance();
         }));
     }
 
@@ -197,17 +160,68 @@ public class ContractSlideIn : MonoBehaviour
     {
         float blinkInterval = blinkDuration / (blinkCount * 2); // Temps entre les clignotements (allumé/éteint)
         bool isActive = false;
+        float shopStartTime = blinkDuration * 0.75f; // Le shop apparaît à 75% de l'animation de clignotement
+        bool shopStarted = false;
 
         for (int i = 0; i < blinkCount * 2; i++) // Chaque cycle compte comme un allumage + extinction
         {
             isActive = !isActive;
             shopSignal.SetActive(isActive); // Activer/désactiver le signal
+
+            if (!shopStarted && i * blinkInterval >= shopStartTime)
+            {
+                shopStarted = true;
+                onComplete?.Invoke(); // Appeler la fonction de rappel pour commencer à générer le shop
+            }
+
             yield return new WaitForSeconds(blinkInterval);
         }
 
         shopSignal.SetActive(false); // Assurez-vous que le signal est éteint à la fin
-        onComplete?.Invoke(); // Appeler la fonction de rappel une fois le clignotement terminé
     }
+
+    private void StartShopAppearance()
+    {
+        // Créer les contrats
+        for (int i = 0; i < numberOfContracts; i++)
+        {
+            GameObject contract = Instantiate(contractPrefab, startTransform.position, Quaternion.identity, transform);
+            SingleContract contractScript = contract.AddComponent<SingleContract>();
+            contracts.Add(contractScript);
+
+            // Assigner un effet aléatoire avec pondération
+            ContractEffect effect = GetRandomEffect();
+            assignedEffects.Add(effect);
+
+            // Configurer le contrat
+            contractScript.SetEffect(effect, effectSprites[(int)effect]);
+        }
+
+        // Créer les curseurs
+        playerCount = 2;
+        votedPlayer = 0; // Réinitialiser le joueur qui a voté
+        cursors = new GameObject[playerCount];
+        selectedIndices = new int[playerCount];
+
+        for (int i = 0; i < playerCount; i++)
+        {
+            GameObject playerCursor = Instantiate(cursorPrefab, startTransform.position, Quaternion.identity, transform);
+            playerCursor.GetComponent<Image>().sprite = cursorSprites[i]; // Associer un sprite différent
+            cursors[i] = playerCursor;
+            selectedIndices[i] = 0; // Initialiser à la première carte
+        }
+
+        // Lancer l'animation d'apparition
+        StartCoroutine(SlideContracts());
+
+        // Lancer la coroutine d'auto-hide
+        if (autoHideCoroutine != null)
+        {
+            StopCoroutine(autoHideCoroutine);
+        }
+        autoHideCoroutine = StartCoroutine(AutoHideShop());
+    }
+
 
     private IEnumerator AutoHideShop()
     {
@@ -241,8 +255,8 @@ public class ContractSlideIn : MonoBehaviour
         float canvasHeight = 540; // Hauteur du Canvas
 
         // Calculer les limites de l'écran en unités locales
-        Vector2 screenTopLeft = new Vector2(-canvasWidth / 2f, canvasHeight / 2f);
-        Vector2 screenBottomRight = new Vector2(canvasWidth / 2f, -canvasHeight / 2f);
+        Vector2 screenTopLeft = new Vector2(-canvasWidth, canvasHeight);
+        Vector2 screenBottomRight = new Vector2(canvasWidth, -canvasHeight);
 
         // Calculer la largeur disponible pour positionner les contrats
         float availableSpace = Vector2.Distance(screenTopLeft, screenBottomRight);
@@ -360,12 +374,11 @@ public class ContractSlideIn : MonoBehaviour
         Vector3 initialScale = cursor.transform.localScale;
 
         float elapsedTime = 0f;
-        float duration = 0.5f; // Durée de l'animation
 
-        while (elapsedTime < duration)
+        while (elapsedTime < cursorFadeDuration)
         {
             elapsedTime += Time.deltaTime;
-            float t = elapsedTime / duration;
+            float t = elapsedTime / cursorFadeDuration;
 
             // Rétrécir le curseur
             cursor.transform.localScale = Vector3.Lerp(initialScale, Vector3.zero, t);
@@ -391,7 +404,13 @@ public class ContractSlideIn : MonoBehaviour
             }
         }
 
-        float cursorHideDuration = slideDuration / 8f;
+        for(int i = 0; i < cursors.Length; i++)
+        {
+            if (cursors[i] != null)
+            {
+                StartCoroutine(FadeOutCursor(i));
+            }
+        }
 
         while (elapsedTime < slideDuration)
         {
@@ -412,7 +431,7 @@ public class ContractSlideIn : MonoBehaviour
         // Détruire les contrats restants
         foreach (var contract in contracts)
         {
-            if (contract != null) Destroy(contract);
+            if(contract != null) Destroy(contract.gameObject);
         }
 
         contracts.Clear();
