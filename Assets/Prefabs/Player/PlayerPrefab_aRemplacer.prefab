@@ -91,6 +91,22 @@ MonoBehaviour:
         m_CallState: 2
     m_ActionId: 1668ea20-adb1-49eb-ba20-95f0698f9527
     m_ActionName: 'Player/MenuUpDown[/XInputControllerWindows/leftStick/y,/Keyboard/w,/Keyboard/q]'
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 4058649720628368533}
+        m_TargetAssemblyTypeName: PlayerController, Assembly-CSharp
+        m_MethodName: OnBoosting
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 7e20c337-1e26-47e0-a1e0-bc82b9b2d6ca
+    m_ActionName: 'Player/Accelerate/Deccelerate[/XInputControllerWindows/rightTrigger,/XInputControllerWindows/leftTrigger,/Keyboard/z,/Keyboard/c]'
   m_NeverAutoSwitchControlSchemes: 1
   m_DefaultControlScheme: 
   m_DefaultActionMap: Player
@@ -108,8 +124,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a3d20b7696d11af47a855a407c9c9491, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 0.5
-  xPlane: 3
+  baseHorizontalSpeed: 10
+  baseVerticalSpeed: 10
+  baseTurningSpeed: 600
+  myID: 0
 --- !u!1 &8149366306158835436
 GameObject:
   m_ObjectHideFlags: 0
