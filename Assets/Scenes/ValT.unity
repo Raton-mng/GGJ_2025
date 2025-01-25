@@ -391,7 +391,7 @@ MonoBehaviour:
   contractPrefab: {fileID: 6421635082057920429, guid: 20e536cf84c915b44a3f65ab7bf8d246, type: 3}
   cursorPrefab: {fileID: 6421635082057920429, guid: ebefc3f3826d3ce45bd8bcb71fa00b6e, type: 3}
   numberOfContracts: 5
-  autoHideDelay: 5
+  autoHideDelay: 50
   effectSprites:
   - {fileID: 7675826601332790545, guid: f14db81dfcfb00b4190962617f9a5e14, type: 3}
   - {fileID: -4412926668834298731, guid: f14db81dfcfb00b4190962617f9a5e14, type: 3}
@@ -401,6 +401,11 @@ MonoBehaviour:
   - 1
   - 1
   allowDuplicateEffects: 1
+  cursorSprites:
+  - {fileID: 21300000, guid: 3755683abe51d35439f50e3a4d563564, type: 3}
+  - {fileID: 21300000, guid: fca94693a6f6bc341b871878f95cc261, type: 3}
+  - {fileID: 21300000, guid: 6e238b5ef264e89469a2b7eeae578f8a, type: 3}
+  - {fileID: 21300000, guid: b21b3369f93a48e41a93281315ba6fb7, type: 3}
 --- !u!1 &1821726003
 GameObject:
   m_ObjectHideFlags: 0

@@ -18,7 +18,7 @@ public class PlayerController : MonoBehaviour
         {
             while(transform.position.x < xPlane)
             {
-                transform.position += (Vector3)Vector2.right * Time.deltaTime * speed;
+                transform.position += speed * Time.deltaTime * (Vector3)Vector2.right;
                 yield return 0;
             }
         }

@@ -21,7 +21,7 @@ public class SingleContract : MonoBehaviour
         GetComponent<Image>().sprite = sprite;
     }
 
-    public void SelectContract()
+    public void SelectContract(int playerId)
     {
         isSelected = true;
         print(GetIsSelected());
