@@ -8,7 +8,7 @@ public class PlayerController : MonoBehaviour
     public GameObject _hud;
     private TurboManager _turboManager;
     public CoinManager coinManager;
-
+    
     [SerializeField] private float baseHorizontalSpeed;
     [SerializeField] private float baseVerticalSpeed;
     [SerializeField] private float baseTurningSpeed;
@@ -100,6 +100,11 @@ public class PlayerController : MonoBehaviour
 
     }
 
+
+    public void OnPauseMenu(InputAction.CallbackContext context)
+    {
+        Pause.Instance.OnPauseButton();
+    }
 
     public void LookTo(float target, float speed){
         transform.rotation = Quaternion.RotateTowards(
