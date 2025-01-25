@@ -20,15 +20,7 @@ public class TrailCollider : MonoBehaviour
     private void FixedUpdate()
     {
 
-   /*   //I dont want to do this raycasting all the time, so I am going to check if the player
-        //is close enough, if not we can ignore trying to detect collisions
-        if (!Physics.CheckSphere(transform.position, detectionRange, LayerMask.GetMask("Curbs")))
-        {
-
-            return;
-        }
-   */
-        Debug.Log("Continue !");
+ 
 
         for (int i = 0; i < trailRenderer.positionCount; i++)
         {

@@ -29,7 +29,7 @@ public class CameraFollowCurb : MonoBehaviour
             if(y > maxY) maxY = y;
         }
         transform.position += (y / playerTransforms.Count - transform.position.y) * Vector3.up;
-        Debug.Log("min :" + minY + " max :" + maxY + " | dist = " + (maxY - minY));
+        //Debug.Log("min :" + minY + " max :" + maxY + " | dist = " + (maxY - minY));
         Camera.orthographicSize = (5/3) * (maxY - minY);
     }
 }
