@@ -22,11 +22,11 @@ public class PlayerCurb : MonoBehaviour
         }
     }
 
-    /* Debug Tools : --------------------- */
+    /* Debug Tools : --------------------- 
         private void Update()
         {
             if (Input.GetMouseButton(0)) transform.position += (Vector3)Vector2.up * Time.deltaTime;
             if (Input.GetMouseButton(1)) transform.position += (Vector3)Vector2.down * Time.deltaTime;
         }
-    /* ----------------------------------- */
+     ----------------------------------- */
 }

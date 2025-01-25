@@ -25,11 +25,10 @@ public class CameraFollowCurb : MonoBehaviour
         foreach (Transform player in playerTransforms)
         {
             y += player.position.y;
-            if(y < minY) minY = y;
-            if(y > maxY) maxY = y;
+            if(y < minY) minY = player.position.y;
+            if(y > maxY) maxY = player.position.y;
         }
         transform.position += (y / playerTransforms.Count - transform.position.y) * Vector3.up;
-        //Debug.Log("min :" + minY + " max :" + maxY + " | dist = " + (maxY - minY));
-        Camera.orthographicSize = (5/3) * (maxY - minY);
+        Camera.orthographicSize = -(5/3) * (maxY - minY);
     }
 }
