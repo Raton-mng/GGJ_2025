@@ -340,6 +340,66 @@ PrefabInstance:
       propertyPath: m_Name
       value: '[AUDIO_MANAGER]'
       objectReference: {fileID: 0}
+    - target: {fileID: 4067278474181355057, guid: 64b46ac15199bcc4c961ba16bc1e8215, type: 3}
+      propertyPath: music.Path
+      value: event:/Main_Music
+      objectReference: {fileID: 0}
+    - target: {fileID: 4067278474181355057, guid: 64b46ac15199bcc4c961ba16bc1e8215, type: 3}
+      propertyPath: music.Guid.Data1
+      value: -261580465
+      objectReference: {fileID: 0}
+    - target: {fileID: 4067278474181355057, guid: 64b46ac15199bcc4c961ba16bc1e8215, type: 3}
+      propertyPath: music.Guid.Data2
+      value: 1303162768
+      objectReference: {fileID: 0}
+    - target: {fileID: 4067278474181355057, guid: 64b46ac15199bcc4c961ba16bc1e8215, type: 3}
+      propertyPath: music.Guid.Data3
+      value: 1608327359
+      objectReference: {fileID: 0}
+    - target: {fileID: 4067278474181355057, guid: 64b46ac15199bcc4c961ba16bc1e8215, type: 3}
+      propertyPath: music.Guid.Data4
+      value: -989698237
+      objectReference: {fileID: 0}
+    - target: {fileID: 4067278474181355057, guid: 64b46ac15199bcc4c961ba16bc1e8215, type: 3}
+      propertyPath: pauseSnapshot.Path
+      value: snapshot:/PauseMenuSnapshot
+      objectReference: {fileID: 0}
+    - target: {fileID: 4067278474181355057, guid: 64b46ac15199bcc4c961ba16bc1e8215, type: 3}
+      propertyPath: normalSnapshot.Path
+      value: snapshot:/NormalSnapshot
+      objectReference: {fileID: 0}
+    - target: {fileID: 4067278474181355057, guid: 64b46ac15199bcc4c961ba16bc1e8215, type: 3}
+      propertyPath: pauseSnapshot.Guid.Data1
+      value: -1906079957
+      objectReference: {fileID: 0}
+    - target: {fileID: 4067278474181355057, guid: 64b46ac15199bcc4c961ba16bc1e8215, type: 3}
+      propertyPath: pauseSnapshot.Guid.Data2
+      value: 1231723150
+      objectReference: {fileID: 0}
+    - target: {fileID: 4067278474181355057, guid: 64b46ac15199bcc4c961ba16bc1e8215, type: 3}
+      propertyPath: pauseSnapshot.Guid.Data3
+      value: 690839967
+      objectReference: {fileID: 0}
+    - target: {fileID: 4067278474181355057, guid: 64b46ac15199bcc4c961ba16bc1e8215, type: 3}
+      propertyPath: pauseSnapshot.Guid.Data4
+      value: -1367009723
+      objectReference: {fileID: 0}
+    - target: {fileID: 4067278474181355057, guid: 64b46ac15199bcc4c961ba16bc1e8215, type: 3}
+      propertyPath: normalSnapshot.Guid.Data1
+      value: -1740881087
+      objectReference: {fileID: 0}
+    - target: {fileID: 4067278474181355057, guid: 64b46ac15199bcc4c961ba16bc1e8215, type: 3}
+      propertyPath: normalSnapshot.Guid.Data2
+      value: 1229226629
+      objectReference: {fileID: 0}
+    - target: {fileID: 4067278474181355057, guid: 64b46ac15199bcc4c961ba16bc1e8215, type: 3}
+      propertyPath: normalSnapshot.Guid.Data3
+      value: -91680853
+      objectReference: {fileID: 0}
+    - target: {fileID: 4067278474181355057, guid: 64b46ac15199bcc4c961ba16bc1e8215, type: 3}
+      propertyPath: normalSnapshot.Guid.Data4
+      value: -135368048
+      objectReference: {fileID: 0}
     - target: {fileID: 8972666475850406110, guid: 64b46ac15199bcc4c961ba16bc1e8215, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
