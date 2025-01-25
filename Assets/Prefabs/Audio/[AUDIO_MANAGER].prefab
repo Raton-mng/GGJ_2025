@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5678916390270937393}
   - component: {fileID: 2334317620070124756}
+  - component: {fileID: 2477779655205367815}
   m_Layer: 0
   m_Name: Musique
   m_TagString: Untagged
@@ -65,6 +66,37 @@ MonoBehaviour:
   OverrideAttenuation: 0
   OverrideMinDistance: 1
   OverrideMaxDistance: 20
+--- !u!114 &2477779655205367815
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1358583812809302627}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9a6610d2e704f1648819acc8d7460285, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CollisionTag: 
+  EventReference:
+    Guid:
+      Data1: -1740881087
+      Data2: 1229226629
+      Data3: -91680853
+      Data4: -135368048
+    Path: snapshot:/NormalSnapshot
+  Event: 
+  EventPlayTrigger: 1
+  EventStopTrigger: 2
+  AllowFadeout: 1
+  TriggerOnce: 0
+  Preload: 0
+  NonRigidbodyVelocity: 0
+  Params: []
+  OverrideAttenuation: 0
+  OverrideMinDistance: 0
+  OverrideMaxDistance: 0
 --- !u!1 &3499279982986344511
 GameObject:
   m_ObjectHideFlags: 0
