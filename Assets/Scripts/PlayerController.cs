@@ -26,6 +26,8 @@ public class PlayerController : MonoBehaviour
     
     public int myID;
 
+    [SerializeField] private AnimationCurve deathUpCurve;
+
     void Start(){
         GameObject playerHUD = Instantiate(_hud);
         _turboManager = playerHUD.GetComponentInChildren<TurboManager>();
@@ -126,5 +128,20 @@ public class PlayerController : MonoBehaviour
         _isInversed = true;
         yield return new WaitForSeconds(timer);
         _isInversed = false;
+    }
+
+    private void DieUp(){
+
+    }
+
+    IEnumerator ExplodeUp(){
+        float currentTime = 0f;
+        float startY = transform.position.y;
+        
+        while (true){
+            transform.position = new Vector3(transform.position.x, startY + deathUpCurve.Evaluate(currentTime), transform.position.z);
+            yield return null;
+            currentTime += Time.deltaTime;
+        }
     }
 }
