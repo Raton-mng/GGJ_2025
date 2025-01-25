@@ -347,6 +347,10 @@ PrefabInstance:
       propertyPath: _hud
       value: 
       objectReference: {fileID: 8715606349471961274, guid: b004bdba3b85e02448e985e5a9b3a783, type: 3}
+    - target: {fileID: 4998970912893147736, guid: c0deed579fa74d141be7e4653cd1e892, type: 3}
+      propertyPath: m_SortingOrder
+      value: 10000
+      objectReference: {fileID: 0}
     - target: {fileID: 5669395393756392616, guid: c0deed579fa74d141be7e4653cd1e892, type: 3}
       propertyPath: m_Name
       value: PlayerPrefab_aRemplacer
