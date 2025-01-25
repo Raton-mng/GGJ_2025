@@ -33,7 +33,10 @@ public class PlayerController : MonoBehaviour
     public void OnMove(InputAction.CallbackContext context)
     {
         _isGoingUp = context.action.WasPerformedThisFrame();
-        Debug.Log(_isGoingUp);
     }
 
+    public void OnMenuing(InputAction.CallbackContext context)
+    {
+        Debug.Log(context.action.ReadValue<float>());
+    }
 }
