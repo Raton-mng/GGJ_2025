@@ -9,7 +9,7 @@ public class PlayerManager : MonoBehaviour
 {
     public static PlayerManager Instance;
 
-    private HashSet<GameObject> _players;
+    private List<GameObject> _players;
 
     private void Awake()
     {
@@ -19,7 +19,7 @@ public class PlayerManager : MonoBehaviour
         {
             Instance = this;
             DontDestroyOnLoad(gameObject);
-            _players = new HashSet<GameObject>();
+            _players = new List<GameObject>();
         
             playerInputManager.playerJoinedEvent.AddListener(OnAddPlayer);
             playerInputManager.playerLeftEvent.AddListener(OnRemovePlayer);
@@ -34,8 +34,11 @@ public class PlayerManager : MonoBehaviour
 
     private void OnLoad(Scene scene, LoadSceneMode lsm)
     {
-        foreach (GameObject player in _players)
+        Debug.Log(_players.Count);
+        for (int i = 0; i < _players.Count; i++)
         {
+            Debug.Log(_players.Count + "; i = " + i);
+            GameObject player = _players[i];
             Transform playerChild = player.transform.GetChild(0);
             if (playerChild.TryGetComponent(out PlayerStartController psc))
             {
