@@ -276,8 +276,6 @@ MonoBehaviour:
   Preload: 0
   NonRigidbodyVelocity: 0
   Params:
-  - Name: Parameter 1
-    Value: 0
   - Name: End_Music
     Value: 0
   OverrideAttenuation: 0
