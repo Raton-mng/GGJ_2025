@@ -351,6 +351,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: PlayerPrefab_aRemplacer
       objectReference: {fileID: 0}
+    - target: {fileID: 5669395393756392616, guid: c0deed579fa74d141be7e4653cd1e892, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7130440451295629467, guid: c0deed579fa74d141be7e4653cd1e892, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0

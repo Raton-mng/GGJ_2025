@@ -5,12 +5,14 @@ public class TurboManager : MonoBehaviour
     [SerializeField] private GameObject _bar;
     [SerializeField] private float _maxTurbo;
     [SerializeField] private float _consumption;
+    private Animator _turboAnimator;
     private float _turbo;
     private RectTransform _anchorMax;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Awake()
     {
         _anchorMax = _bar.GetComponent<RectTransform>();
+        _turboAnimator = GetComponentInChildren<Animator>();
     }
 
     private void Start()
@@ -35,11 +37,27 @@ public class TurboManager : MonoBehaviour
 
     public void GainTurbo(float t)
     {
+        if (_turbo < _consumption * Time.deltaTime)
+        {
+            _turboAnimator.SetBool("isMin", false);
+        }
         _turbo = Mathf.Clamp01(_turbo + t);
+        if (_turbo == _maxTurbo)
+        {
+            _turboAnimator.SetBool("isMax", true);
+        }
     }
 
-    public void UseTurbo ()
+    public void UseTurbo()
     {
+        if(_turbo == _maxTurbo)
+        {
+            _turboAnimator.SetBool("isMax", false);
+        }
         _turbo -= _consumption * Time.deltaTime;
+        if(_turbo < _consumption * Time.deltaTime)
+        {
+            _turboAnimator.SetBool("isMin", true);
+        }
     }
 }

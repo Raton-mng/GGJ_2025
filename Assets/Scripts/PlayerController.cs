@@ -30,6 +30,12 @@ public class PlayerController : MonoBehaviour
     public bool isDeath = false;
     private AnimationCurve deathUpCurve;
 
+    [SerializeField] Sprite cursor1;
+    [SerializeField] Sprite cursor2;
+    [SerializeField] Sprite cursor3;
+    [SerializeField] Sprite cursor4;
+    private SpriteRenderer spriteRenderer;
+
     void Start(){
         GameObject playerHUD = Instantiate(_hud);
         _turboManager = playerHUD.GetComponentInChildren<TurboManager>();
@@ -38,6 +44,18 @@ public class PlayerController : MonoBehaviour
         currentVerticalSpeed = baseVerticalSpeed;
         currentTurningSpeed = baseTurningSpeed;
 
+        spriteRenderer = GetComponent<SpriteRenderer>();
+
+        if (myID == 0){
+            spriteRenderer.sprite = cursor1;
+        } else if (myID == 1){
+            spriteRenderer.sprite = cursor2;
+        } else if (myID == 2){
+            spriteRenderer.sprite = cursor3;
+        } else if (myID == 3){
+            spriteRenderer.sprite = cursor4;
+        }
+
         InitDeathCurve();
     }
 
@@ -45,22 +63,32 @@ public class PlayerController : MonoBehaviour
         if (isDeath){
             return;
         }
-        if (Input.GetKeyDown(KeyCode.O)){
+        if(RandomCurves.Instance.IsPlayerBelowUpperCurve(transform.position))
+        {
             DieUp();
+        }
+        else if(RandomCurves.Instance.IsPlayerAboveLowerCurve(transform.position))
+        {
+            DieDown();
         }
         if (_boostingUse>0.03 && _turboManager.GetTurbo() > 0){
             Accelerate(baseHorizontalSpeed*2);
             _turboManager.UseTurbo();
-        } else if (_boostingUse<-0.03 && _turboManager.GetTurbo() > 0)
+        } 
+        else if (_boostingUse<-0.03 && _turboManager.GetTurbo() > 0)
         {
-            Accelerate(baseHorizontalSpeed*0.75f);
+            Accelerate(baseHorizontalSpeed*0.5f);
             _turboManager.UseTurbo();
-        } else {
+        } 
+        else 
+        {
             if (transform.localPosition.x < -0.1){
                 currentHorizontalSpeed = baseHorizontalSpeed*1.1f;
-            } else if (transform.localPosition.x > 0.1){
+            } 
+            else if (transform.localPosition.x > 0.1){
                 currentHorizontalSpeed = baseHorizontalSpeed*0.9f;
-            } else {   
+            } 
+            else {   
                 currentHorizontalSpeed = baseHorizontalSpeed;
                 Vector3 pos = transform.localPosition;
                 pos.x = 0f;
