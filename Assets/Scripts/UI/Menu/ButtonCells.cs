@@ -25,7 +25,7 @@ namespace UI.Menu
 
         public static void Select(int cellID)
         {
-            if (cellID == PlayCellID && CellManager.Instance.players.Count >= 2)
+            if (cellID == PlayCellID && CellManager.Instance.players.Count >= 1)
             {
                 SceneManager.StartGame();
             }

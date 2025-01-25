@@ -1608,6 +1608,66 @@ PrefabInstance:
       propertyPath: m_Name
       value: '[AUDIO_MANAGER]'
       objectReference: {fileID: 0}
+    - target: {fileID: 4067278474181355057, guid: 64b46ac15199bcc4c961ba16bc1e8215, type: 3}
+      propertyPath: music.Path
+      value: event:/Menu_Music
+      objectReference: {fileID: 0}
+    - target: {fileID: 4067278474181355057, guid: 64b46ac15199bcc4c961ba16bc1e8215, type: 3}
+      propertyPath: music.Guid.Data1
+      value: 931537344
+      objectReference: {fileID: 0}
+    - target: {fileID: 4067278474181355057, guid: 64b46ac15199bcc4c961ba16bc1e8215, type: 3}
+      propertyPath: music.Guid.Data2
+      value: 1260746241
+      objectReference: {fileID: 0}
+    - target: {fileID: 4067278474181355057, guid: 64b46ac15199bcc4c961ba16bc1e8215, type: 3}
+      propertyPath: music.Guid.Data3
+      value: 968607142
+      objectReference: {fileID: 0}
+    - target: {fileID: 4067278474181355057, guid: 64b46ac15199bcc4c961ba16bc1e8215, type: 3}
+      propertyPath: music.Guid.Data4
+      value: 2012649909
+      objectReference: {fileID: 0}
+    - target: {fileID: 4067278474181355057, guid: 64b46ac15199bcc4c961ba16bc1e8215, type: 3}
+      propertyPath: pauseSnapshot.Path
+      value: snapshot:/PauseMenuSnapshot
+      objectReference: {fileID: 0}
+    - target: {fileID: 4067278474181355057, guid: 64b46ac15199bcc4c961ba16bc1e8215, type: 3}
+      propertyPath: normalSnapshot.Path
+      value: snapshot:/NormalSnapshot
+      objectReference: {fileID: 0}
+    - target: {fileID: 4067278474181355057, guid: 64b46ac15199bcc4c961ba16bc1e8215, type: 3}
+      propertyPath: pauseSnapshot.Guid.Data1
+      value: -1906079957
+      objectReference: {fileID: 0}
+    - target: {fileID: 4067278474181355057, guid: 64b46ac15199bcc4c961ba16bc1e8215, type: 3}
+      propertyPath: pauseSnapshot.Guid.Data2
+      value: 1231723150
+      objectReference: {fileID: 0}
+    - target: {fileID: 4067278474181355057, guid: 64b46ac15199bcc4c961ba16bc1e8215, type: 3}
+      propertyPath: pauseSnapshot.Guid.Data3
+      value: 690839967
+      objectReference: {fileID: 0}
+    - target: {fileID: 4067278474181355057, guid: 64b46ac15199bcc4c961ba16bc1e8215, type: 3}
+      propertyPath: pauseSnapshot.Guid.Data4
+      value: -1367009723
+      objectReference: {fileID: 0}
+    - target: {fileID: 4067278474181355057, guid: 64b46ac15199bcc4c961ba16bc1e8215, type: 3}
+      propertyPath: normalSnapshot.Guid.Data1
+      value: -1740881087
+      objectReference: {fileID: 0}
+    - target: {fileID: 4067278474181355057, guid: 64b46ac15199bcc4c961ba16bc1e8215, type: 3}
+      propertyPath: normalSnapshot.Guid.Data2
+      value: 1229226629
+      objectReference: {fileID: 0}
+    - target: {fileID: 4067278474181355057, guid: 64b46ac15199bcc4c961ba16bc1e8215, type: 3}
+      propertyPath: normalSnapshot.Guid.Data3
+      value: -91680853
+      objectReference: {fileID: 0}
+    - target: {fileID: 4067278474181355057, guid: 64b46ac15199bcc4c961ba16bc1e8215, type: 3}
+      propertyPath: normalSnapshot.Guid.Data4
+      value: -135368048
+      objectReference: {fileID: 0}
     - target: {fileID: 8972666475850406110, guid: 64b46ac15199bcc4c961ba16bc1e8215, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -1649,9 +1709,13 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
-    m_RemovedGameObjects: []
+    m_RemovedGameObjects:
+    - {fileID: 1358583812809302627, guid: 64b46ac15199bcc4c961ba16bc1e8215, type: 3}
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 3499279982986344511, guid: 64b46ac15199bcc4c961ba16bc1e8215, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1168872811}
   m_SourcePrefab: {fileID: 100100000, guid: 64b46ac15199bcc4c961ba16bc1e8215, type: 3}
 --- !u!1 &644885990
 GameObject:
@@ -3060,6 +3124,44 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 1246613888182245915, guid: ca5c31263c050074082f1772784b1bdd, type: 3}
   m_PrefabInstance: {fileID: 1145260761}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1168872809 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3499279982986344511, guid: 64b46ac15199bcc4c961ba16bc1e8215, type: 3}
+  m_PrefabInstance: {fileID: 644021642}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1168872811
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1168872809}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1438b218a8d327345a3a5c2d898324d4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  music:
+    Guid:
+      Data1: 931537344
+      Data2: 1260746241
+      Data3: 968607142
+      Data4: 2012649909
+    Path: event:/Menu_Music
+  normalSnapshot:
+    Guid:
+      Data1: -1740881087
+      Data2: 1229226629
+      Data3: -91680853
+      Data4: -135368048
+    Path: snapshot:/NormalSnapshot
+  pauseSnapshot:
+    Guid:
+      Data1: -1906079957
+      Data2: 1231723150
+      Data3: 690839967
+      Data4: -1367009723
+    Path: snapshot:/PauseMenuSnapshot
 --- !u!1 &1213880212
 GameObject:
   m_ObjectHideFlags: 0
