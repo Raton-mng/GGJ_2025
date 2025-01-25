@@ -6,82 +6,51 @@ namespace UI.Menu
     public class CellManager : MonoBehaviour
     {
         [SerializeField] private int cellNumber;
-        [SerializeField] private int cellRowCount;
+        public int cellRowCount;
         [SerializeField] private int cellColumnCount;
         [SerializeField] private GameObject cellPrefab;
 
         private GameObject cellOutline;
+        public List<PlayerStartController> players;
+
+        public static CellManager Instance;
 
 
-        private List<Cell> cellList = new ();
-        private int currentCellID = 0;
+        public List<Cell> cellList = new ();
         
         private void Awake()
         {
+            if (Instance == null) Instance = this;
+            
             for(int i = 0; i < cellNumber; i++)
             {
                 cellList.Add(Instantiate(cellPrefab, transform).GetComponent<Cell>());
             }
+
+            players = new List<PlayerStartController>();
         }
 
-        private void Start()
-        {
-            currentCellID = 0;
-            UpdateCellOutlinePosition(currentCellID);
-        }
-
-        private void UpdateCellOutlinePosition(int previousCellIndex)
+        public void UpdateCellOutlinePosition(int previousCellIndex, int currentCellID)
         {
             if (currentCellID > cellList.Count)
                 return;
-            cellList[previousCellIndex].SetOutlineActive(false);
+            if (!IsCellActive(previousCellIndex)) cellList[previousCellIndex].SetOutlineActive(false);
             cellList[currentCellID].SetOutlineActive(true);
         }
 
-        public int GetCurrentCellID()
+        public bool IsCellActive(int cellIndex)
         {
-            return currentCellID;
-        }
-
-        private void Update()
-        {
-            if (Input.GetKeyDown(KeyCode.RightArrow))
+            foreach (PlayerStartController player in players)
             {
-                if (currentCellID + cellRowCount < cellList.Count)
+                if (player.currentCellID == cellIndex)
                 {
-                    currentCellID += cellRowCount;
-                    UpdateCellOutlinePosition(currentCellID - cellRowCount);
+                    return true;
                 }
             }
 
-            if (Input.GetKeyDown(KeyCode.LeftArrow))
-            {
-                if (currentCellID - cellRowCount >= 0)
-                {
-                    currentCellID -= cellRowCount;
-                    UpdateCellOutlinePosition(currentCellID + cellRowCount);
-                } 
-            }
-            
-            if (Input.GetKeyDown(KeyCode.UpArrow))
-            {
-                if (currentCellID % cellRowCount > 0)
-                {
-                    currentCellID -= 1;
-                    UpdateCellOutlinePosition(currentCellID + 1);
-                } 
-            }
-            
-            if (Input.GetKeyDown(KeyCode.DownArrow))
-            {
-                if (currentCellID % cellRowCount < cellRowCount - 1 && currentCellID + 1 < cellList.Count)
-                {
-                    currentCellID += 1;
-                    UpdateCellOutlinePosition(currentCellID - 1);
-                } 
-            }
-            
+            return false;
         }
+        
 
         public void SetCellText(int cellID, string text)
         {
