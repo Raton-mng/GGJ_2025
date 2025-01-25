@@ -70,7 +70,7 @@ public class PlayerManager : MonoBehaviour
         //player.transform.SetParent(transform);
         
        _players.Add(player);
-        Debug.Log("PrTOUTE " + _players.Count);
+        //Debug.Log("PrTOUTE " + _players.Count);
 
     }
 

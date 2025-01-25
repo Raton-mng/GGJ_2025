@@ -14,12 +14,15 @@ namespace UI.Menu
         [SerializeField] private float moveTimer;
         private bool _moveDelayed;
 
+        private ButtonCells _buttonCell;
+
         private void Start()
         {
             _cellManager = CellManager.Instance;
             currentCellID = 0;
             _cellManager.UpdateCellOutlinePosition(currentCellID, currentCellID);
             _cellManager.players.Add(this);
+            _buttonCell = FindObjectsByType<ButtonCells>(FindObjectsSortMode.None)[0];
         }
 
         private void Update()
@@ -77,7 +80,10 @@ namespace UI.Menu
 
         public void OnSelect(InputAction.CallbackContext context)
         {
-            if (context.action.triggered) ButtonCells.Select(currentCellID);
+            if (context.action.triggered)
+            {
+                _buttonCell.Select(currentCellID);
+            }
         }
 
         private IEnumerator DontMoveTooFast()
