@@ -56,4 +56,9 @@ public class PlayerManager : MonoBehaviour
         }
         return otherPlayers;
     }
+
+    public int GetPlayerCount()
+    {
+        return _players.Count;
+    }
 }

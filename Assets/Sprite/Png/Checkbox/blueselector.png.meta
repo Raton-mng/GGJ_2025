@@ -309,7 +309,15 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      blueselector_0: -3826683327922421634
+      blueselector_1: -6434380876043273018
+      blueselector_2: 7435641726422297583
+      blueselector_3: -881994276518562502
+      blueselector_4: 1287476514106313834
+      blueselector_5: -563353251458900288
+      blueselector_6: 1980047886130820667
+      blueselector_7: -5341485410178781384
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

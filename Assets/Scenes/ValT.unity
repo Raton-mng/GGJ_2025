@@ -151,7 +151,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 1147.1, y: 0}
+  m_AnchoredPosition: {x: 0, y: -700}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1597725480
@@ -265,7 +265,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 722.7, y: 0}
+  m_AnchoredPosition: {x: 0, y: -388.45}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1802257709
@@ -390,7 +390,7 @@ MonoBehaviour:
   contractSpacing: 100
   contractPrefab: {fileID: 6421635082057920429, guid: 20e536cf84c915b44a3f65ab7bf8d246, type: 3}
   cursorPrefab: {fileID: 6421635082057920429, guid: ebefc3f3826d3ce45bd8bcb71fa00b6e, type: 3}
-  numberOfContracts: 5
+  numberOfContracts: 8
   autoHideDelay: 50
   effectSprites:
   - {fileID: 7675826601332790545, guid: f14db81dfcfb00b4190962617f9a5e14, type: 3}

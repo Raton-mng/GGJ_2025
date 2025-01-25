@@ -309,7 +309,15 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      redselector_0: 1853276283452655013
+      redselector_1: -8291876146010368504
+      redselector_2: -8829673360725456172
+      redselector_3: 9106626765760556512
+      redselector_4: -8849841708436240208
+      redselector_5: 7384377420965397310
+      redselector_6: -3642070335505496138
+      redselector_7: -7972310875360827855
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

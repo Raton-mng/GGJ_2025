@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 using static SingleContract;
@@ -32,21 +33,26 @@ public class ContractSlideIn : MonoBehaviour
     private GameObject[] cursors;  // Tableau pour stocker les curseurs
     private int[] selectedIndices; // Indices sélectionnés pour chaque joueur
 
+    [Header("Shop Signal")]
+    public GameObject shopSignal; // Associez un objet (par exemple une image) dans l'éditeur pour le signal clignotant
+    public float blinkDuration = 2f; // Durée totale du clignotement
+    public int blinkCount = 5; // Nombre de fois que le signal clignote
+
     private readonly List<SingleContract> contracts = new();
     private bool contractsReady = false;
     private readonly List<ContractEffect> assignedEffects = new();
     private Coroutine autoHideCoroutine; // Référence à la coroutine de disparition automatique
     private int playerCount = 2; // Nombre de joueurs (variable static du script PlayerController)
     private int votedPlayer = 0; // Joueur qui a voté
+    private bool shopActive = false; // Indique si le shop est actif
 
-
-    private void Start()
-    {
-        TriggerContractAppearance();
-    }
 
     private void Update()
     {
+        if(Input.GetKeyDown(KeyCode.Space))
+        {
+            TriggerContractAppearance();
+        }
         if (contractsReady)
         {
             if (Input.GetKeyDown(KeyCode.Z)) MoveCursor(0, false);  // Exemple pour le joueur 1, monter
@@ -126,6 +132,12 @@ public class ContractSlideIn : MonoBehaviour
     // Fonction pour déclencher l'animation
     public void TriggerContractAppearance()
     {
+        if (shopActive)
+        {
+            return;
+        }
+        shopActive = true;
+
         // Réinitialiser
         foreach (var contract in contracts)
         {
@@ -136,46 +148,65 @@ public class ContractSlideIn : MonoBehaviour
 
         contractsReady = false;
 
-        // Créer les contrats
-        for (int i = 0; i < numberOfContracts; i++)
+        // Lancer l'animation de clignotement avant de faire apparaître le shop
+        StartCoroutine(BlinkSignal(() =>
         {
-            GameObject contract = Instantiate(contractPrefab, startTransform.position, Quaternion.identity, transform);
-            SingleContract contractScript = contract.AddComponent<SingleContract>();
-            contracts.Add(contractScript);
+            // Une fois le clignotement terminé, le shop apparaît
+            // Créer les contrats
+            for (int i = 0; i < numberOfContracts; i++)
+            {
+                GameObject contract = Instantiate(contractPrefab, startTransform.position, Quaternion.identity, transform);
+                SingleContract contractScript = contract.AddComponent<SingleContract>();
+                contracts.Add(contractScript);
 
-            // Assigner un effet aléatoire avec pondération
-            ContractEffect effect = GetRandomEffect();
-            assignedEffects.Add(effect);
+                // Assigner un effet aléatoire avec pondération
+                ContractEffect effect = GetRandomEffect();
+                assignedEffects.Add(effect);
 
-            // Configurer le contrat
-            contractScript.SetEffect(effect, effectSprites[(int)effect]);
+                // Configurer le contrat
+                contractScript.SetEffect(effect, effectSprites[(int)effect]);
+            }
+
+            // Créer les curseurs
+            playerCount = PlayerManager.Instance.GetPlayerCount();
+            votedPlayer = 0; // Réinitialiser le joueur qui a voté
+            cursors = new GameObject[playerCount];
+            selectedIndices = new int[playerCount];
+
+            for (int i = 0; i < playerCount; i++)
+            {
+                GameObject playerCursor = Instantiate(cursorPrefab, startTransform.position, Quaternion.identity, transform);
+                playerCursor.GetComponent<Image>().sprite = cursorSprites[i]; // Associer un sprite différent
+                cursors[i] = playerCursor;
+                selectedIndices[i] = 0; // Initialiser à la première carte
+            }
+
+            // Lancer l'animation d'apparition
+            StartCoroutine(SlideContracts());
+
+            // Lancer la coroutine d'auto-hide
+            if (autoHideCoroutine != null)
+            {
+                StopCoroutine(autoHideCoroutine);
+            }
+            autoHideCoroutine = StartCoroutine(AutoHideShop());
+        }));
+    }
+
+    private IEnumerator BlinkSignal(System.Action onComplete)
+    {
+        float blinkInterval = blinkDuration / (blinkCount * 2); // Temps entre les clignotements (allumé/éteint)
+        bool isActive = false;
+
+        for (int i = 0; i < blinkCount * 2; i++) // Chaque cycle compte comme un allumage + extinction
+        {
+            isActive = !isActive;
+            shopSignal.SetActive(isActive); // Activer/désactiver le signal
+            yield return new WaitForSeconds(blinkInterval);
         }
 
-        // Créer le curseur
-        //Set le nombre de joueur en fonction de la variable static du script PlayerController
-/*        playerCount = PlayerController.playerCount;
-*/        
-        votedPlayer = 0; // Réinitialiser le joueur qui a voté
-        cursors = new GameObject[playerCount];
-        selectedIndices = new int[playerCount];
-
-        for (int i = 0; i < playerCount; i++)
-        {
-            GameObject playerCursor = Instantiate(cursorPrefab, startTransform.position, Quaternion.identity, transform);
-            playerCursor.GetComponent<Image>().sprite = cursorSprites[i]; // Associer un sprite différent
-            cursors[i] = playerCursor;
-            selectedIndices[i] = 0; // Initialiser à la première carte
-        }
-
-        // Lancer l'animation
-        StartCoroutine(SlideContracts());
-
-        // Lancer la coroutine d'auto-hide
-        if (autoHideCoroutine != null)
-        {
-            StopCoroutine(autoHideCoroutine);
-        }
-        autoHideCoroutine = StartCoroutine(AutoHideShop());
+        shopSignal.SetActive(false); // Assurez-vous que le signal est éteint à la fin
+        onComplete?.Invoke(); // Appeler la fonction de rappel une fois le clignotement terminé
     }
 
     private IEnumerator AutoHideShop()
@@ -194,6 +225,8 @@ public class ContractSlideIn : MonoBehaviour
 
     private IEnumerator SlideContracts()
     {
+        // Récupérer le `RectTransform` du Canvas
+        RectTransform canvasRect = GetComponent<RectTransform>();
         Vector3 startPosition = startTransform.position;
         Vector3 endPosition = endTransform.position;
 
@@ -203,13 +236,39 @@ public class ContractSlideIn : MonoBehaviour
         // Calculer un vecteur perpendiculaire à la direction de glissement pour l'alignement
         Vector3 perpendicularDirection = Vector3.Cross(slideDirection, Vector3.forward).normalized;
 
-        // Calculer les positions finales des contrats avec espacement
+        // Récupérer les dimensions du Canvas en unités locales
+        float canvasWidth = 960; // Largeur du Canvas
+        float canvasHeight = 540; // Hauteur du Canvas
+
+        // Calculer les limites de l'écran en unités locales
+        Vector2 screenTopLeft = new Vector2(-canvasWidth / 2f, canvasHeight / 2f);
+        Vector2 screenBottomRight = new Vector2(canvasWidth / 2f, -canvasHeight / 2f);
+
+        // Calculer la largeur disponible pour positionner les contrats
+        float availableSpace = Vector2.Distance(screenTopLeft, screenBottomRight);
+
+        // Calculer l'espacement dynamique
+        float dynamicSpacing = numberOfContracts > 1 ? availableSpace / (numberOfContracts + 1) : 0f;
+
+        // Calculer les positions finales des contrats
         Vector3[] targetPositions = new Vector3[numberOfContracts];
-        float startOffset = -(numberOfContracts - 1) / 2.0f * contractSpacing;
 
         for (int i = 0; i < numberOfContracts; i++)
         {
-            targetPositions[i] = endPosition + perpendicularDirection * (startOffset + i * contractSpacing);
+            // Calculer la position locale dans le Canvas
+            Vector3 localPosition = endTransform.localPosition + (Vector3)perpendicularDirection * (dynamicSpacing * (i + 1) - availableSpace / 2);
+
+            // Convertir en position monde pour les `RectTransform`
+            targetPositions[i] = canvasRect.TransformPoint(localPosition);
+        }
+
+        // Appliquer les positions aux contrats
+        for (int i = 0; i < numberOfContracts; i++)
+        {
+            if (contracts[i] != null)
+            {
+                contracts[i].GetComponent<RectTransform>().position = targetPositions[i];
+            }
         }
 
         float elapsedTime = 0f;
@@ -218,7 +277,7 @@ public class ContractSlideIn : MonoBehaviour
         Vector3[] initialPositions = new Vector3[numberOfContracts];
         for (int i = 0; i < numberOfContracts; i++)
         {
-            initialPositions[i] = contracts[i].GetComponent<RectTransform>().position;
+            initialPositions[i] = startPosition;
         }
 
         // Animer les contrats
@@ -365,6 +424,7 @@ public class ContractSlideIn : MonoBehaviour
         }
 
         contractsReady = false;
+        shopActive = false;
     }
 
 

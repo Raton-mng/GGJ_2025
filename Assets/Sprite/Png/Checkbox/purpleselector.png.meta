@@ -309,7 +309,15 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      purpleselector_0: -5084796475973565317
+      purpleselector_1: -2084476346907442191
+      purpleselector_2: -6281448418987139523
+      purpleselector_3: 1758548726383085934
+      purpleselector_4: -2202331719502281021
+      purpleselector_5: 4254099576377552767
+      purpleselector_6: 1175548460320993934
+      purpleselector_7: 2840945511030121685
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
