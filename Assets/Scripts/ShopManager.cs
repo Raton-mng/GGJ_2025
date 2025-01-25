@@ -36,6 +36,9 @@ public class ContractSlideIn : MonoBehaviour
     private bool contractsReady = false;
     private readonly List<ContractEffect> assignedEffects = new();
     private Coroutine autoHideCoroutine; // Référence à la coroutine de disparition automatique
+    private int playerCount = 2; // Nombre de joueurs (variable static du script PlayerController)
+    private int votedPlayer = 0; // Joueur qui a voté
+
 
     private void Start()
     {
@@ -68,13 +71,18 @@ public class ContractSlideIn : MonoBehaviour
 
         // Calcul du nouvel indice sélectionné
         int direction = moveUp ? -1 : 1; // Haut (-1) ou bas (+1)
-        selectedIndices[playerIndex] = (selectedIndices[playerIndex] + direction + numberOfContracts) % numberOfContracts;
+        int newIndex = (selectedIndices[playerIndex] + direction + numberOfContracts) % numberOfContracts;
+
+        // Vérifier si le contrat à l'index nouvellement calculé est détruit
+        while (contracts[newIndex] == null)
+        {
+            newIndex = (newIndex + direction + numberOfContracts) % numberOfContracts; // Passer au prochain contrat
+        }
+
+        selectedIndices[playerIndex] = newIndex; // Mettre à jour l'indice sélectionné
 
         // Mettre à jour la position du curseur
-        if (contracts[selectedIndices[playerIndex]] != null) // Vérification du contrat
-        {
-            cursors[playerIndex].GetComponent<RectTransform>().position = contracts[selectedIndices[playerIndex]].GetComponent<RectTransform>().position;
-        }
+        cursors[playerIndex].GetComponent<RectTransform>().position = contracts[selectedIndices[playerIndex]].GetComponent<RectTransform>().position;
     }
 
     public void ActivateCardEffect(int playerIndex)
@@ -106,7 +114,8 @@ public class ContractSlideIn : MonoBehaviour
             }
 
             // Vérifier si tous les joueurs ont sélectionné une carte
-            if (AreAllContractsSelected())
+            votedPlayer++;
+            if (votedPlayer>=playerCount)
             {
                 StartCoroutine(HideContractsAndCursors());
             }
@@ -143,7 +152,10 @@ public class ContractSlideIn : MonoBehaviour
         }
 
         // Créer le curseur
-        int playerCount = 2; // Nombre de joueurs (variable static du script PlayerController)
+        //Set le nombre de joueur en fonction de la variable static du script PlayerController
+/*        playerCount = PlayerController.playerCount;
+*/        
+        votedPlayer = 0; // Réinitialiser le joueur qui a voté
         cursors = new GameObject[playerCount];
         selectedIndices = new int[playerCount];
 
@@ -281,18 +293,6 @@ public class ContractSlideIn : MonoBehaviour
         }
 
         return ContractEffect.None; // Valeur par défaut au cas où
-    }
-
-    private bool AreAllContractsSelected()
-    {
-        foreach (var contract in contracts)
-        {
-            if (contract != null && !contract.GetIsSelected())
-            {
-                return false;
-            }
-        }
-        return true;
     }
 
     private IEnumerator FadeOutCursor(int playerIndex)
