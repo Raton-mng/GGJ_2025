@@ -4,25 +4,44 @@ using System.Collections;
 
 public class RandomCurves : MonoBehaviour
 {
+    public static RandomCurves Instance;
+
     [Header("Curve Settings")]
     public float segmentWidth = 2f; // Largeur de chaque segment
     public float maxSlope = 2f; // Pente maximale (valeurs positives ou négatives)
     public float initialHeightMin = 1f; // Hauteur minimale initiale
     public float initialHeightMax = 5f; // Hauteur maximale initiale
     public float minCurveSpacing = 2f; // Espacement minimal entre les deux courbes
+    public float maxCurveSeparation = 20; // Écartement maximal autorisé entre les deux courbes
+    public float removalOffset = 10f; // Distance supplémentaire pour supprimer les segments derrière la caméra
+    public float apparitionOffset = 10f; // Distance supplémentaire pour supprimer les segments derrière la caméra
 
     [Header("Line Renderer")]
     public LineRenderer upperCurveRenderer; // Renderer pour la courbe supérieure
     public LineRenderer lowerCurveRenderer; // Renderer pour la courbe inférieure
 
+    [Header("Dynamic Curve Settings")]
+    public float movementSpeed = 5f; // Vitesse à laquelle les courbes reculent (unités par seconde)
+    public float generationInterval = 0.1f; // Temps entre chaque génération de segment
+
     private List<Vector3> upperCurvePoints; // Points de la courbe supérieure
     private List<Vector3> lowerCurvePoints; // Points de la courbe inférieure
 
-    [Header("Dynamic Curve Extension")]
-    public float generationInterval = 1f; // Temps entre chaque génération de segment
-    private float currentX; // Position actuelle sur l'axe X
+    private float currentX; // Position actuelle pour les nouveaux segments
     private float upperCurrentY; // Position Y actuelle de la courbe supérieure
     private float lowerCurrentY; // Position Y actuelle de la courbe inférieure
+
+    private void Awake()
+    {
+        if (Instance == null)
+        {
+            Instance = this;
+        }
+        else if (Instance != this)
+        {
+            Destroy(gameObject);
+        }
+    }
 
     void Start()
     {
@@ -36,15 +55,32 @@ public class RandomCurves : MonoBehaviour
         lowerCurrentY = Random.Range(initialHeightMin, initialHeightMax);
 
         // Générer les premiers segments
-        GenerateInitialSegments(10); // Par exemple, démarrer avec 10 segments
+        GenerateInitialSegments(10);
 
         // Configurer les LineRenderers
         ConfigureLineRenderer(upperCurveRenderer, Color.red, 0.1f);
         ConfigureLineRenderer(lowerCurveRenderer, Color.blue, 0.1f);
 
-        // Commencer la génération continue
-        StartCoroutine(GenerateSegmentsOverTime());
     }
+
+    void Update()
+    {
+        // Faire reculer les courbes
+        MoveCurvesBackward();
+
+        // Supprimer les points hors champ
+        RemoveOutOfBoundsSegments();
+
+        // Vérifier si un nouveau segment doit être généré
+        if (upperCurvePoints.Count > 0 && upperCurvePoints[upperCurvePoints.Count - 1].x < Camera.main.transform.position.x + apparitionOffset)
+        {
+            GenerateNextSegment();
+        }
+
+        // Mettre à jour les LineRenderers
+        RenderCurves();
+    }
+
 
     void ConfigureLineRenderer(LineRenderer lineRenderer, Color color, float width)
     {
@@ -85,6 +121,14 @@ public class RandomCurves : MonoBehaviour
             lowerNewY -= adjustment;
         }
 
+        // Assurer l'espacement maximal
+        if (upperNewY - lowerNewY > maxCurveSeparation)
+        {
+            float adjustment = (upperNewY - lowerNewY - maxCurveSeparation) / 2f;
+            upperNewY -= adjustment;
+            lowerNewY += adjustment;
+        }
+
         // Ajouter les points
         upperCurvePoints.Add(new Vector3(currentX, upperNewY, 0f));
         lowerCurvePoints.Add(new Vector3(currentX, lowerNewY, 0f));
@@ -97,25 +141,39 @@ public class RandomCurves : MonoBehaviour
         lowerCurrentY = lowerNewY;
     }
 
-    IEnumerator GenerateSegmentsOverTime()
+    void MoveCurvesBackward()
     {
-        while (true)
+        // Décaler tous les points vers la gauche (axe X)
+        for (int i = 0; i < upperCurvePoints.Count; i++)
         {
-            // Générer un nouveau segment
-            GenerateNextSegment();
+            upperCurvePoints[i] = new Vector3(
+                upperCurvePoints[i].x - movementSpeed * Time.deltaTime,
+                upperCurvePoints[i].y,
+                upperCurvePoints[i].z
+            );
 
-            // Limiter le nombre de segments pour éviter une surcharge
-            if (upperCurvePoints.Count > 50)
-            {
-                upperCurvePoints.RemoveAt(0);
-                lowerCurvePoints.RemoveAt(0);
-            }
+            lowerCurvePoints[i] = new Vector3(
+                lowerCurvePoints[i].x - movementSpeed * Time.deltaTime,
+                lowerCurvePoints[i].y,
+                lowerCurvePoints[i].z
+            );
+        }
 
-            // Rendre les courbes
-            RenderCurves();
+        // Synchroniser currentX avec le dernier segment
+        if (upperCurvePoints.Count > 0)
+        {
+            currentX = upperCurvePoints[upperCurvePoints.Count - 1].x + segmentWidth;
+        }
+    }
 
-            // Attendre avant de générer le prochain segment
-            yield return new WaitForSeconds(generationInterval);
+
+    void RemoveOutOfBoundsSegments()
+    {
+        // Supprimer les points qui sont hors du champ de jeu (trop à gauche)
+        while (upperCurvePoints.Count > 0 && upperCurvePoints[0].x < -removalOffset)
+        {
+            upperCurvePoints.RemoveAt(0);
+            lowerCurvePoints.RemoveAt(0);
         }
     }
 
@@ -129,7 +187,25 @@ public class RandomCurves : MonoBehaviour
         lowerCurveRenderer.SetPositions(lowerCurvePoints.ToArray());
     }
 
-    public bool IsPlayerOutOfBounds(Vector3 playerPosition)
+    public bool IsPlayerAboveLowerCurve(Vector3 playerPosition)
+    {
+        float x = playerPosition.x;
+
+        for (int i = 0; i < lowerCurvePoints.Count - 1; i++)
+        {
+            if (x >= lowerCurvePoints[i].x && x <= lowerCurvePoints[i + 1].x)
+            {
+                float t = (x - lowerCurvePoints[i].x) / (lowerCurvePoints[i + 1].x - lowerCurvePoints[i].x);
+                float lowerY = Mathf.Lerp(lowerCurvePoints[i].y, lowerCurvePoints[i + 1].y, t);
+
+                return playerPosition.y < lowerY;
+            }
+        }
+
+        return true;
+    }
+
+    public bool IsPlayerBelowUpperCurve(Vector3 playerPosition)
     {
         float x = playerPosition.x;
 
@@ -139,12 +215,39 @@ public class RandomCurves : MonoBehaviour
             {
                 float t = (x - upperCurvePoints[i].x) / (upperCurvePoints[i + 1].x - upperCurvePoints[i].x);
                 float upperY = Mathf.Lerp(upperCurvePoints[i].y, upperCurvePoints[i + 1].y, t);
-                float lowerY = Mathf.Lerp(lowerCurvePoints[i].y, lowerCurvePoints[i + 1].y, t);
 
-                return playerPosition.y > upperY || playerPosition.y < lowerY;
+                return playerPosition.y > upperY;
             }
         }
 
         return true;
+    }
+
+    public float GetHighestPoint()
+    {
+        // Récupérer le Y maximal parmi les points de la courbe supérieure
+        float highestY = float.MinValue;
+        foreach (var point in upperCurvePoints)
+        {
+            if (point.y > highestY)
+            {
+                highestY = point.y;
+            }
+        }
+        return highestY;
+    }
+
+    public float GetLowestPoint()
+    {
+        // Récupérer le Y minimal parmi les points de la courbe inférieure
+        float lowestY = float.MaxValue;
+        foreach (var point in lowerCurvePoints)
+        {
+            if (point.y < lowestY)
+            {
+                lowestY = point.y;
+            }
+        }
+        return lowestY;
     }
 }

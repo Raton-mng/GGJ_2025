@@ -343,7 +343,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _hud: {fileID: 8715606349471961274, guid: b004bdba3b85e02448e985e5a9b3a783, type: 3}
   coinManager: {fileID: 0}
-  pauseMenu: {fileID: 0}
   baseHorizontalSpeed: 10
   baseVerticalSpeed: 10
   baseTurningSpeed: 600

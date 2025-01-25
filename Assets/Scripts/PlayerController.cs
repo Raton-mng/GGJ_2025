@@ -45,22 +45,32 @@ public class PlayerController : MonoBehaviour
         if (isDeath){
             return;
         }
-        if (Input.GetKeyDown(KeyCode.O)){
+        if(RandomCurves.Instance.IsPlayerBelowUpperCurve(transform.position))
+        {
             DieUp();
+        }
+        else if(RandomCurves.Instance.IsPlayerAboveLowerCurve(transform.position))
+        {
+            DieDown();
         }
         if (_boostingUse>0.03 && _turboManager.GetTurbo() > 0){
             Accelerate(baseHorizontalSpeed*2);
             _turboManager.UseTurbo();
-        } else if (_boostingUse<-0.03 && _turboManager.GetTurbo() > 0)
+        } 
+        else if (_boostingUse<-0.03 && _turboManager.GetTurbo() > 0)
         {
-            Accelerate(baseHorizontalSpeed*0.75f);
+            Accelerate(baseHorizontalSpeed*0.5f);
             _turboManager.UseTurbo();
-        } else {
+        } 
+        else 
+        {
             if (transform.localPosition.x < -0.1){
                 currentHorizontalSpeed = baseHorizontalSpeed*1.1f;
-            } else if (transform.localPosition.x > 0.1){
+            } 
+            else if (transform.localPosition.x > 0.1){
                 currentHorizontalSpeed = baseHorizontalSpeed*0.9f;
-            } else {   
+            } 
+            else {   
                 currentHorizontalSpeed = baseHorizontalSpeed;
                 Vector3 pos = transform.localPosition;
                 pos.x = 0f;
