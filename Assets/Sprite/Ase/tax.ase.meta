@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: fe85cbcab259b184a88ef192181725b2
+guid: fead5066156836a43a85eb29bb2dd14f
 ScriptedImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -122,9 +122,9 @@ ScriptedImporter:
     tessellationDetail: 0
     uvTransform: {x: 0, y: 0}
   animatedSpriteImportData:
-  - name: greenup
+  - name: tax
     originalName: 
-    pivot: {x: 0.51282054, y: 0}
+    pivot: {x: 0.5, y: 0}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
     customData: 
@@ -132,9 +132,9 @@ ScriptedImporter:
       serializedVersion: 2
       x: 4
       y: 4
-      width: 39
-      height: 39
-    spriteID: 9339730583236de40b87328bcc335617
+      width: 60
+      height: 40
+    spriteID: babecd87545226f4592fdac80f0430b8
     spriteBone: []
     spriteOutline: []
     vertices: []
@@ -146,21 +146,21 @@ ScriptedImporter:
   spriteSheetImportData: []
   asepriteLayers:
   - layerIndex: 0
-    guid: -1704496852
-    name: greenup
+    guid: 1445868473
+    name: tax
     layerFlags: 0
     layerType: 0
     blendMode: 0
     cells:
-    - name: greenup
+    - name: tax
       frameIndex: 0
       additiveSortOrder: 0
       cellRect:
         x: 0
         y: 0
-        width: 39
-        height: 39
-      spriteId: 9339730583236de40b87328bcc335617
+        width: 60
+        height: 40
+      spriteId: babecd87545226f4592fdac80f0430b8
     linkedCells: []
     parentIndex: -1
   platformSettings:
@@ -179,4 +179,4 @@ ScriptedImporter:
   generatePhysicsShape: 0
   secondarySpriteTextures: []
   spritePackingTag: 
-  canvasSize: {x: 40, y: 40}
+  canvasSize: {x: 60, y: 40}
