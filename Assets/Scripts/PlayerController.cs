@@ -274,6 +274,7 @@ public class PlayerController : MonoBehaviour
             yield return null;
             currentTime += Time.deltaTime;
             if (currentTime > duration){
+                Destroy(gameObject);
                 break;
             }
         }
@@ -315,8 +316,8 @@ public class PlayerController : MonoBehaviour
 
         Keyframe key1 = new Keyframe(0f, 0f, 0f, 0f); // Tangentes = 1 (pente constante)
         Keyframe key2 = new Keyframe(1f, 0f, 0f, 0f); // Même pente pour assurer la linéarité
-        Keyframe key3 = new Keyframe(1.1f, 1f, -5f, 5f); // Même pente pour assurer la linéarité
-        Keyframe key4 = new Keyframe(5f, -5f, 0f, 0f); // Même pente pour assurer la linéarité
+        Keyframe key3 = new Keyframe(1.2f, 3f, 0f, -1f); // Même pente pour assurer la linéarité
+        Keyframe key4 = new Keyframe(40, -40f, -1f, -1f); // Même pente pour assurer la linéarité
 
         // Ajouter les keyframes à la courbe
 
