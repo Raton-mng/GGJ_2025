@@ -1,5 +1,7 @@
 using System;
 using UnityEngine;
+using UnityEngine.Events;
+using UnityEngine.Serialization;
 
 namespace UI.Menu
 {
@@ -8,6 +10,9 @@ namespace UI.Menu
         private const int PlayCellID = 23;
         private const int OptionsCellID = 25;
         private const int QuitCellID = 27;
+
+        [SerializeField] private UnityEvent OptionOpenEvent;
+        [SerializeField] private UnityEvent OptionQuitEvent;
 
         private CellManager cellManager;
         
@@ -23,12 +28,22 @@ namespace UI.Menu
             cellManager.SetCellText(QuitCellID, "Quit");
         }
 
-        public static void Select(int cellID)
+        public void Select(int cellID)
         {
             if (cellID == PlayCellID && CellManager.Instance.players.Count >= 1)
             {
                 SceneManager.StartGame();
             }
+
+            if (cellID == OptionsCellID)
+            {
+                OptionOpenEvent?.Invoke();
+            }
+        }
+
+        public void CloseMenu()
+        {
+            OptionQuitEvent?.Invoke();
         }
     }
 }

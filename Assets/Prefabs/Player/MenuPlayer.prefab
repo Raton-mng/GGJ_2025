@@ -116,6 +116,26 @@ MonoBehaviour:
         m_CallState: 2
     m_ActionId: c103ed81-729e-48c4-a0e7-93eff0b9486c
     m_ActionName: 'PlayerUI/Select[/XInputControllerWindows/buttonSouth,/Keyboard/enter]'
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 02c3fad6-68f7-45a5-b2a8-d94dd81855ee
+    m_ActionName: 'Player/PauseMenu[/Keyboard/escape]'
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 7800611580957868019}
+        m_TargetAssemblyTypeName: UI.Menu.PlayerStartController, Assembly-CSharp
+        m_MethodName: OnEscapeMenu
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 40001fd2-c2aa-422b-87d4-f377d2d637df
+    m_ActionName: 'PlayerUI/CloseMenu[/Keyboard/escape]'
   m_NeverAutoSwitchControlSchemes: 1
   m_DefaultControlScheme: 
   m_DefaultActionMap: PlayerUI

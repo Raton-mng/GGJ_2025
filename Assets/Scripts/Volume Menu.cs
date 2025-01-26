@@ -15,20 +15,20 @@ public class VolumeMenu : MonoBehaviour
     
     void Start()
     {
-        soundtrackBus = FMODUnity.RuntimeManager.GetBus("bus:/TODO");
-        sfxBus = FMODUnity.RuntimeManager.GetBus("bus:/TODO");
+        soundtrackBus = FMODUnity.RuntimeManager.GetBus("bus:/Music");
+        sfxBus = FMODUnity.RuntimeManager.GetBus("bus:/SFX");
     }
     
-    public void ChangeSoundtrackVolume()
+    public void ChangeSoundtrackVolume(Single value)
     {
-        soundtrackBus.setVolume(soundtrackSlider.value);
+        soundtrackBus.setVolume(value);
     }
 
 
-    public void ChangeSfxVolume()
+    public void ChangeSfxVolume(Single value)
     {
         sfxIsClicked = true;
-        sfxBus.setVolume(sfxSlider.value);
+        sfxBus.setVolume(value);
     }
 
     private void Update()

@@ -1262,25 +1262,13 @@ PrefabInstance:
       propertyPath: m_Name
       value: Graph
       objectReference: {fileID: 0}
-    - target: {fileID: 2955128776212168006, guid: 1a7686198900dbd4980a87ae689fad2f, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 0
+    - target: {fileID: 1510632624851745133, guid: 1a7686198900dbd4980a87ae689fad2f, type: 3}
+      propertyPath: speed
+      value: 5
       objectReference: {fileID: 0}
-    - target: {fileID: 2955128776212168006, guid: 1a7686198900dbd4980a87ae689fad2f, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 2955128776212168006, guid: 1a7686198900dbd4980a87ae689fad2f, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 180
-      objectReference: {fileID: 0}
-    - target: {fileID: 6500410206204990256, guid: 1a7686198900dbd4980a87ae689fad2f, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7118715570920910058, guid: 1a7686198900dbd4980a87ae689fad2f, type: 3}
-      propertyPath: m_IsActive
-      value: 1
+    - target: {fileID: 6159948094451974691, guid: 1a7686198900dbd4980a87ae689fad2f, type: 3}
+      propertyPath: scale
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 7842448028128668274, guid: 1a7686198900dbd4980a87ae689fad2f, type: 3}
       propertyPath: m_LocalPosition.x
@@ -1323,12 +1311,8 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8012297944443937847, guid: 1a7686198900dbd4980a87ae689fad2f, type: 3}
-      propertyPath: translationMaxAmplitude
-      value: 8
-      objectReference: {fileID: 0}
-    - target: {fileID: 8012297944443937847, guid: 1a7686198900dbd4980a87ae689fad2f, type: 3}
-      propertyPath: translationMinAmplitude
-      value: 4
+      propertyPath: verticalSpeed
+      value: 15
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
