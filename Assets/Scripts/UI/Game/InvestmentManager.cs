@@ -3,6 +3,8 @@ using UnityEngine;
 
 public class InvestmentManager : MonoBehaviour
 {
+    public static InvestmentManager Instance;
+
     [SerializeField] private GameObject selectPlayerPrefab; // Nombre de contrats
 
     [Header("InvestmentVariable")]
@@ -15,6 +17,29 @@ public class InvestmentManager : MonoBehaviour
     private int[] moneyInvestByPLayer; // Indices sélectionnés pour chaque joueur
     private int playerCount;       // Nombre de joueurs
 
+    private void Awake()
+    {
+        cursors = new GameObject[4];
+        hudList = new GameObject[4];
+        selectedIndices = new int[4];
+        moneyInvestByPLayer = new int[4];
+
+        if (Instance == null)
+        {
+            Instance = this;
+        }
+        else if (Instance != this)
+        {
+            Destroy(gameObject);
+        }
+    }
+
+    private void Start()
+    {
+        InitiateInvestment();
+
+    }
+
     public void InitiateInvestment()
     {
         // Initialisation des curseurs
@@ -26,42 +51,22 @@ public class InvestmentManager : MonoBehaviour
             GameObject cursor = Instantiate(selectPlayerPrefab);
             cursors[i] = cursor;
             cursor.transform.SetParent(hudList[i].transform);
+            cursor.GetComponent<RectTransform>().anchoredPosition = Vector3.zero;
         }
         moneyInvestByPLayer = new int[playerCount];
 
     }
 
-    private void Update()
-    {
-        if (!ShopManager.ShopActive)
-        {
-            if (Input.GetKeyDown(KeyCode.Z)) MoveCursor(0, false);  // Exemple pour le joueur 1, monter
-            if (Input.GetKeyDown(KeyCode.S)) MoveCursor(0, true); // Exemple pour le joueur 1, descendre
-            if (Input.GetKeyDown(KeyCode.UpArrow)) MoveCursor(1, false);  // Exemple pour le joueur 2, monter
-            if (Input.GetKeyDown(KeyCode.DownArrow)) MoveCursor(1, true); // Exemple pour le joueur 2, descendre
-        }
-
-        if (!ShopManager.ShopActive)
-        {
-            // Exemple pour le joueur 1
-            if (Input.GetKeyDown(KeyCode.A)) InvestInPLayer(0);
-
-            // Ajoute d'autres contrôles pour d'autres joueurs
-            if (Input.GetKeyDown(KeyCode.K)) InvestInPLayer(1);
-        }
-    }
-
-    public void MoveCursor(int playerIndex, bool moveUp)
+    public void MoveCursor(int playerIndex, float moveUp)
     {
         if (playerIndex < 0 || playerIndex >= cursors.Length || cursors[playerIndex] == null) return; // Validation de l'index et vérification du curseur
 
         // Calcul du nouvel indice sélectionné
-        int direction = moveUp ? -1 : 1; // Haut (-1) ou bas (+1)
-        int newIndex = (selectedIndices[playerIndex] + direction + playerCount) % playerCount;
+        int newIndex = (selectedIndices[playerIndex] + (int)moveUp + playerCount) % playerCount;
 
         while (PlayerManager.Instance.GetPlayer(newIndex).IsDead())
         {
-            newIndex = (newIndex + direction + playerCount) % playerCount; // Passer au prochain contrat
+            newIndex = (newIndex + (int)moveUp + playerCount) % playerCount; // Passer au prochain contrat
         }
 
         selectedIndices[playerIndex] = newIndex; // Mettre à jour l'indice sélectionné
@@ -99,7 +104,7 @@ public class InvestmentManager : MonoBehaviour
         {
             if (selectedIndices[i] == playerIndex)
             {
-                MoveCursor(i, true);
+                MoveCursor(i, 1);
             }
         }
     }

@@ -212,7 +212,8 @@ public class PlayerController : MonoBehaviour
     {
         if (context.phase == InputActionPhase.Started)
         {
-            ShopManager.Instance.ActivateCardEffect(myID);
+            if (!ShopManager.ShopActive) InvestmentManager.Instance.InvestInPLayer(myID);
+            else ShopManager.Instance.ActivateCardEffect(myID);
         }
     }
 
@@ -221,7 +222,9 @@ public class PlayerController : MonoBehaviour
         if (context.phase == InputActionPhase.Started)
         {
             //print(value);
-            ShopManager.Instance.MoveCursor(myID, context.action.ReadValue<float>());
+            if(!ShopManager.ShopActive) InvestmentManager.Instance.MoveCursor(myID, context.action.ReadValue<float>());
+            else ShopManager.Instance.MoveCursor(myID, context.action.ReadValue<float>());
+
         }
     }
 

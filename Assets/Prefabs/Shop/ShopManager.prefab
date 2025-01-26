@@ -378,6 +378,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 825178191926061883}
+  - component: {fileID: 5911926223758654145}
   m_Layer: 0
   m_Name: ShopManager
   m_TagString: Untagged
@@ -402,3 +403,18 @@ Transform:
   - {fileID: 1717036419363496560}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &5911926223758654145
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8115383514642732676}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a0bfc5c78ff04c84ebe5df2184a1debe, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  selectPlayerPrefab: {fileID: 4739738003017933106, guid: 97a3bbe6b37580e48a3302df4500800d, type: 3}
+  investTimer: 2
+  investAmount: 10

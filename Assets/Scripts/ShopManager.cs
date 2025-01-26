@@ -411,7 +411,7 @@ public class ShopManager : MonoBehaviour
         Vector3[] initialPositions = new Vector3[numberOfContracts];
         Vector3 startPosition = startTransform.position;
 
-        for (int i = 0; i < numberOfContracts; i++)
+        for (int i = 0; i < contracts.Count; i++)
         {
             if (contracts[i] != null)
             {
@@ -432,7 +432,7 @@ public class ShopManager : MonoBehaviour
             elapsedTime += Time.deltaTime;
             float tContracts = elapsedTime / slideDuration;
 
-            for (int i = 0; i < numberOfContracts; i++)
+            for (int i = 0; i < contracts.Count; i++)
             {
                 if (contracts[i] != null && !contracts[i].GetIsSelected())
                 {
