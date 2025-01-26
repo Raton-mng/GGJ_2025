@@ -322,4 +322,9 @@ public class RandomCurves : MonoBehaviour
         }
         return lowestY;
     }
+
+    public Vector3[] GetLatestPoints(){
+        Vector3[] res = {upperCurvePoints[upperCurvePoints.Count - 1], lowerCurvePoints[lowerCurvePoints.Count - 1]};
+        return res;
+    }
 }

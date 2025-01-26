@@ -182,8 +182,9 @@ public class PlayerController : MonoBehaviour
 
     public void OnSelectMenu(InputAction.CallbackContext context)
     {
+        Debug.Log("test ");
         print(context.action.WasPerformedThisFrame());
-        ShopManager.Instance.MoveCursor(myID, context.action.WasPerformedThisFrame());
+        //ShopManager.Instance.MoveCursor(myID, context.action.WasPerformedThisFrame());
     }
 
     public void OnNavigateMenu(InputAction.CallbackContext context)
@@ -191,7 +192,7 @@ public class PlayerController : MonoBehaviour
         if (context.phase == InputActionPhase.Started)
         {
             float value = context.action.ReadValue<float>();
-            print(value);
+            //print(value);
 
             if (value > 0)
             {

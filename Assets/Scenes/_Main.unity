@@ -176,6 +176,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 660010728}
     - target: {fileID: 8569177790819103769, guid: 0655ef79c9e620f4dba40d8b75d9ad90, type: 3}
+      propertyPath: limitCurve
+      value: 
+      objectReference: {fileID: 1021491585}
+    - target: {fileID: 8569177790819103769, guid: 0655ef79c9e620f4dba40d8b75d9ad90, type: 3}
       propertyPath: testbottom
       value: 
       objectReference: {fileID: 403138985}
@@ -771,6 +775,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ea8e0749ee0442f42aee75f9cfba0265, type: 3}
+--- !u!1 &1021491585 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1854433166007796352, guid: ea8e0749ee0442f42aee75f9cfba0265, type: 3}
+  m_PrefabInstance: {fileID: 1021491584}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1197384283
 PrefabInstance:
   m_ObjectHideFlags: 0

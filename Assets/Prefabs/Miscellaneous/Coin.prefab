@@ -30,7 +30,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1.5, y: 1.5, z: 1.5}
+  m_LocalScale: {x: 7, y: 7, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -102,7 +102,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ba4520034b656fa458bd43ebf6a5d1d7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  value: 0
+  speed: 25
+  value: 5
+  type: 0
+  coinEvent:
+    Guid:
+      Data1: -756680719
+      Data2: 1288515894
+      Data3: -1741897309
+      Data4: -49144338
+    Path: event:/Coins
 --- !u!95 &1663107817626303514
 Animator:
   serializedVersion: 7

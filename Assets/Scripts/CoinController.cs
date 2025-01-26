@@ -1,13 +1,22 @@
+using FMODUnity;
 using UnityEngine;
 
 public class CoinController : MonoBehaviour
 {
-    private float speed = 5f;
+    enum CoinType  {
+        COIN, BIG_COIN, BAD_COIN
+    }
+    
+    [SerializeField]  private float speed = 5f;
     [SerializeField] int value;
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
+    [SerializeField] private CoinType type;
+    
+    [SerializeField] private EventReference coinEvent;
+    private FMOD.Studio.EventInstance coinEventInstance;
+    
     void Start()
     {
-        
+        coinEventInstance = RuntimeManager.CreateInstance(coinEvent);
     }
 
     // Update is called once per frame
@@ -25,7 +34,14 @@ public class CoinController : MonoBehaviour
         PlayerController player = col.GetComponent<PlayerController>();
         CoinManager wallet = player.coinManager;
         wallet.EarnCoins(value);
-        Debug.Log("nique ta mere");
+        PlayCoinSound();
         Destroy(gameObject);
+    }
+
+    void PlayCoinSound()
+    {
+        coinEventInstance.setParameterByName("coin-type", (int)type);
+        coinEventInstance.start();
+        coinEventInstance.release();
     }
 }

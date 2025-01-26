@@ -123,14 +123,14 @@ MonoBehaviour:
   cursorFadeDuration: 0.3
   contractPrefab: {fileID: 6421635082057920429, guid: 20e536cf84c915b44a3f65ab7bf8d246, type: 3}
   cursorPrefab: {fileID: 6421635082057920429, guid: ebefc3f3826d3ce45bd8bcb71fa00b6e, type: 3}
-  numberOfContracts: 4
-  autoHideDelay: 5
+  numberOfContracts: 3
+  autoHideDelay: 10
   timeBetweenContracts: 15
   firstApparitionTime: 5
   effectSprites:
-  - {fileID: 7675826601332790545, guid: f14db81dfcfb00b4190962617f9a5e14, type: 3}
-  - {fileID: -4412926668834298731, guid: f14db81dfcfb00b4190962617f9a5e14, type: 3}
-  - {fileID: 2278881825021241808, guid: f14db81dfcfb00b4190962617f9a5e14, type: 3}
+  - {fileID: 3329863921455595519, guid: 5ea7c8581bd00a34ca79e35fd6ce4e0c, type: 3}
+  - {fileID: -6505513120015752476, guid: 5ea7c8581bd00a34ca79e35fd6ce4e0c, type: 3}
+  - {fileID: -3969541181175262118, guid: 5ea7c8581bd00a34ca79e35fd6ce4e0c, type: 3}
   effectCoast: 0f0000000f0000000f000000
   effectWeights:
   - 1
