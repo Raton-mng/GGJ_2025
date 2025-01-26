@@ -1,13 +1,15 @@
+using System;
 using System.Collections;
 using UI.Menu;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using Random = UnityEngine.Random;
 
 public class PlayerController : MonoBehaviour
 {
     public GameObject _hud;
-    public GameObject playerHUD;
+    //public GameObject playerHUD;
     private HealthManager _healthManager;
     private TurboManager _turboManager;
     public CoinManager coinManager;
@@ -42,32 +44,41 @@ public class PlayerController : MonoBehaviour
     [SerializeField] Sprite cursor4;
     private SpriteRenderer spriteRenderer;
 
+    private void Awake()
+    {
+        _healthManager = _hud.GetComponentInChildren<HealthManager>();
+        _turboManager = _hud.GetComponentInChildren<TurboManager>();
+        coinManager = _hud.GetComponentInChildren<CoinManager>();
+    }
+
+    public GameObject GetHUD()
+    {
+        return _hud;
+    }
+    
+    public HealthManager GetHealthManager()
+    {
+        return _healthManager;
+    }
+
     void Start(){
-        playerHUD = Instantiate(_hud, PlayerManager.Instance.canvas);
-        _turboManager = playerHUD.GetComponentInChildren<TurboManager>();
-        _healthManager = playerHUD.GetComponentInChildren<HealthManager>();
-        coinManager = playerHUD.GetComponentInChildren<CoinManager>();
         currentHorizontalSpeed = baseHorizontalSpeed;
         currentVerticalSpeed = baseVerticalSpeed;
         currentTurningSpeed = baseTurningSpeed;
 
         spriteRenderer = GetComponent<SpriteRenderer>();
-        Debug.Log(myID);
+        //Debug.Log(myID);
         if (myID == 1){
             spriteRenderer.sprite = cursor1;
-            playerHUD.transform.position = new Vector3(283, 895, 0);
         }
         else if (myID == 2){
             spriteRenderer.sprite = cursor2;
-            playerHUD.transform.position = new Vector3(1618, 914, 0);
         }
         else if (myID == 3){
             spriteRenderer.sprite = cursor3;
-            playerHUD.transform.position = new Vector3(283, 145, 0);
         }
         else if (myID == 4){
             spriteRenderer.sprite = cursor4;
-            playerHUD.transform.position = new Vector3(1618, 145, 0);
         }
 
         InitDeathCurve();

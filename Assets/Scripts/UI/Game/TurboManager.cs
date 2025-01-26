@@ -13,6 +13,7 @@ public class TurboManager : MonoBehaviour
     {
         _anchorMax = _bar.GetComponent<RectTransform>();
         _turboAnimator = GetComponentInChildren<Animator>();
+        //Debug.Log(_turboAnimator);
     }
 
     private void Start()
