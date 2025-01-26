@@ -1,5 +1,7 @@
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 namespace UI.Menu
 {
@@ -14,6 +16,8 @@ namespace UI.Menu
         public List<PlayerStartController> players;
 
         public static CellManager Instance;
+
+        private int nbPlayerJoined = 0;
 
 
         public List<Cell> cellList = new ();
@@ -30,12 +34,33 @@ namespace UI.Menu
             players = new List<PlayerStartController>();
         }
 
-        public void UpdateCellOutlinePosition(int previousCellIndex, int currentCellID)
+        public void UpdateCellOutlinePosition(int previousCellIndex, int currentCellID, int playerID)
         {
             if (currentCellID > cellList.Count)
                 return;
-            if (!IsCellActive(previousCellIndex)) cellList[previousCellIndex].SetOutlineActive(false);
+            if (!IsCellActive(previousCellIndex))
+            {
+                cellList[previousCellIndex].SetOutlineActive(false);
+            }
+            else
+            {
+                cellList[previousCellIndex].SetOutlineColor(GetPlayerIDInCell(previousCellIndex));
+            }
+            cellList[currentCellID].SetOutlineColor(playerID);
             cellList[currentCellID].SetOutlineActive(true);
+        }
+
+        private int GetPlayerIDInCell(int cellID)
+        {
+            foreach (PlayerStartController player in players)
+            {
+                if (player.currentCellID == cellID)
+                {
+                    return player.GetID();
+                }
+            }
+
+            return 0;
         }
 
         public bool IsCellActive(int cellIndex)
@@ -50,11 +75,15 @@ namespace UI.Menu
 
             return false;
         }
-        
 
         public void SetCellText(int cellID, string text)
         {
             cellList[cellID].SetText(text);
+        }
+
+        public void AssignPlayerID(PlayerInput playerInput)
+        {
+            playerInput.gameObject.GetComponent<PlayerStartController>().SetID(nbPlayerJoined++);
         }
         
     }

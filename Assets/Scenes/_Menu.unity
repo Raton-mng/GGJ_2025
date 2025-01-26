@@ -3178,20 +3178,6 @@ MonoBehaviour:
       Data3: 968607142
       Data4: 2012649909
     Path: event:/Menu_Music
-  normalSnapshot:
-    Guid:
-      Data1: -1740881087
-      Data2: 1229226629
-      Data3: -91680853
-      Data4: -135368048
-    Path: snapshot:/NormalSnapshot
-  pauseSnapshot:
-    Guid:
-      Data1: -1906079957
-      Data2: 1231723150
-      Data3: 690839967
-      Data4: -1367009723
-    Path: snapshot:/PauseMenuSnapshot
 --- !u!1 &1213880212
 GameObject:
   m_ObjectHideFlags: 0
@@ -5037,6 +5023,34 @@ PrefabInstance:
       propertyPath: m_JoinAction.m_Reference
       value: 
       objectReference: {fileID: -5109331444065623107, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
+    - target: {fileID: 3190525340640153120, guid: a9a70ff6ec62d4348ab5e6d6d9a858d5, type: 3}
+      propertyPath: m_PlayerJoinedEvent.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3190525340640153120, guid: a9a70ff6ec62d4348ab5e6d6d9a858d5, type: 3}
+      propertyPath: m_PlayerJoinedEvent.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3190525340640153120, guid: a9a70ff6ec62d4348ab5e6d6d9a858d5, type: 3}
+      propertyPath: m_PlayerJoinedEvent.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 751136274}
+    - target: {fileID: 3190525340640153120, guid: a9a70ff6ec62d4348ab5e6d6d9a858d5, type: 3}
+      propertyPath: m_PlayerJoinedEvent.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3190525340640153120, guid: a9a70ff6ec62d4348ab5e6d6d9a858d5, type: 3}
+      propertyPath: m_PlayerJoinedEvent.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: AssignPlayerID
+      objectReference: {fileID: 0}
+    - target: {fileID: 3190525340640153120, guid: a9a70ff6ec62d4348ab5e6d6d9a858d5, type: 3}
+      propertyPath: m_PlayerJoinedEvent.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: UI.Menu.CellManager, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 3190525340640153120, guid: a9a70ff6ec62d4348ab5e6d6d9a858d5, type: 3}
+      propertyPath: m_PlayerJoinedEvent.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
     - target: {fileID: 3679394165856730245, guid: a9a70ff6ec62d4348ab5e6d6d9a858d5, type: 3}
       propertyPath: canvas
       value: 

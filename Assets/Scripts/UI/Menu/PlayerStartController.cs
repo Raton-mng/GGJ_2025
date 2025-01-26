@@ -16,11 +16,13 @@ namespace UI.Menu
 
         private ButtonCells _buttonCell;
 
+        private int playerID;
+
         private void Start()
         {
             _cellManager = CellManager.Instance;
             currentCellID = 0;
-            _cellManager.UpdateCellOutlinePosition(currentCellID, currentCellID);
+            _cellManager.UpdateCellOutlinePosition(currentCellID, currentCellID, playerID);
             _cellManager.players.Add(this);
             _buttonCell = FindObjectsByType<ButtonCells>(FindObjectsSortMode.None)[0];
         }
@@ -34,7 +36,7 @@ namespace UI.Menu
                 if (currentCellID + _cellManager.cellRowCount < _cellManager.cellList.Count)
                 {
                     currentCellID += _cellManager.cellRowCount;
-                    _cellManager.UpdateCellOutlinePosition(currentCellID - _cellManager.cellRowCount, currentCellID);
+                    _cellManager.UpdateCellOutlinePosition(currentCellID - _cellManager.cellRowCount, currentCellID, playerID);
                     StartCoroutine(DontMoveTooFast());
                 }
             }
@@ -44,7 +46,7 @@ namespace UI.Menu
                 if (currentCellID - _cellManager.cellRowCount >= 0)
                 {
                     currentCellID -= _cellManager.cellRowCount;
-                    _cellManager.UpdateCellOutlinePosition(currentCellID + _cellManager.cellRowCount, currentCellID);
+                    _cellManager.UpdateCellOutlinePosition(currentCellID + _cellManager.cellRowCount, currentCellID, playerID);
                     StartCoroutine(DontMoveTooFast());
                 } 
             }
@@ -54,7 +56,7 @@ namespace UI.Menu
                 if (currentCellID % _cellManager.cellRowCount > 0)
                 {
                     currentCellID -= 1;
-                    _cellManager.UpdateCellOutlinePosition(currentCellID + 1, currentCellID);
+                    _cellManager.UpdateCellOutlinePosition(currentCellID + 1, currentCellID, playerID);
                     StartCoroutine(DontMoveTooFast());
                 } 
             }
@@ -64,10 +66,20 @@ namespace UI.Menu
                 if (currentCellID % _cellManager.cellRowCount < _cellManager.cellRowCount - 1 && currentCellID + 1 < _cellManager.cellList.Count)
                 {
                     currentCellID += 1;
-                    _cellManager.UpdateCellOutlinePosition(currentCellID - 1, currentCellID);
+                    _cellManager.UpdateCellOutlinePosition(currentCellID - 1, currentCellID, playerID);
                     StartCoroutine(DontMoveTooFast());
                 } 
             }
+        }
+
+        public int GetID()
+        {
+            return playerID;
+        }
+
+        public void SetID(int id)
+        {
+            playerID = id;
         }
 
         public void OnMenuMove(InputAction.CallbackContext context)
@@ -80,7 +92,7 @@ namespace UI.Menu
 
         public void OnSelect(InputAction.CallbackContext context)
         {
-            if (context.action.triggered)
+            if (context.performed)
             {
                 _buttonCell.Select(currentCellID);
             }
@@ -88,7 +100,7 @@ namespace UI.Menu
         
         public void OnEscapeMenu(InputAction.CallbackContext context)
         {
-            if (context.action.triggered)
+            if (context.performed)
             {
                 _buttonCell.CloseMenu();
             }
