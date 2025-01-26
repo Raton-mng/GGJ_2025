@@ -42,6 +42,7 @@ public class PlayerController : MonoBehaviour
     void Start(){
         GameObject playerHUD = Instantiate(_hud, PlayerManager.Instance.canvas);
         _turboManager = playerHUD.GetComponentInChildren<TurboManager>();
+        _healthManager = playerHUD.GetComponentInChildren<HealthManager>();
         coinManager = playerHUD.GetComponentInChildren<CoinManager>();
         currentHorizontalSpeed = baseHorizontalSpeed;
         currentVerticalSpeed = baseVerticalSpeed;
