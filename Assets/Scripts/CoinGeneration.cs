@@ -17,13 +17,21 @@ public class CoinGeneration : MonoBehaviour
     {
         topLimit = testtop.GetComponent<Rigidbody2D>();
         bottomLimit = testbottom.GetComponent<Rigidbody2D>();
+        StartCoroutine("randomSpawn");
     }
 
     // Update is called once per frame
     void Update()
     {
-        if(Input.GetKeyDown(KeyCode.P)){
-            CreateCurve(5,0.4f,Random.value,curve1,0.3f,0.5f);
+        
+    }
+
+    IEnumerator randomSpawn()
+    {
+        while(true)
+        {
+            yield return new WaitForSeconds(Random.Range(1, 5));
+            CreateCurve(5, 0.4f, Random.value, curve1, 0.3f, 0.5f);
         }
     }
 
