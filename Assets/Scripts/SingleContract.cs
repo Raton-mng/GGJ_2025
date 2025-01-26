@@ -13,8 +13,8 @@ public class SingleContract : MonoBehaviour
         MoreLife,
         ReverseControls,
         PushEveryoneUp,
-        ImmediateJump,
-        Steal
+        ImmediateJumpUp,
+        ImmediateJumpDown
     }
 
     public ContractEffect effectType;
@@ -53,11 +53,11 @@ public class SingleContract : MonoBehaviour
             case ContractEffect.PushEveryoneUp :
                 PushEveryoneUp(playerID);
                 break;
-            case ContractEffect.ImmediateJump :
-                ImmediateJump(playerID);
+            case ContractEffect.ImmediateJumpUp :
+                ImmediateJumpUp(playerID);
                 break;
             default :
-                Steal(playerID);
+                ImmediateJumpDown(playerID);
                 break;
         }
     }
@@ -102,7 +102,7 @@ public class SingleContract : MonoBehaviour
     private void MoreLife(int playerID)
     {
         PlayerController player =  _playerManager.GetPlayer(playerID);
-        player._hud.GetComponentInChildren<HealthManager>();
+        player.playerHUD.GetComponentInChildren<HealthManager>().AddHealth();
     }
     
     private void ReverseControls(int playerID)
@@ -116,16 +116,22 @@ public class SingleContract : MonoBehaviour
     
     private void PushEveryoneUp(int playerID)
     {
-        
+        List<PlayerController> otherPlayers = _playerManager.GetOtherPlayers(playerID);
+        foreach (PlayerController otherPlayer in otherPlayers)
+        {
+            StartCoroutine(otherPlayer.PushUp(6, 2));
+        }
     }
     
-    private void ImmediateJump(int playerID)
+    private void ImmediateJumpUp(int playerID)
     {
-        
+        PlayerController otherPlayer = _playerManager.GetRandomPlayer(playerID);
+        otherPlayer.transform.localPosition += 7 * Vector3.up;
     }
     
-    private void Steal(int playerID)
+    private void ImmediateJumpDown(int playerID)
     {
-        
+        PlayerController otherPlayer = _playerManager.GetRandomPlayer(playerID);
+        otherPlayer.transform.localPosition += 7 * Vector3.down;
     }
 }

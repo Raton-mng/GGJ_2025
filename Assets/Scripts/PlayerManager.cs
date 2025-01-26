@@ -93,6 +93,17 @@ public class PlayerManager : MonoBehaviour
         return null;
     }
 
+    public PlayerController GetRandomPlayer(int playerID)
+    {
+        int otherID;
+        do
+        {
+            otherID = Random.Range(1, _players.Count + 1);
+        } while (otherID == playerID);
+
+        return GetPlayer(otherID);
+    }
+
     public List<PlayerController> GetOtherPlayers(int playerID)
     {
         List<PlayerController> otherPlayers = new List<PlayerController>();
