@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
+using UnityEditor.Animations;
 using UnityEngine;
 using UnityEngine.UI;
 using static SingleContract;
@@ -34,7 +35,7 @@ public class ShopManager : MonoBehaviour
     public bool allowDuplicateEffects; // Permettre des effets dupliqués
 
     [Header("Multiplayer Settings")]
-    public Sprite[] cursorSprites; // Sprites pour différencier les curseurs
+    public AnimatorController[] cursorSprites; // Sprites pour différencier les curseurs
     private GameObject[] cursors;  // Tableau pour stocker les curseurs
     private int[] selectedIndices; // Indices sélectionnés pour chaque joueur
 
@@ -221,7 +222,7 @@ public class ShopManager : MonoBehaviour
         for (int i = 0; i < playerCount; i++)
         {
             GameObject playerCursor = Instantiate(cursorPrefab, startTransform.position, Quaternion.identity, transform);
-            playerCursor.GetComponent<Image>().sprite = cursorSprites[i]; // Associer un sprite différent
+            playerCursor.GetComponent<Animator>().runtimeAnimatorController = cursorSprites[i]; // Associer un sprite différent
             cursors[i] = playerCursor;
             selectedIndices[i] = 0; // Initialiser à la première carte
         }
