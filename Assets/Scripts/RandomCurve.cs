@@ -92,7 +92,7 @@ public class RandomCurves : MonoBehaviour
     {
         yield return new WaitForSeconds(6f);
         maxSlope += 2f;
-        segmentWidth += 0f;
+        segmentWidth += 1f;
     }
 
 

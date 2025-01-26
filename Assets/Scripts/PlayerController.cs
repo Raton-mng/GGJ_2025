@@ -122,7 +122,7 @@ public class PlayerController : MonoBehaviour
             _turboManager.GainTurbo(Time.deltaTime / turboFillDuration);
         }
         if (_boostingUse>0.03 && _turboManager.GetTurbo() > 0){
-            Accelerate(baseHorizontalSpeed*2);
+            Accelerate(baseHorizontalSpeed*10);
             _turboManager.UseTurbo();
         } 
         else if (_boostingUse<-0.03 && _turboManager.GetTurbo() > 0)
@@ -133,7 +133,7 @@ public class PlayerController : MonoBehaviour
         else 
         {
             if (transform.localPosition.x < -0.1){
-                currentHorizontalSpeed = baseHorizontalSpeed*4f;
+                currentHorizontalSpeed = baseHorizontalSpeed*5f;
             } 
             else if (transform.localPosition.x > 0.1){
                 currentHorizontalSpeed = baseHorizontalSpeed*0.2f;
@@ -189,7 +189,7 @@ public class PlayerController : MonoBehaviour
 
     public void OnPauseMenu(InputAction.CallbackContext context)
     {
-        if (context.phase == InputActionPhase.Started) MenuManager.Instance.MenuPause.OnPauseButton();
+        if (context.phase == InputActionPhase.Started) Pause.Instance.OnPauseButton();
     }
 
     public void LookTo(float target, float speed){
@@ -255,13 +255,11 @@ public class PlayerController : MonoBehaviour
     }
 
     private void DieUp(){
-        PlayerManager.Instance.SomeoneDied(transform.parent.gameObject);
         isDeath = true;
         StartCoroutine(ExplodeUp());
     }
 
     private void DieDown(){
-        PlayerManager.Instance.SomeoneDied(transform.parent.gameObject);
         isDeath = true;
         StartCoroutine(ExplodeDown());
     }

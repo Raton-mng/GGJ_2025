@@ -4,10 +4,23 @@ using UnityEngine;
 public class Pause : MonoBehaviour
 {
     private bool isPaused = true;
+
+    public static Pause Instance;
     
     [SerializeField] private GameObject pauseMenu;
-    
-    
+
+    private void Awake()
+    {
+        if (Instance == null)
+        {
+            Instance = this;
+        }
+        else if (Instance != this)
+        {
+            Destroy(gameObject);
+        }
+    }
+
     // Executé quand le binding de pause est trigger
     public void OnPauseButton()
     {

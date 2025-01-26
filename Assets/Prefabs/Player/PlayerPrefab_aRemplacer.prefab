@@ -368,7 +368,7 @@ MonoBehaviour:
   baseVerticalSpeed: 10
   baseTurningSpeed: 600
   accelerateModifier: 0
-  turboFillDuration: 1
+  turboFillDuration: 5
   myID: 0
   isDeath: 0
   cursor1: {fileID: 7675826601332790545, guid: 61c8826f3806b9245916bc65e5d177ba, type: 3}

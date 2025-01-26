@@ -621,7 +621,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _bar: {fileID: 1022151836833552977}
-  _maxTurbo: 10
+  _maxTurbo: 1
   _consumption: 1
 --- !u!1 &8092953961921642342
 GameObject:
