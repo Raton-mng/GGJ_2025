@@ -102,7 +102,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ba4520034b656fa458bd43ebf6a5d1d7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  value: 0
+  value: 5
+  type: 0
+  coinEvent:
+    Guid:
+      Data1: -756680719
+      Data2: 1288515894
+      Data3: -1741897309
+      Data4: -49144338
+    Path: event:/Coins
 --- !u!95 &1663107817626303514
 Animator:
   serializedVersion: 7

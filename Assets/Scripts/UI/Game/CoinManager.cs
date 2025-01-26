@@ -21,6 +21,7 @@ public class CoinManager : MonoBehaviour
     {
         _coinNumber += value;
         _coins.text = "X" + _coinNumber;
+        
     }
 
     public void UseCoins(int value)

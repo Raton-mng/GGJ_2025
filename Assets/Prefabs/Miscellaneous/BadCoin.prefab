@@ -100,3 +100,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ba4520034b656fa458bd43ebf6a5d1d7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  value: -2
+  type: 2
+  coinEvent:
+    Guid:
+      Data1: -756680719
+      Data2: 1288515894
+      Data3: -1741897309
+      Data4: -49144338
+    Path: event:/Coins

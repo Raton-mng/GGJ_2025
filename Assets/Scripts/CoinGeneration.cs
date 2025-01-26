@@ -12,6 +12,8 @@ public class CoinGeneration : MonoBehaviour
     [SerializeField] GameObject bigCoinModel;
     [SerializeField] GameObject badCoinModel;
     [SerializeField] AnimationCurve curve1;
+    
+    
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
