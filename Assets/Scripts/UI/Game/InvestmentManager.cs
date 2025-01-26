@@ -1,11 +1,15 @@
 using System.Diagnostics.Contracts;
+using UnityEditor.Animations;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class InvestmentManager : MonoBehaviour
 {
     public static InvestmentManager Instance;
 
     [SerializeField] private GameObject selectPlayerPrefab; // Nombre de contrats
+
+    [SerializeField] private AnimatorController[] selectorSprites;
 
     [Header("InvestmentVariable")]
     [SerializeField] private float investTimer = 2f; // Temps pour investir
@@ -52,6 +56,7 @@ public class InvestmentManager : MonoBehaviour
             cursors[i] = cursor;
             cursor.transform.SetParent(hudList[i].transform);
             cursor.GetComponent<RectTransform>().anchoredPosition = Vector3.zero;
+            cursor.GetComponent<Animator>().runtimeAnimatorController = selectorSprites[i];
         }
         moneyInvestByPLayer = new int[playerCount];
 
@@ -59,6 +64,7 @@ public class InvestmentManager : MonoBehaviour
 
     public void MoveCursor(int playerIndex, float moveUp)
     {
+        print("MoveCursor");
         if (playerIndex < 0 || playerIndex >= cursors.Length || cursors[playerIndex] == null) return; // Validation de l'index et vérification du curseur
 
         // Calcul du nouvel indice sélectionné
@@ -77,6 +83,7 @@ public class InvestmentManager : MonoBehaviour
 
     public void InvestInPLayer(int playerIndex)
     {
+        print("InvestInPLayer");
         if (playerIndex < 0 || playerIndex >= cursors.Length || cursors[playerIndex] == null) return; // Validation de l'index et vérification du curseur
 
         int selectedIndex = selectedIndices[playerIndex];

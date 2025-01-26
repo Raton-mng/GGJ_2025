@@ -416,5 +416,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   selectPlayerPrefab: {fileID: 4739738003017933106, guid: 97a3bbe6b37580e48a3302df4500800d, type: 3}
+  selectorSprites:
+  - {fileID: 9100000, guid: c43c9808d5d99f44392bf632ef1f24e7, type: 2}
+  - {fileID: 9100000, guid: 3de75689da5aa084baa2db1365026de4, type: 2}
+  - {fileID: 9100000, guid: f760f7033bfd34e44a94a51f3a4c1404, type: 2}
+  - {fileID: 9100000, guid: 9f2784036fadbda46a5041d450380213, type: 2}
   investTimer: 2
-  investAmount: 10
+  investAmount: 5

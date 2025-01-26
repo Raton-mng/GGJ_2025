@@ -74,26 +74,26 @@ public class PlayerController : MonoBehaviour
         if (myID == 0)
         {
             spriteRenderer.sprite = cursor1;
-            _hud.GetComponent<RectTransform>().anchoredPosition = new Vector3(1625, 155, 0);
+            _hud.GetComponent<RectTransform>().anchoredPosition = new Vector3(1625, 940, 0);
 
         }
         else if (myID == 1)
         {
             spriteRenderer.sprite = cursor2;
-            _hud.GetComponent<RectTransform>().anchoredPosition = new Vector3(280, 155, 0);
+            _hud.GetComponent<RectTransform>().anchoredPosition = new Vector3(280, 940, 0);
 
 
         }
         else if (myID == 2)
         {
             spriteRenderer.sprite = cursor3;
-            _hud.GetComponent<RectTransform>().anchoredPosition = new Vector3(280, 940, 0);
+            _hud.GetComponent<RectTransform>().anchoredPosition = new Vector3(728, 940, 0);
 
         }
         else if (myID == 3)
         {
             spriteRenderer.sprite = cursor4;
-            _hud.GetComponent<RectTransform>().anchoredPosition = new Vector3(1625, 940, 0);
+            _hud.GetComponent<RectTransform>().anchoredPosition = new Vector3(1176, 940, 0);
 
         }
 
