@@ -21,9 +21,9 @@ public class CoinController : MonoBehaviour
         }
     }
 
-    void OnTriggerEnter2D(Collider2D col){
-        GameObject player = col.gameObject;
-        CoinManager wallet = player.GetComponent<CoinManager>();
+    void OnTriggerEnter(Collider col){
+        PlayerController player = col.GetComponent<PlayerController>();
+        CoinManager wallet = player.coinManager;
         wallet.EarnCoins(value);
         Debug.Log("nique ta mere");
         Destroy(gameObject);
