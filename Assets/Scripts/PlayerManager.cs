@@ -37,8 +37,9 @@ public class PlayerManager : MonoBehaviour
     {
         //Debug.Log(_players.Count);
         List<GameObject> playersCopy = new List<GameObject>(_players);
-        foreach (GameObject player in playersCopy)
+        for (int i = 0; i < playersCopy.Count; i++)
         {
+            GameObject player = playersCopy[i];
             //Debug.Log("_players : " + _players.Count);
             //Debug.Log("playersCopy : " + playersCopy.Count);
             Transform playerChild = player.transform.GetChild(0);
@@ -52,13 +53,15 @@ public class PlayerManager : MonoBehaviour
                 player.transform.GetChild(1).gameObject.SetActive(true);
                 PlayerController pc = player.transform.GetChild(1).GetComponent<PlayerController>();
                 //Debug.Log(pc);
-                pc.myID = _players.Count-1;
+                pc.myID = i;
+                print(pc.myID);
+
             }
             else
             {
                 playerChild.gameObject.SetActive(true);
                 PlayerController pc = playerChild.GetComponent<PlayerController>();
-                pc.myID = _players.Count-1;
+                pc.myID = i;
                 player.transform.GetChild(1).gameObject.SetActive(false);
             }
         }

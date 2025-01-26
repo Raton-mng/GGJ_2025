@@ -13,8 +13,8 @@ public class HUDManager : MonoBehaviour
 
     private void OnEnable()
     {
-        InitCanvas();
-        Debug.Log(gameObject);
+/*        InitCanvas();
+*/        Debug.Log(gameObject);
     }
     void InitCanvas()
     {
@@ -23,8 +23,8 @@ public class HUDManager : MonoBehaviour
             //Debug.Log("HUD " + player.GetHUD());
             if (!player) return;
             GameObject playerHUD = Instantiate(player.GetHUD(), transform);
-            player.SetHUD(playerHUD);
-            int myID = player.myID;
+/*            player.SetHUD(playerHUD);
+*/            int myID = player.myID;
             if (player.myID == 0)
             {
                 playerHUD.transform.position = new Vector3(283, 895, 0);

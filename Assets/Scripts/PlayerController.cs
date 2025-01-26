@@ -42,27 +42,21 @@ public class PlayerController : MonoBehaviour
     [SerializeField] Sprite cursor2;
     [SerializeField] Sprite cursor3;
     [SerializeField] Sprite cursor4;
-    private SpriteRenderer spriteRenderer;
+    [SerializeField] private SpriteRenderer spriteRenderer;
 
     private void Awake()
     {
         _healthManager = _hud.GetComponentInChildren<HealthManager>();
         _turboManager = _hud.GetComponentInChildren<TurboManager>();
         coinManager = _hud.GetComponentInChildren<CoinManager>();
+
     }
 
     public GameObject GetHUD()
     {
         return _hud;
     }
-    
-    public void SetHUD(GameObject hud)
-    {
-        _hud = hud;
-        _healthManager = _hud.GetComponentInChildren<HealthManager>();
-        _turboManager = _hud.GetComponentInChildren<TurboManager>();
-        coinManager = _hud.GetComponentInChildren<CoinManager>();
-    }
+
     
     public HealthManager GetHealthManager()
     {
@@ -73,23 +67,42 @@ public class PlayerController : MonoBehaviour
         currentHorizontalSpeed = baseHorizontalSpeed;
         currentVerticalSpeed = baseVerticalSpeed;
         currentTurningSpeed = baseTurningSpeed;
-
-        spriteRenderer = GetComponent<SpriteRenderer>();
         //Debug.Log(myID);
-        if (myID == 1){
+
+        print(myID);
+
+        if (myID == 0)
+        {
             spriteRenderer.sprite = cursor1;
+            _hud.GetComponent<RectTransform>().anchoredPosition = new Vector3(1625, 155, 0);
+
         }
-        else if (myID == 2){
+        else if (myID == 1)
+        {
             spriteRenderer.sprite = cursor2;
+            _hud.GetComponent<RectTransform>().anchoredPosition = new Vector3(280, 155, 0);
+
+
         }
-        else if (myID == 3){
+        else if (myID == 2)
+        {
             spriteRenderer.sprite = cursor3;
+            _hud.GetComponent<RectTransform>().anchoredPosition = new Vector3(280, 940, 0);
+
         }
-        else if (myID == 4){
+        else if (myID == 3)
+        {
             spriteRenderer.sprite = cursor4;
+            _hud.GetComponent<RectTransform>().anchoredPosition = new Vector3(1625, 940, 0);
+
         }
 
         InitDeathCurve();
+    }
+
+    private void OnEnable()
+    {
+        
     }
 
     void Update(){
@@ -147,6 +160,8 @@ public class PlayerController : MonoBehaviour
         Vector3 tempPos = transform.localPosition;
         tempPos.x += (currentHorizontalSpeed - baseHorizontalSpeed) * Time.deltaTime;
         transform.localPosition = tempPos;
+
+        
     }
 
 

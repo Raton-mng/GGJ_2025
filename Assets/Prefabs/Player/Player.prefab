@@ -93,6 +93,10 @@ PrefabInstance:
       propertyPath: m_ActionEvents.Array.data[7].m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
       value: OnSelectMenu
       objectReference: {fileID: 0}
+    - target: {fileID: 8886897677962009634, guid: c0deed579fa74d141be7e4653cd1e892, type: 3}
+      propertyPath: m_hasFontAssetChanged
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

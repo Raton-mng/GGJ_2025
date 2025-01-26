@@ -38,11 +38,12 @@ public class TurboManager : MonoBehaviour
 
     public void GainTurbo(float t)
     {
+        _turbo += t;
+
         if (_turbo < _consumption * Time.deltaTime)
         {
             _turboAnimator.SetBool("isMin", false);
         }
-        _turbo = Mathf.Clamp01(_turbo + t);
         if (_turbo == _maxTurbo)
         {
             _turboAnimator.SetBool("isMax", true);
