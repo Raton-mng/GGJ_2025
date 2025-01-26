@@ -11,6 +11,11 @@ public class CoinGeneration : MonoBehaviour
     [SerializeField] GameObject bigCoinModel;
     [SerializeField] GameObject badCoinModel;
     [SerializeField] AnimationCurve curve1;
+    [SerializeField] AnimationCurve curve2;
+    [SerializeField] AnimationCurve curve3;
+    [SerializeField] AnimationCurve curve4;
+    [SerializeField] AnimationCurve curve5;
+    [SerializeField] AnimationCurve curve6;
     
     
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -26,20 +31,63 @@ public class CoinGeneration : MonoBehaviour
     }
 
     IEnumerator randomSpawn()
-    {
+    {   
+        yield return new WaitForSeconds(2);
         while(true)
         {
-            yield return new WaitForSeconds(Random.Range(2, 5));
-            CreateCurve(5, 0.4f, Random.value, curve1, 0.3f, .1f);
+            
+            int randomInt = Random.Range(0, 9);
+            switch (randomInt)
+            {
+                case 0:
+                    CreateRectangle(2, 8, Random.value, 0.1f, 0.1f, 0.1f);
+                    yield return new WaitForSeconds(Random.Range(2,6));
+                    break;
+                case 1:
+                    CreateRectangle(5, 3, Random.value, 0.1f, 0.1f, 0.1f);
+                    yield return new WaitForSeconds(Random.Range(1,5));
+                    break;
+                case 2:
+                    CreateCurve(10, 0.4f, Random.value, curve1, 0.2f, 0.2f);
+                    yield return new WaitForSeconds(Random.Range(3,7));
+                    break;
+                case 3:
+                    CreateCurve(20, 0.4f, Random.value, curve2, 0.2f, 0.2f);
+                    yield return new WaitForSeconds(Random.Range(5,9));
+                    break;
+                case 4:
+                    CreateCurve(30, 0.4f, Random.value, curve3, 0.1f, 0.2f);
+                    yield return new WaitForSeconds(Random.Range(4,8));
+                    break;
+                case 5:
+                    CreateCurve(8, 0.4f, Random.value, curve4, 0.3f, 0.5f);
+                    yield return new WaitForSeconds(Random.Range(3,7));
+                    break;
+                case 6:
+                    float r = Random.value;
+                    CreateCurve(5, 0.4f, r, curve5, 0.3f, 0.5f);
+                    CreateCurve(5, 0.4f, r, curve6, 0.3f, 0.5f);
+                    yield return new WaitForSeconds(Random.Range(2,6));
+                    break;
+                case 7:
+                    CreateWall(10);
+                    yield return new WaitForSeconds(Random.Range(2,6));
+                    break;
+                case 8:
+                    CreateWall(10);
+                    yield return new WaitForSeconds(Random.Range(2,6));
+                    break;
+                default:
+                    break;
+            }
         }
     }
 
     void CreateCoin(float height, float probabilityBig){
         GameObject newCoins;
-        if (probabilityBig == -1){
+        if (probabilityBig == -1f){
             newCoins = Instantiate(badCoinModel);
-        }
-        if (Random.value < probabilityBig){
+        } else if (Random.value < probabilityBig){
             newCoins = Instantiate(bigCoinModel);
         } else {
             newCoins = Instantiate(coinModel);
@@ -49,6 +97,7 @@ public class CoinGeneration : MonoBehaviour
     }
 
     void CreateCoins(float[] coins, float probabilityBig){
+        Debug.Log(probabilityBig);
         for (int i = 0; i < coins.Length; i++){
             CreateCoin(coins[i], probabilityBig);
         }
@@ -108,12 +157,12 @@ public class CoinGeneration : MonoBehaviour
 
     float[][] CreateCurveAux(int width, float height, float position, AnimationCurve curve){
         float[][] mat = new float[width][];
-
+        
+        float duration = curve.keys[curve.keys.Length - 1].time - curve.keys[0].time;
         for (int i = 0; i < width; i++){
-            float x = ((float)i)/(width-1);
+            float x = ((float)i)/(width-1) * duration;
             float[] temp = {1 - curve.Evaluate(x)*height - position/2};
-/*            Debug.Log(string.Format("{0}", curve.Evaluate(x)*height));
-*/            mat[i] = temp;
+            mat[i] = temp;
         }
 
         return mat;
@@ -123,6 +172,28 @@ public class CoinGeneration : MonoBehaviour
     void CreateCurve(int width, float height, float position, AnimationCurve curve, float horizontalSpace, float probabilityBig){
         float[][] coins = CreateCurveAux(width, height, position, curve);
         StartCoroutine(CoinsGeneration(coins, horizontalSpace, probabilityBig));
+    }
+
+
+    
+
+    
+
+    float[][] CreateWallAux(int height){
+        float[][] mat = new float[1][];
+        mat[0] = new float[height];
+        
+        for (int i = 0; i < height; i++){
+            mat[0][i] = ((float)i)/(height-1);
+        }
+
+        return mat;
+
+    }
+
+    void CreateWall(int height){
+        float[][] coins = CreateWallAux(height);
+        StartCoroutine(CoinsGeneration(coins, 0f, -1f));
     }
 
 }
