@@ -1,36 +1,48 @@
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerCurb : MonoBehaviour
 {
     [SerializeField] private float speed = 0.5f;
-    [SerializeField] private float xPlane = 3f;
+    [SerializeField] private LineRenderer lineRenderer;
+    private List<Vector3> curvePoints = new(); // Points de la courbe supérieure
+
+
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    void Update()
     {
-        int id = GetComponent<PlayerController>().myID;
-        transform.parent = CurbManager.m_Instance.transform;
-        transform.localPosition = -5f * Vector3.forward + id * Vector3.up;
+        curvePoints.Add(transform.position);
 
-        StartCoroutine(Update());
-
-        IEnumerator Update()
-        {
-            while(transform.position.x < xPlane)
-            {
-                transform.position += (Vector3)Vector2.right * Time.deltaTime * speed;
-                yield return 0;
-            }
-            CurbManager.m_Instance.enabled = true;
-        }
+        MoveCurvesBackward();
+        // Mettre à jour les LineRenderers
+        RenderCurves();
     }
 
-    /* Debug Tools : --------------------- 
-        private void Update()
+    void MoveCurvesBackward()
+    {
+        // Décaler tous les points vers la gauche (axe X)
+        for (int i = 0; i < curvePoints.Count; i++)
         {
-            if (Input.GetMouseButton(0)) transform.position += (Vector3)Vector2.up * Time.deltaTime;
-            if (Input.GetMouseButton(1)) transform.position += (Vector3)Vector2.down * Time.deltaTime;
+            curvePoints[i] = new Vector3(
+                curvePoints[i].x - speed * Time.deltaTime,
+                curvePoints[i].y,
+                curvePoints[i].z
+            );
         }
-     ----------------------------------- */
+
+        // Synchroniser currentX avec le dernier segment
+        /*if (curvePoints.Count > 0)
+        {
+            currentX = curvePoints[curvePoints.Count - 1].x + segmentWidth;
+        }*/
+    }
+    void RenderCurves()
+    {
+        // Appliquer les points aux LineRenderers
+        lineRenderer.positionCount = curvePoints.Count;
+        lineRenderer.SetPositions(curvePoints.ToArray());
+
+    }
 }
