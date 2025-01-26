@@ -9,13 +9,7 @@ public class AudioManager : MonoBehaviour
     [Header("Events")]
     [SerializeField] private EventReference music;
 
-    [Header("Snapshots")]
-    [SerializeField] private EventReference normalSnapshot;
-    [SerializeField] private EventReference pauseSnapshot;
-
     private FMOD.Studio.EventInstance musicInstance;
-    private FMOD.Studio.EventInstance normalSnapshotInstance;
-    private FMOD.Studio.EventInstance pauseSnapshotInstance;
 
     public static AudioManager Instance;
 
@@ -31,27 +25,21 @@ public class AudioManager : MonoBehaviour
         }
 
         musicInstance = RuntimeManager.CreateInstance(music);
-        normalSnapshotInstance = RuntimeManager.CreateInstance(normalSnapshot);
-        pauseSnapshotInstance = RuntimeManager.CreateInstance(pauseSnapshot);
     }
 
     private void Start()
     {
         musicInstance.start();
-        normalSnapshotInstance.start();
     }
 
     private void OnDestroy()
     {
         DestroyEvent(musicInstance);
-        DestroyEvent(normalSnapshotInstance);
-        DestroyEvent(pauseSnapshotInstance);
     }
 
     public void PauseMenuOpened()
     {
-        normalSnapshotInstance.stop(STOP_MODE.ALLOWFADEOUT);
-        pauseSnapshotInstance.start();
+        musicInstance.setParameterByName("Pause_Menu", 1);
     }
 
     public void EndMusic()
@@ -61,8 +49,7 @@ public class AudioManager : MonoBehaviour
     
     public void PauseMenuClosed()
     {
-        pauseSnapshotInstance.stop(STOP_MODE.ALLOWFADEOUT);
-        normalSnapshotInstance.start();
+        musicInstance.setParameterByName("Pause_Menu", 0);
     }
 
     private void DestroyEvent(EventInstance eventInstance)
