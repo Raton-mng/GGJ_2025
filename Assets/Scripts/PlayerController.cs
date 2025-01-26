@@ -7,6 +7,7 @@ using UnityEngine.InputSystem;
 public class PlayerController : MonoBehaviour
 {
     public GameObject _hud;
+    public GameObject playerHUD;
     private HealthManager _healthManager;
     private TurboManager _turboManager;
     public CoinManager coinManager;
@@ -19,13 +20,15 @@ public class PlayerController : MonoBehaviour
     private float currentTurningSpeed;
 
     [SerializeField] private float accelerateModifier;
-    [SerializeField] private float decelerateModifier;
     [SerializeField] private float turboFillDuration;
 
     private bool _isGoingUp;
     private float _boostingUse;
 
     private bool _isInversed;
+    private bool _isPushedUpward;
+    private float _pushForce;
+    
     private bool _isDead;
     
     public int myID;
@@ -40,7 +43,7 @@ public class PlayerController : MonoBehaviour
     private SpriteRenderer spriteRenderer;
 
     void Start(){
-        GameObject playerHUD = Instantiate(_hud, PlayerManager.Instance.canvas);
+        playerHUD = Instantiate(_hud, PlayerManager.Instance.canvas);
         _turboManager = playerHUD.GetComponentInChildren<TurboManager>();
         _healthManager = playerHUD.GetComponentInChildren<HealthManager>();
         coinManager = playerHUD.GetComponentInChildren<CoinManager>();
@@ -134,6 +137,9 @@ public class PlayerController : MonoBehaviour
 
         Vector3 pos = transform.localPosition;
         pos.y += dy * Time.deltaTime;
+
+        if (_isPushedUpward) pos.y += _pushForce * Time.deltaTime;
+        
         transform.localPosition = pos;
         
         return false;
@@ -194,9 +200,12 @@ public class PlayerController : MonoBehaviour
         _isInversed = false;
     }
 
-    public void AddHealth()
+    public IEnumerator PushUp(float timer, float pushForce)
     {
-        
+        _isPushedUpward = true;
+        _pushForce = pushForce;
+        yield return new WaitForSeconds(timer);
+        _isPushedUpward = false;
     }
 
     private void DieUp(){
