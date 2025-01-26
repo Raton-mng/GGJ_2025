@@ -69,7 +69,6 @@ public class PlayerController : MonoBehaviour
         currentTurningSpeed = baseTurningSpeed;
         //Debug.Log(myID);
 
-        print(myID);
 
         if (myID == 0)
         {
@@ -128,16 +127,16 @@ public class PlayerController : MonoBehaviour
         } 
         else if (_boostingUse<-0.03 && _turboManager.GetTurbo() > 0)
         {
-            Accelerate(baseHorizontalSpeed*0.5f);
+            Accelerate(baseHorizontalSpeed*0.1f);
             _turboManager.UseTurbo();
         } 
         else 
         {
             if (transform.localPosition.x < -0.1){
-                currentHorizontalSpeed = baseHorizontalSpeed*1.1f;
+                currentHorizontalSpeed = baseHorizontalSpeed*4f;
             } 
             else if (transform.localPosition.x > 0.1){
-                currentHorizontalSpeed = baseHorizontalSpeed*0.9f;
+                currentHorizontalSpeed = baseHorizontalSpeed*0.2f;
             } 
             else {   
                 currentHorizontalSpeed = baseHorizontalSpeed;
@@ -151,12 +150,15 @@ public class PlayerController : MonoBehaviour
         } else {
             GoDown(currentHorizontalSpeed, currentVerticalSpeed);
         }
-        
+
         Vector3 tempPos = transform.localPosition;
         tempPos.x += (currentHorizontalSpeed - baseHorizontalSpeed) * Time.deltaTime;
+        print(currentHorizontalSpeed);
+        print("oui :" + baseHorizontalSpeed);
         transform.localPosition = tempPos;
+        print(transform.localPosition.x);
 
-        
+
     }
 
 
