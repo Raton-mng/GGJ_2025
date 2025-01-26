@@ -130,6 +130,7 @@ public class PlayerManager : MonoBehaviour
         _players.Remove(died);
         if (_players.Count <= 1)
         {
+            AudioManager.Instance.EndMusic();
             MenuManager.Instance.MenuFin.OnGameEnd();
         }
     }

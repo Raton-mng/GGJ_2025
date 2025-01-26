@@ -1,7 +1,5 @@
-using System.Diagnostics.Contracts;
-using UnityEditor.Animations;
+
 using UnityEngine;
-using UnityEngine.UI;
 
 public class InvestmentManager : MonoBehaviour
 {
@@ -9,7 +7,7 @@ public class InvestmentManager : MonoBehaviour
 
     [SerializeField] private GameObject selectPlayerPrefab; // Nombre de contrats
 
-    [SerializeField] private AnimatorController[] selectorSprites;
+    [SerializeField] private RuntimeAnimatorController[] selectorSprites;
 
     [Header("InvestmentVariable")]
     [SerializeField] private float investTimer = 2f; // Temps pour investir
