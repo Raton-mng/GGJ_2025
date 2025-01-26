@@ -390,14 +390,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: ShopManager
       objectReference: {fileID: 0}
-    - target: {fileID: 8968440456273862278, guid: 5a7fbb420c3786b46a27b08a6f315cf8, type: 3}
-      propertyPath: blinkCount
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 8968440456273862278, guid: 5a7fbb420c3786b46a27b08a6f315cf8, type: 3}
-      propertyPath: blinkDuration
-      value: 5
-      objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 5059138648264231871, guid: 5a7fbb420c3786b46a27b08a6f315cf8, type: 3}
     m_RemovedGameObjects:

@@ -125,10 +125,13 @@ MonoBehaviour:
   cursorPrefab: {fileID: 6421635082057920429, guid: ebefc3f3826d3ce45bd8bcb71fa00b6e, type: 3}
   numberOfContracts: 4
   autoHideDelay: 5
+  timeBetweenContracts: 15
+  firstApparitionTime: 5
   effectSprites:
   - {fileID: 7675826601332790545, guid: f14db81dfcfb00b4190962617f9a5e14, type: 3}
   - {fileID: -4412926668834298731, guid: f14db81dfcfb00b4190962617f9a5e14, type: 3}
   - {fileID: 2278881825021241808, guid: f14db81dfcfb00b4190962617f9a5e14, type: 3}
+  effectCoast: 0f0000000f0000000f000000
   effectWeights:
   - 1
   - 1

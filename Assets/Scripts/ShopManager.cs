@@ -7,6 +7,8 @@ using static SingleContract;
 
 public class ShopManager : MonoBehaviour
 {
+    public static ShopManager Instance { get; private set; }
+
     [Header("Transforms for Movement")]
     public RectTransform startTransform; // Point de départ hors champ
     public RectTransform endTransform;   // Point d'arrivée visible
@@ -49,6 +51,18 @@ public class ShopManager : MonoBehaviour
     private int votedPlayer = 0; // Joueur qui a voté
     public static bool ShopActive { get; set;}
 
+    private void Awake()
+    {
+        if (Instance)
+        {
+            Destroy(this);
+        }
+        else
+        {
+            Instance = this;
+        }
+    }
+
     private void Start()
     {
         StartCoroutine(LoopContractApparance());
@@ -88,6 +102,8 @@ public class ShopManager : MonoBehaviour
 
     public void MoveCursor(int playerIndex, bool moveUp)
     {
+        if (contractsReady) return; // Vérifier si les contrats sont prêts à être sélectionnés
+
         if (playerIndex < 0 || playerIndex >= cursors.Length || cursors[playerIndex] == null) return; // Validation de l'index et vérification du curseur
 
         // Calcul du nouvel indice sélectionné
@@ -108,6 +124,8 @@ public class ShopManager : MonoBehaviour
 
     public void ActivateCardEffect(int playerIndex)
     {
+        if (contractsReady) return; // Vérifier si les contrats sont prêts à être sélectionnés
+
         if (playerIndex < 0 || playerIndex >= cursors.Length || cursors[playerIndex] == null) return; // Validation de l'index et vérification du curseur
 
         int selectedIndex = selectedIndices[playerIndex];

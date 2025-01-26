@@ -15,6 +15,15 @@
                     "initialStateCheck": true
                 },
                 {
+                    "name": "MenuSelect",
+                    "type": "Value",
+                    "id": "55680a53-9185-451d-9658-c01d6ebd3d20",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                },
+                {
                     "name": "MenuUpDown",
                     "type": "Value",
                     "id": "1668ea20-adb1-49eb-ba20-95f0698f9527",
@@ -67,6 +76,28 @@
                 },
                 {
                     "name": "",
+                    "id": "05479d59-cfbc-4d46-8553-ffd443406107",
+                    "path": "<Keyboard>/z",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard&Mouse;Keyboard1",
+                    "action": "MenuSelect",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "f13460e7-35d7-41d4-aefb-e4a6451abddb",
+                    "path": "<Gamepad>/buttonSouth",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Gamepad;Controller",
+                    "action": "MenuSelect",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
                     "id": "2018c023-e9f6-40e9-980b-79a45c68d72a",
                     "path": "<Gamepad>/leftStick/y",
                     "interactions": "",
@@ -90,7 +121,7 @@
                 {
                     "name": "negative",
                     "id": "fa57cea5-e95c-460e-ab58-041e37749242",
-                    "path": "<Keyboard>/w",
+                    "path": "<Keyboard>/e",
                     "interactions": "",
                     "processors": "",
                     "groups": ";Keyboard1",

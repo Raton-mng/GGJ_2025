@@ -114,8 +114,8 @@ public class CoinGeneration : MonoBehaviour
         for (int i = 0; i < width; i++){
             float x = ((float)i)/(width-1);
             float[] temp = {1 - curve.Evaluate(x)*height - position/2};
-            Debug.Log(string.Format("{0}", curve.Evaluate(x)*height));
-            mat[i] = temp;
+/*            Debug.Log(string.Format("{0}", curve.Evaluate(x)*height));
+*/            mat[i] = temp;
         }
 
         return mat;

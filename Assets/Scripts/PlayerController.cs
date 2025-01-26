@@ -153,6 +153,7 @@ public class PlayerController : MonoBehaviour
     public void OnPauseMenu(InputAction.CallbackContext context)
     {
         Pause.Instance.OnPauseButton();
+        Debug.Log("Pause");
     }
 
     public void LookTo(float target, float speed){
@@ -168,14 +169,29 @@ public class PlayerController : MonoBehaviour
         _isGoingUp = _isInversed ? !context.action.WasPerformedThisFrame() : context.action.WasPerformedThisFrame();
     }
 
-    public void OnMenuing(InputAction.CallbackContext context)
-    {
-        Debug.Log(context.action.ReadValue<float>());
-    }
-
     public void OnBoosting(InputAction.CallbackContext context)
     {
         _boostingUse = context.action.ReadValue<float>();
+    }
+
+    public void OnSelectMenu(InputAction.CallbackContext context)
+    {
+        print(context.action.WasPerformedThisFrame());
+        ShopManager.Instance.MoveCursor(myID, context.action.WasPerformedThisFrame());
+    }
+
+    public void OnNavigateMenu(InputAction.CallbackContext context)
+    {
+        float value = context.action.ReadValue<float>();
+        print(value);
+        if(value > 0)
+        {
+            ShopManager.Instance.MoveCursor(myID, true);
+        }
+        else if (value < 0)
+        {
+            ShopManager.Instance.MoveCursor(myID, false);
+        }
     }
 
     public IEnumerator BoostTheBoost(float boostModifierModifier, float timer)
