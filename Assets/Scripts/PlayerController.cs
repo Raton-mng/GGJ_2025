@@ -189,7 +189,7 @@ public class PlayerController : MonoBehaviour
 
     public void OnPauseMenu(InputAction.CallbackContext context)
     {
-        if (context.phase == InputActionPhase.Started) Pause.Instance.OnPauseButton();
+        if (context.phase == InputActionPhase.Started) MenuManager.Instance.MenuPause.OnPauseButton();
     }
 
     public void LookTo(float target, float speed){
@@ -255,11 +255,13 @@ public class PlayerController : MonoBehaviour
     }
 
     private void DieUp(){
+        PlayerManager.Instance.SomeoneDied(transform.parent.gameObject);
         isDeath = true;
         StartCoroutine(ExplodeUp());
     }
 
     private void DieDown(){
+        PlayerManager.Instance.SomeoneDied(transform.parent.gameObject);
         isDeath = true;
         StartCoroutine(ExplodeDown());
     }

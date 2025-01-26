@@ -46,6 +46,11 @@ public class AudioManager : MonoBehaviour
     {
         musicInstance.setParameterByName("End_Music", 1);
     }
+
+    public void SetShopParameter(int shopOpened)
+    {
+        musicInstance.setParameterByName("shop", shopOpened);
+    }
     
     public void PauseMenuClosed()
     {
