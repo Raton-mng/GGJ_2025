@@ -30,14 +30,19 @@ public class HealthManager : MonoBehaviour
         _lastDamage += Time.deltaTime;
     }
 
-    public void takeDamage()
+    public bool TakeDamage()
     {
-        if(_lastDamage > _invulnerabiltyTime)
+        if (_lastDamage > _invulnerabiltyTime)
         {
             _lastDamage = 0;
             _currentHealth--;
             _health[_currentHealth].SetActive(false);
+            if(_currentHealth == 0)
+            {
+                return true;
+            }
         }
+        return false;
     }
 
     public void AddHealth()

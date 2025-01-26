@@ -6,6 +6,7 @@ using UnityEngine.InputSystem;
 public class PlayerController : MonoBehaviour
 {
     public GameObject _hud;
+    private HealthManager _healthManager;
     private TurboManager _turboManager;
     public CoinManager coinManager;
     
@@ -38,6 +39,7 @@ public class PlayerController : MonoBehaviour
 
     void Start(){
         GameObject playerHUD = Instantiate(_hud);
+        _healthManager = playerHUD.GetComponentInChildren<HealthManager>();
         _turboManager = playerHUD.GetComponentInChildren<TurboManager>();
         coinManager = playerHUD.GetComponentInChildren<CoinManager>();
         currentHorizontalSpeed = baseHorizontalSpeed;
@@ -65,11 +67,17 @@ public class PlayerController : MonoBehaviour
         }
         if(RandomCurves.Instance.IsPlayerBelowUpperCurve(transform.position))
         {
-            DieUp();
+            if(_healthManager.TakeDamage())
+            {
+                DieUp();
+            }
         }
         else if(RandomCurves.Instance.IsPlayerAboveLowerCurve(transform.position))
         {
-            DieDown();
+            if (_healthManager.TakeDamage())
+            {
+                DieDown();
+            }
         }
         if (_boostingUse>0.03 && _turboManager.GetTurbo() > 0){
             Accelerate(baseHorizontalSpeed*2);
