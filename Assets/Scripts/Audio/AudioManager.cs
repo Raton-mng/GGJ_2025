@@ -53,6 +53,11 @@ public class AudioManager : MonoBehaviour
         normalSnapshotInstance.stop(STOP_MODE.ALLOWFADEOUT);
         pauseSnapshotInstance.start();
     }
+
+    public void EndMusic()
+    {
+        musicInstance.setParameterByName("End_Music", 1);
+    }
     
     public void PauseMenuClosed()
     {
