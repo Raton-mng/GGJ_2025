@@ -1,13 +1,15 @@
+using System;
 using System.Collections;
 using UI.Menu;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using Random = UnityEngine.Random;
 
 public class PlayerController : MonoBehaviour
 {
     public GameObject _hud;
-    public GameObject playerHUD;
+    //public GameObject playerHUD;
     private HealthManager _healthManager;
     private TurboManager _turboManager;
     public CoinManager coinManager;
@@ -41,6 +43,23 @@ public class PlayerController : MonoBehaviour
     [SerializeField] Sprite cursor3;
     [SerializeField] Sprite cursor4;
     private SpriteRenderer spriteRenderer;
+
+    private void Awake()
+    {
+        _healthManager = _hud.GetComponentInChildren<HealthManager>();
+        _turboManager = _hud.GetComponentInChildren<TurboManager>();
+        coinManager = _hud.GetComponentInChildren<CoinManager>();
+    }
+
+    public GameObject GetHUD()
+    {
+        return _hud;
+    }
+    
+    public HealthManager GetHealthManager()
+    {
+        return _healthManager;
+    }
 
     void Start(){
         currentHorizontalSpeed = baseHorizontalSpeed;

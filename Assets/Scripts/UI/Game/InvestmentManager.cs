@@ -21,7 +21,7 @@ public class InvestmentManager : MonoBehaviour
         playerCount = PlayerManager.Instance.GetPlayerCount();
         for (int i = 0; i < playerCount; i++)
         {
-            hudList[i] = PlayerManager.Instance.GetPlayer(i)._hud;
+            hudList[i] = PlayerManager.Instance.GetPlayer(i).GetHUD();
             selectedIndices[i] = i;
             GameObject cursor = Instantiate(selectPlayerPrefab);
             cursors[i] = cursor;

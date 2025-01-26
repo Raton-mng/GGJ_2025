@@ -20,8 +20,8 @@ public class HUDManager : MonoBehaviour
     {
         foreach (PlayerController player in PlayerManager.Instance.GetPlayerControllers())
         {
-            Debug.Log("HUD " + player._hud);
-            GameObject playerHUD = Instantiate(player._hud, transform);
+            Debug.Log("HUD " + player.GetHUD());
+            GameObject playerHUD = Instantiate(player.GetHUD(), transform);
             int myID = player.myID;
             if (player.myID == 0)
             {
