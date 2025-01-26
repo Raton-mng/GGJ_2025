@@ -138,10 +138,10 @@ MonoBehaviour:
   - 1
   allowDuplicateEffects: 1
   cursorSprites:
-  - {fileID: 21300000, guid: 3755683abe51d35439f50e3a4d563564, type: 3}
-  - {fileID: 21300000, guid: fca94693a6f6bc341b871878f95cc261, type: 3}
-  - {fileID: 21300000, guid: 6e238b5ef264e89469a2b7eeae578f8a, type: 3}
-  - {fileID: 21300000, guid: b21b3369f93a48e41a93281315ba6fb7, type: 3}
+  - {fileID: 1400357931147217582, guid: a71af3053e7d364499ead0dac95dd578, type: 3}
+  - {fileID: -6400503832151274853, guid: 11255f8bff0018a4eab3b6d94e347a07, type: 3}
+  - {fileID: -592599405210246335, guid: f1995ca0dade1704d94fb5f12c6510ae, type: 3}
+  - {fileID: -3631176559204462585, guid: 700c6766657f2194e8b1d493a25b5be0, type: 3}
   shopSignal: {fileID: 7269329325641942534}
   blinkDuration: 1
   blinkCount: 3

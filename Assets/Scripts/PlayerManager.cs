@@ -54,7 +54,6 @@ public class PlayerManager : MonoBehaviour
                 PlayerController pc = player.transform.GetChild(1).GetComponent<PlayerController>();
                 //Debug.Log(pc);
                 pc.myID = i;
-                print(pc.myID);
 
             }
             else

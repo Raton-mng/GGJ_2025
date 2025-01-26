@@ -100,12 +100,7 @@ public class PlayerController : MonoBehaviour
         InitDeathCurve();
     }
 
-    private void OnEnable()
-    {
-        
-    }
-
-    void Update(){
+   void Update(){
         if (isDeath){
             return;
         }
