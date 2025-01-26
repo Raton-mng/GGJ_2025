@@ -48,7 +48,7 @@ MonoBehaviour:
   testbottom: {fileID: 0}
   coinModel: {fileID: 5508627805320530930, guid: 496482575083cb24e906d7d5cb3958ee, type: 3}
   bigCoinModel: {fileID: 7277832061938324199, guid: b1864e9705b3579448d4683e78803f3a, type: 3}
-  badCoinModel: {fileID: 0}
+  badCoinModel: {fileID: 1593205458743690544, guid: 04a7fda326e9c3d4fb7319634ac6fcd5, type: 3}
   curve1:
     serializedVersion: 2
     m_Curve:

@@ -3,8 +3,7 @@ using System.Collections;
 
 public class CoinGeneration : MonoBehaviour
 {
-    public GameObject testtop;
-    public GameObject testbottom;
+    public GameObject limitCurve;
     private Rigidbody topLimit;
     private Rigidbody bottomLimit;
     private float spawnAbscissa = 5f;
@@ -12,11 +11,11 @@ public class CoinGeneration : MonoBehaviour
     [SerializeField] GameObject bigCoinModel;
     [SerializeField] GameObject badCoinModel;
     [SerializeField] AnimationCurve curve1;
+    
+    
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        topLimit = testtop.GetComponent<Rigidbody>();
-        bottomLimit = testbottom.GetComponent<Rigidbody>();
         StartCoroutine("randomSpawn");
     }
 
@@ -30,8 +29,8 @@ public class CoinGeneration : MonoBehaviour
     {
         while(true)
         {
-            yield return new WaitForSeconds(Random.Range(1, 5));
-            CreateCurve(5, 0.4f, Random.value, curve1, 0.3f, 0.5f);
+            yield return new WaitForSeconds(Random.Range(2, 5));
+            CreateCurve(5, 0.4f, Random.value, curve1, 0.3f, .1f);
         }
     }
 
@@ -55,16 +54,15 @@ public class CoinGeneration : MonoBehaviour
         }
     }
 
-    float[] GetLimits(){
-        float[] limits = new float[2];
-        limits[0] = topLimit.position.y;
-        limits[1] = bottomLimit.position.y;
+    Vector3[] GetLimits(){
+        Vector3[] limits = limitCurve.GetComponent<RandomCurves>().GetLatestPoints();
+        spawnAbscissa = limits[0].x;
         return limits;
     }
 
     float GetEquivalent(float height){
-        float[] limits = GetLimits();
-        return Mathf.Lerp(limits[0], limits[1], height);
+        Vector3[] limits = GetLimits();
+        return Mathf.Lerp(limits[0].y, limits[1].y, height);
     }
 
 
@@ -114,8 +112,8 @@ public class CoinGeneration : MonoBehaviour
         for (int i = 0; i < width; i++){
             float x = ((float)i)/(width-1);
             float[] temp = {1 - curve.Evaluate(x)*height - position/2};
-            Debug.Log(string.Format("{0}", curve.Evaluate(x)*height));
-            mat[i] = temp;
+/*            Debug.Log(string.Format("{0}", curve.Evaluate(x)*height));
+*/            mat[i] = temp;
         }
 
         return mat;

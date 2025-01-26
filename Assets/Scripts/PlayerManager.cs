@@ -52,13 +52,13 @@ public class PlayerManager : MonoBehaviour
                 player.transform.GetChild(1).gameObject.SetActive(true);
                 PlayerController pc = player.transform.GetChild(1).GetComponent<PlayerController>();
                 //Debug.Log(pc);
-                pc.myID = _players.Count;
+                pc.myID = _players.Count-1;
             }
             else
             {
                 playerChild.gameObject.SetActive(true);
                 PlayerController pc = playerChild.GetComponent<PlayerController>();
-                pc.myID = _players.Count;
+                pc.myID = _players.Count-1;
                 player.transform.GetChild(1).gameObject.SetActive(false);
             }
         }
@@ -111,6 +111,17 @@ public class PlayerManager : MonoBehaviour
         {
             PlayerController player = playerGo.GetComponentInChildren<PlayerController>();
             if (player.myID != playerID) otherPlayers.Add(player);
+        }
+        return otherPlayers;
+    }
+
+    public List<PlayerController> GetPlayerControllers()
+    {
+        List<PlayerController> otherPlayers = new List<PlayerController>();
+        foreach (GameObject playerGo in _players)
+        {
+            PlayerController player = playerGo.GetComponentInChildren<PlayerController>();
+            otherPlayers.Add(player);
         }
         return otherPlayers;
     }

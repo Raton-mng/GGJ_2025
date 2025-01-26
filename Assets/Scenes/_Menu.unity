@@ -5037,6 +5037,10 @@ PrefabInstance:
       propertyPath: m_JoinAction.m_Reference
       value: 
       objectReference: {fileID: -5109331444065623107, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
+    - target: {fileID: 3679394165856730245, guid: a9a70ff6ec62d4348ab5e6d6d9a858d5, type: 3}
+      propertyPath: canvas
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 3826086310818150307, guid: a9a70ff6ec62d4348ab5e6d6d9a858d5, type: 3}
       propertyPath: m_Name
       value: PlayerManager

@@ -90,24 +90,8 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7848403428532084940, guid: c0deed579fa74d141be7e4653cd1e892, type: 3}
-      propertyPath: m_ActionEvents.Array.size
-      value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: 7848403428532084940, guid: c0deed579fa74d141be7e4653cd1e892, type: 3}
-      propertyPath: m_ActionEvents.Array.data[3].m_ActionId
-      value: ab3e43d8-b300-44b2-afaf-f35d9e0a3ba0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7848403428532084940, guid: c0deed579fa74d141be7e4653cd1e892, type: 3}
-      propertyPath: m_ActionEvents.Array.data[4].m_ActionId
-      value: c103ed81-729e-48c4-a0e7-93eff0b9486c
-      objectReference: {fileID: 0}
-    - target: {fileID: 7848403428532084940, guid: c0deed579fa74d141be7e4653cd1e892, type: 3}
-      propertyPath: m_ActionEvents.Array.data[3].m_ActionName
-      value: 'PlayerUI/MoveInsideUI[/Keyboard/s,/Keyboard/x,/Keyboard/z,/Keyboard/c]'
-      objectReference: {fileID: 0}
-    - target: {fileID: 7848403428532084940, guid: c0deed579fa74d141be7e4653cd1e892, type: 3}
-      propertyPath: m_ActionEvents.Array.data[4].m_ActionName
-      value: 'PlayerUI/Select[/Keyboard/enter]'
+      propertyPath: m_ActionEvents.Array.data[7].m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: OnSelectMenu
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

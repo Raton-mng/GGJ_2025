@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Drawing;
 using UnityEngine;
 
 public class PlayerCurb : MonoBehaviour
@@ -8,7 +9,34 @@ public class PlayerCurb : MonoBehaviour
     [SerializeField] private LineRenderer lineRenderer;
     private List<Vector3> curvePoints = new(); // Points de la courbe supérieure
 
+    private void Start()
+    {
+        Material lineMaterial = new Material(Shader.Find("Unlit/Color"));
+        int playerId = GetComponent<PlayerController>().myID;
+        
+        switch (playerId) // Ajout des parenthèses autour de l'expression
+        {
+            case 0:
+                lineMaterial.color = UnityEngine.Color.blue;
+                break;
+            case 1:
+                lineMaterial.color = UnityEngine.Color.green;
+                break;
+            case 2:
+                lineMaterial.color = UnityEngine.Color.magenta;
+                break;
+            case 3:
+                lineMaterial.color = UnityEngine.Color.red;
+                break;
+            default:
+                lineMaterial.color = UnityEngine.Color.white; // Couleur par défaut
+                break;
+        }
+        lineRenderer.material = lineMaterial;
 
+        lineRenderer.startWidth = 0.5f;
+        lineRenderer.endWidth = 0.5f;
+    }
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Update()

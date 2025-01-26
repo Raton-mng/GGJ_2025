@@ -48,10 +48,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9703780b4148ffd47857ead7078d6cbe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  segmentWidth: 1
-  maxSlope: 3
-  initialHeightMin: 1
-  initialHeightMax: 5
+  segmentWidth: 5
+  maxSlope: 0
+  initialHeightMin: 8
+  initialHeightMax: 8
   minCurveSpacing: 20
   maxCurveSeparation: 40
   removalOffset: 50
@@ -435,7 +435,7 @@ LineRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: -100
   m_Positions:
   - {x: 0, y: 0, z: 0}
   - {x: 0, y: 0, z: 1}

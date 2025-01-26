@@ -102,7 +102,7 @@ public class SingleContract : MonoBehaviour
     private void MoreLife(int playerID)
     {
         PlayerController player =  _playerManager.GetPlayer(playerID);
-        player.playerHUD.GetComponentInChildren<HealthManager>().AddHealth();
+        player.GetHealthManager().AddHealth();
     }
     
     private void ReverseControls(int playerID)
