@@ -58,7 +58,7 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     serializedVersion: 2
-    filterMode: 1
+    filterMode: 0
     aniso: 1
     mipBias: 0
     wrapU: 1
@@ -125,9 +125,9 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 0
-        y: 7
-        width: 5
-        height: 5
+        y: 0
+        width: 12
+        height: 12
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -146,10 +146,10 @@ TextureImporter:
       name: purpleselector_1
       rect:
         serializedVersion: 2
-        x: 7
-        y: 7
-        width: 6
-        height: 5
+        x: 12
+        y: 0
+        width: 12
+        height: 12
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -164,143 +164,11 @@ TextureImporter:
       indices: 
       edges: []
       weights: []
-    - serializedVersion: 2
-      name: purpleselector_2
-      rect:
-        serializedVersion: 2
-        x: 12
-        y: 6
-        width: 6
-        height: 6
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: d3e155781ffc3d8a0800000000000000
-      internalID: -6281448418987139523
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: purpleselector_3
-      rect:
-        serializedVersion: 2
-        x: 18
-        y: 6
-        width: 6
-        height: 6
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: e69874cdfbe976810800000000000000
-      internalID: 1758548726383085934
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: purpleselector_4
-      rect:
-        serializedVersion: 2
-        x: 0
-        y: 0
-        width: 5
-        height: 5
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 3c6cd7538febf61e0800000000000000
-      internalID: -2202331719502281021
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: purpleselector_5
-      rect:
-        serializedVersion: 2
-        x: 7
-        y: 0
-        width: 6
-        height: 5
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: f7faf198609990b30800000000000000
-      internalID: 4254099576377552767
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: purpleselector_6
-      rect:
-        serializedVersion: 2
-        x: 12
-        y: 0
-        width: 6
-        height: 6
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: e82b0b9a813605010800000000000000
-      internalID: 1175548460320993934
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: purpleselector_7
-      rect:
-        serializedVersion: 2
-        x: 18
-        y: 0
-        width: 6
-        height: 6
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 5d4e03be3e01d6720800000000000000
-      internalID: 2840945511030121685
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
     outline: []
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 
+    spriteID: c730b9a1b20b37d4d8d634fafaec3b6f
     internalID: 0
     vertices: []
     indices: 
@@ -312,12 +180,6 @@ TextureImporter:
     nameFileIdTable:
       purpleselector_0: -5084796475973565317
       purpleselector_1: -2084476346907442191
-      purpleselector_2: -6281448418987139523
-      purpleselector_3: 1758548726383085934
-      purpleselector_4: -2202331719502281021
-      purpleselector_5: 4254099576377552767
-      purpleselector_6: 1175548460320993934
-      purpleselector_7: 2840945511030121685
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

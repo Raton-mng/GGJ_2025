@@ -36,33 +36,28 @@ public class PlayerManager : MonoBehaviour
     private void OnLoad(Scene scene, LoadSceneMode lsm)
     {
         //Debug.Log(_players.Count);
-        List<GameObject> playersCopy = new List<GameObject>(_players);
-        for (int i = 0; i < playersCopy.Count; i++)
+        for (int i = 0; i < _players.Count; i++)
         {
-            GameObject player = playersCopy[i];
+            GameObject player = _players[i];
             //Debug.Log("_players : " + _players.Count);
             //Debug.Log("playersCopy : " + playersCopy.Count);
             Transform playerChild = player.transform.GetChild(0);
             if (playerChild.TryGetComponent(out PlayerStartController psc))
             {
-                //Debug.Log(player);
-                //Debug.Log(playerChild);
                 playerChild.gameObject.SetActive(false);
-                //Debug.Log(playerChild);
-                //Debug.Log(transform.GetChild(1).gameObject);
                 player.transform.GetChild(1).gameObject.SetActive(true);
                 PlayerController pc = player.transform.GetChild(1).GetComponent<PlayerController>();
-                //Debug.Log(pc);
                 pc.myID = i;
-
             }
-            else
+            else //ne se passe pas normalement
             {
                 playerChild.gameObject.SetActive(true);
                 PlayerController pc = playerChild.GetComponent<PlayerController>();
                 pc.myID = i;
                 player.transform.GetChild(1).gameObject.SetActive(false);
             }
+            player.GetComponent<PlayerInput>().actions.FindActionMap("Player").Enable();
+            player.GetComponent<PlayerInput>().actions.FindActionMap("PlayerUI").Disable();
         }
         //Debug.Log("_players : " + _players.Count);
         //Debug.Log("playersCopy : " + playersCopy.Count);
@@ -70,7 +65,9 @@ public class PlayerManager : MonoBehaviour
 
     public void OnAddPlayer(PlayerInput newInput)
     {
-        GameObject player = newInput.transform.parent.gameObject;
+        newInput.actions.FindActionMap("Player").Disable();
+        
+        GameObject player = newInput.gameObject;
         
         DontDestroyOnLoad(player);
         //player.transform.SetParent(transform);
@@ -82,7 +79,7 @@ public class PlayerManager : MonoBehaviour
 
     public void OnRemovePlayer(PlayerInput removedInput)
     {
-        _players.Remove(removedInput.transform.parent.gameObject);
+        _players.Remove(removedInput.gameObject);
     }
 
     public PlayerController GetPlayer(int playerID)

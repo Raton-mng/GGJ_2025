@@ -83,7 +83,7 @@ namespace UI.Menu
 
         public void AssignPlayerID(PlayerInput playerInput)
         {
-            playerInput.gameObject.GetComponent<PlayerStartController>().SetID(nbPlayerJoined++);
+            playerInput.gameObject.GetComponentInChildren<PlayerStartController>().SetID(nbPlayerJoined++);
         }
         
     }
