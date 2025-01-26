@@ -189,15 +189,19 @@ public class PlayerController : MonoBehaviour
 
     public void OnNavigateMenu(InputAction.CallbackContext context)
     {
-        float value = context.action.ReadValue<float>();
-        print(value);
-        if(value > 0)
+        if (context.phase == InputActionPhase.Started)
         {
-            ShopManager.Instance.MoveCursor(myID, true);
-        }
-        else if (value < 0)
-        {
-            ShopManager.Instance.MoveCursor(myID, false);
+            float value = context.action.ReadValue<float>();
+            print(value);
+
+            if (value > 0)
+            {
+                ShopManager.Instance.MoveCursor(myID, true);
+            }
+            else if (value < 0)
+            {
+                ShopManager.Instance.MoveCursor(myID, false);
+            }
         }
     }
 

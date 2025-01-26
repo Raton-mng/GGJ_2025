@@ -101,7 +101,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ba4520034b656fa458bd43ebf6a5d1d7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  value: 0
+  value: 1
+  type: 1
+  coinEvent:
+    Guid:
+      Data1: -756680719
+      Data2: 1288515894
+      Data3: -1741897309
+      Data4: -49144338
+    Path: event:/Coins
 --- !u!65 &6357108797513987562
 BoxCollider:
   m_ObjectHideFlags: 0
