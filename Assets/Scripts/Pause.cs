@@ -7,20 +7,6 @@ public class Pause : MonoBehaviour
     
     [SerializeField] private GameObject pauseMenu;
     
-    public static Pause Instance;
-    
-    private void Awake()
-    {
-        if (Instance)
-        {
-            Destroy(this);
-        }
-        else
-        {
-            Instance = this;
-        }
-    }
-    
     
     // Executé quand le binding de pause est trigger
     public void OnPauseButton()

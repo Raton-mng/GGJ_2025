@@ -125,6 +125,15 @@ public class PlayerManager : MonoBehaviour
         return otherPlayers;
     }
 
+    public void SomeoneDied(GameObject died)
+    {
+        _players.Remove(died);
+        if (_players.Count <= 1)
+        {
+            MenuManager.Instance.MenuFin.OnGameEnd();
+        }
+    }
+
     public List<GameObject> GetPlayers()
     {
         return _players;
