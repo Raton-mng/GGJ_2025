@@ -1266,6 +1266,18 @@ PrefabInstance:
       propertyPath: speed
       value: 5
       objectReference: {fileID: 0}
+    - target: {fileID: 1720625892491883784, guid: 1a7686198900dbd4980a87ae689fad2f, type: 3}
+      propertyPath: m_Time
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 3069080706920523825, guid: 1a7686198900dbd4980a87ae689fad2f, type: 3}
+      propertyPath: m_Time
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 3698126516468955042, guid: 1a7686198900dbd4980a87ae689fad2f, type: 3}
+      propertyPath: m_Time
+      value: 20
+      objectReference: {fileID: 0}
     - target: {fileID: 6159948094451974691, guid: 1a7686198900dbd4980a87ae689fad2f, type: 3}
       propertyPath: scale
       value: 2

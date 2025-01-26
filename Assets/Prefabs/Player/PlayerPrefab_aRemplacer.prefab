@@ -345,7 +345,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a3d20b7696d11af47a855a407c9c9491, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _hud: {fileID: 8715606349471961274, guid: b004bdba3b85e02448e985e5a9b3a783, type: 3}
+  _hud: {fileID: 8092953961921642342, guid: fc28840d8ae47b34789fdb8b7a4a3404, type: 3}
   coinManager: {fileID: 0}
   baseHorizontalSpeed: 10
   baseVerticalSpeed: 10
