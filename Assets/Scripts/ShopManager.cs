@@ -1,9 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
-using UnityEditor.Animations;
 using UnityEngine;
-using UnityEngine.UI;
 using static SingleContract;
 
 public class ShopManager : MonoBehaviour
@@ -35,7 +32,7 @@ public class ShopManager : MonoBehaviour
     public bool allowDuplicateEffects; // Permettre des effets dupliqués
 
     [Header("Multiplayer Settings")]
-    public AnimatorController[] cursorSprites; // Sprites pour différencier les curseurs
+    public RuntimeAnimatorController[] cursorSprites; // Sprites pour différencier les curseurs
     private GameObject[] cursors;  // Tableau pour stocker les curseurs
     private int[] selectedIndices; // Indices sélectionnés pour chaque joueur
 

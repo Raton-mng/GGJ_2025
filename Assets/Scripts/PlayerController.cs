@@ -44,6 +44,8 @@ public class PlayerController : MonoBehaviour
     [SerializeField] Sprite cursor4;
     [SerializeField] private SpriteRenderer spriteRenderer;
 
+    private bool hasMadeFirstMove = false;
+
     private void Awake()
     {
         _healthManager = _hud.GetComponentInChildren<HealthManager>();
@@ -145,10 +147,13 @@ public class PlayerController : MonoBehaviour
                 transform.localPosition = pos;
             }
         }
-        if (_isGoingUp){
+        if (_isGoingUp)
+        {
+            hasMadeFirstMove = true;
             GoUp(currentHorizontalSpeed, currentVerticalSpeed);
         } else {
-            GoDown(currentHorizontalSpeed, currentVerticalSpeed);
+            if(hasMadeFirstMove)
+                GoDown(currentHorizontalSpeed, currentVerticalSpeed);
         }
 
         Vector3 tempPos = transform.localPosition;
