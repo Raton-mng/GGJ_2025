@@ -77,32 +77,9 @@ public class ShopManager : MonoBehaviour
         StartCoroutine(LoopContractApparance());
     }
 
-    private void Update()
-    {
-        if(Input.GetKeyDown(KeyCode.Space))
-        {
-        }
-        if (contractsReady)
-        {
-            if (Input.GetKeyDown(KeyCode.Z)) MoveCursor(0, false);  // Exemple pour le joueur 1, monter
-            if (Input.GetKeyDown(KeyCode.S)) MoveCursor(0, true); // Exemple pour le joueur 1, descendre
-            if (Input.GetKeyDown(KeyCode.UpArrow)) MoveCursor(1, false);  // Exemple pour le joueur 2, monter
-            if (Input.GetKeyDown(KeyCode.DownArrow)) MoveCursor(1, true); // Exemple pour le joueur 2, descendre
-        }
-
-        if (contractsReady)
-        {
-            // Exemple pour le joueur 1
-            if (Input.GetKeyDown(KeyCode.A)) ActivateCardEffect(0);
-
-            // Ajoute d'autres contrôles pour d'autres joueurs
-            if (Input.GetKeyDown(KeyCode.K)) ActivateCardEffect(1);
-        }
-    }
-
     public void MoveCursor(int playerIndex, bool moveUp)
     {
-        if (contractsReady) return; // Vérifier si les contrats sont prêts à être sélectionnés
+        if (!contractsReady) return; // Vérifier si les contrats sont prêts à être sélectionnés
 
         if (playerIndex < 0 || playerIndex >= cursors.Length || cursors[playerIndex] == null) return; // Validation de l'index et vérification du curseur
 
@@ -124,7 +101,7 @@ public class ShopManager : MonoBehaviour
 
     public void ActivateCardEffect(int playerIndex)
     {
-        if (contractsReady) return; // Vérifier si les contrats sont prêts à être sélectionnés
+        if (!contractsReady) return; // Vérifier si les contrats sont prêts à être sélectionnés
 
         if (playerIndex < 0 || playerIndex >= cursors.Length || cursors[playerIndex] == null) return; // Validation de l'index et vérification du curseur
 
