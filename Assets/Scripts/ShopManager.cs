@@ -170,6 +170,7 @@ public class ShopManager : MonoBehaviour
         {
             // Une fois que le shop doit apparaître (avant la fin totale du clignotement), le shop commence à se générer
             StartShopAppearance();
+            AudioManager.Instance.SetShopParameter(1);
         }));
     }
 
@@ -248,9 +249,11 @@ public class ShopManager : MonoBehaviour
             elapsedTime += Time.deltaTime;
             yield return null;
         }
-
+        
         // Si le délai est écoulé sans sélection, cacher les contrats et le curseur
         StartCoroutine(HideContractsAndCursors());
+        AudioManager.Instance.SetShopParameter(0);
+        
     }
 
     private IEnumerator SlideContracts()
