@@ -115,6 +115,17 @@ public class PlayerManager : MonoBehaviour
         return otherPlayers;
     }
 
+    public List<PlayerController> GetPlayerControllers()
+    {
+        List<PlayerController> otherPlayers = new List<PlayerController>();
+        foreach (GameObject playerGo in _players)
+        {
+            PlayerController player = playerGo.GetComponentInChildren<PlayerController>();
+            otherPlayers.Add(player);
+        }
+        return otherPlayers;
+    }
+
     public List<GameObject> GetPlayers()
     {
         return _players;

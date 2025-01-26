@@ -43,10 +43,6 @@ public class PlayerController : MonoBehaviour
     private SpriteRenderer spriteRenderer;
 
     void Start(){
-        playerHUD = Instantiate(_hud, PlayerManager.Instance.canvas);
-        _turboManager = playerHUD.GetComponentInChildren<TurboManager>();
-        _healthManager = playerHUD.GetComponentInChildren<HealthManager>();
-        coinManager = playerHUD.GetComponentInChildren<CoinManager>();
         currentHorizontalSpeed = baseHorizontalSpeed;
         currentVerticalSpeed = baseVerticalSpeed;
         currentTurningSpeed = baseTurningSpeed;
@@ -55,19 +51,15 @@ public class PlayerController : MonoBehaviour
         //Debug.Log(myID);
         if (myID == 1){
             spriteRenderer.sprite = cursor1;
-            playerHUD.transform.position = new Vector3(283, 895, 0);
         }
         else if (myID == 2){
             spriteRenderer.sprite = cursor2;
-            playerHUD.transform.position = new Vector3(1618, 914, 0);
         }
         else if (myID == 3){
             spriteRenderer.sprite = cursor3;
-            playerHUD.transform.position = new Vector3(283, 145, 0);
         }
         else if (myID == 4){
             spriteRenderer.sprite = cursor4;
-            playerHUD.transform.position = new Vector3(1618, 145, 0);
         }
 
         InitDeathCurve();
