@@ -5,8 +5,8 @@ public class CoinGeneration : MonoBehaviour
 {
     public GameObject testtop;
     public GameObject testbottom;
-    private Rigidbody2D topLimit;
-    private Rigidbody2D bottomLimit;
+    private Rigidbody topLimit;
+    private Rigidbody bottomLimit;
     private float spawnAbscissa = 5f;
     [SerializeField] GameObject coinModel;
     [SerializeField] GameObject bigCoinModel;
@@ -15,8 +15,8 @@ public class CoinGeneration : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        topLimit = testtop.GetComponent<Rigidbody2D>();
-        bottomLimit = testbottom.GetComponent<Rigidbody2D>();
+        topLimit = testtop.GetComponent<Rigidbody>();
+        bottomLimit = testbottom.GetComponent<Rigidbody>();
         StartCoroutine("randomSpawn");
     }
 
