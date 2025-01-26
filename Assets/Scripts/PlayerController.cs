@@ -192,7 +192,7 @@ public class PlayerController : MonoBehaviour
         if (context.phase == InputActionPhase.Started)
         {
             float value = context.action.ReadValue<float>();
-            print(value);
+            //print(value);
 
             if (value > 0)
             {

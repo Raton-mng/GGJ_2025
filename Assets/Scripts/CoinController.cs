@@ -7,7 +7,7 @@ public class CoinController : MonoBehaviour
         COIN, BIG_COIN, BAD_COIN
     }
     
-    private float speed = 5f;
+    [SerializeField]  private float speed = 5f;
     [SerializeField] int value;
     [SerializeField] private CoinType type;
     
