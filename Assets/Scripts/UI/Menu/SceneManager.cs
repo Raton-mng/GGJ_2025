@@ -22,7 +22,7 @@ namespace UI.Menu
 
         public static void StartGame()
         {
-            UnityEngine.SceneManagement.SceneManager.LoadScene("ValT");
+            UnityEngine.SceneManagement.SceneManager.LoadScene("_Main");
         }
 
         public static void MainMenu()
