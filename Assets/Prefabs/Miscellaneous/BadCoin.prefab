@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 9124646097997513641}
   - component: {fileID: 6951052895672418028}
   - component: {fileID: 6967055149733979974}
+  - component: {fileID: -4159187510635397298}
   m_Layer: 0
   m_Name: BadCoin
   m_TagString: Untagged
@@ -133,3 +134,24 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!65 &-4159187510635397298
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1593205458743690544}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.59999996, y: 0.39999998, z: 0.2}
+  m_Center: {x: 0, y: 0.19999999, z: 0}
