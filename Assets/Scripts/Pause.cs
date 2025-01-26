@@ -6,9 +6,9 @@ public class Pause : MonoBehaviour
     private bool isPaused = true;
     
     [SerializeField] private GameObject pauseMenu;
-
+    
     public static Pause Instance;
-
+    
     private void Awake()
     {
         if (Instance)
@@ -25,6 +25,7 @@ public class Pause : MonoBehaviour
     // Executé quand le binding de pause est trigger
     public void OnPauseButton()
     {
+        Debug.Log("OnPauseButton");
         if (!isPaused)
         {
             isPaused = true;

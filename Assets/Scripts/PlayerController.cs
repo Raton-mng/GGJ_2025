@@ -152,7 +152,8 @@ public class PlayerController : MonoBehaviour
 
     public void OnPauseMenu(InputAction.CallbackContext context)
     {
-        Pause.Instance.OnPauseButton();
+        Debug.Log("OnPauseMenubutton");
+        if (context.phase == InputActionPhase.Started) Pause.Instance.OnPauseButton();
     }
 
     public void LookTo(float target, float speed){
