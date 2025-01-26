@@ -1,4 +1,5 @@
 using System.Collections;
+using UI.Menu;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -19,6 +20,7 @@ public class PlayerController : MonoBehaviour
 
     [SerializeField] private float accelerateModifier;
     [SerializeField] private float decelerateModifier;
+    [SerializeField] private float turboFillDuration;
 
     private bool _isGoingUp;
     private float _boostingUse;
@@ -78,6 +80,10 @@ public class PlayerController : MonoBehaviour
             {
                 DieDown();
             }
+        }
+        else if(RandomCurves.Instance.IsPlayerInRedZone(transform.position))
+        {
+            _turboManager.GainTurbo(Time.deltaTime / turboFillDuration);
         }
         if (_boostingUse>0.03 && _turboManager.GetTurbo() > 0){
             Accelerate(baseHorizontalSpeed*2);

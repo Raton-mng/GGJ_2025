@@ -33,6 +33,6 @@ public class TurboArea : MonoBehaviour
 
     private void OnTrailCollision()
     {
-        coll.otherRb.GetComponent<TurboManager>().GainTurbo( Time.deltaTime / turboFillDuration );
+        
     }
 }

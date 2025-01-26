@@ -19,6 +19,9 @@ public class RandomCurves : MonoBehaviour
     [Header("Line Renderer")]
     public LineRenderer upperCurveRenderer; // Renderer pour la courbe supérieure
     public LineRenderer lowerCurveRenderer; // Renderer pour la courbe inférieure
+    public LineRenderer redZoneRenderer;
+    public MeshFilter redZoneMeshFilter;
+    public MeshRenderer redZoneMeshRenderer;
 
     [Header("Dynamic Curve Settings")]
     public float movementSpeed = 5f; // Vitesse à laquelle les courbes reculent (unités par seconde)
@@ -185,6 +188,44 @@ public class RandomCurves : MonoBehaviour
 
         lowerCurveRenderer.positionCount = lowerCurvePoints.Count;
         lowerCurveRenderer.SetPositions(lowerCurvePoints.ToArray());
+
+        // Dessiner la zone rouge
+        DrawRedZone();
+    }
+
+    void DrawRedZone()
+    {
+        Mesh mesh = new();
+        List<Vector3> vertices = new();
+        List<int> triangles = new();
+
+        for (int i = 0; i < upperCurvePoints.Count; i++)
+        {
+            float upperY = upperCurvePoints[i].y;
+            float lowerY = lowerCurvePoints[i].y;
+            float redZoneY = lowerY + (upperY - lowerY) * 0.8f; // Calculer les 20% en haut
+
+            vertices.Add(new Vector3(upperCurvePoints[i].x, redZoneY, 0f));
+            vertices.Add(new Vector3(upperCurvePoints[i].x, upperY, 0f));
+
+            if (i < upperCurvePoints.Count - 1)
+            {
+                int startIndex = i * 2;
+                triangles.Add(startIndex);
+                triangles.Add(startIndex + 1);
+                triangles.Add(startIndex + 2);
+
+                triangles.Add(startIndex + 1);
+                triangles.Add(startIndex + 3);
+                triangles.Add(startIndex + 2);
+            }
+        }
+
+        mesh.vertices = vertices.ToArray();
+        mesh.triangles = triangles.ToArray();
+        mesh.RecalculateNormals();
+
+        redZoneMeshFilter.mesh = mesh;
     }
 
     public bool IsPlayerAboveLowerCurve(Vector3 playerPosition)
@@ -221,6 +262,26 @@ public class RandomCurves : MonoBehaviour
         }
 
         return true;
+    }
+
+    public bool IsPlayerInRedZone(Vector3 playerPosition)
+    {
+        float x = playerPosition.x;
+
+        for (int i = 0; i < upperCurvePoints.Count - 1; i++)
+        {
+            if (x >= upperCurvePoints[i].x && x <= upperCurvePoints[i + 1].x)
+            {
+                float t = (x - upperCurvePoints[i].x) / (upperCurvePoints[i + 1].x - upperCurvePoints[i].x);
+                float upperY = Mathf.Lerp(upperCurvePoints[i].y, upperCurvePoints[i + 1].y, t);
+                float lowerY = Mathf.Lerp(lowerCurvePoints[i].y, lowerCurvePoints[i + 1].y, t);
+                float redZoneY = lowerY + (upperY - lowerY) * 0.8f;
+
+                return playerPosition.y > redZoneY && playerPosition.y < upperY;
+            }
+        }
+
+        return false;
     }
 
     public float GetHighestPoint()
