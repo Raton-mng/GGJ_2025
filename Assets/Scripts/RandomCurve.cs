@@ -61,8 +61,12 @@ public class RandomCurves : MonoBehaviour
         GenerateInitialSegments(10);
 
         // Configurer les LineRenderers
-        ConfigureLineRenderer(upperCurveRenderer, Color.red, 0.1f);
-        ConfigureLineRenderer(lowerCurveRenderer, Color.blue, 0.1f);
+        ConfigureLineRenderer(upperCurveRenderer, Color.red, 1f);
+        ConfigureLineRenderer(lowerCurveRenderer, Color.blue, 1f);
+
+
+        // Lancer la coroutine pour augmenter les paramètres
+        StartCoroutine(IncreaseParameters());
 
     }
 
@@ -82,6 +86,13 @@ public class RandomCurves : MonoBehaviour
 
         // Mettre à jour les LineRenderers
         RenderCurves();
+    }
+
+    private IEnumerator IncreaseParameters()
+    {
+        yield return new WaitForSeconds(6f);
+        maxSlope += 0.5f;
+        segmentWidth += 0.5f;
     }
 
 

@@ -126,7 +126,7 @@ LineRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: -10
   m_Positions:
   - {x: 0, y: 0, z: 0}
   - {x: 0, y: 0, z: 1}
@@ -362,12 +362,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _hud: {fileID: 8092953961921642342, guid: fc28840d8ae47b34789fdb8b7a4a3404, type: 3}
+  playerHUD: {fileID: 0}
   coinManager: {fileID: 0}
   baseHorizontalSpeed: 10
   baseVerticalSpeed: 10
   baseTurningSpeed: 600
   accelerateModifier: 0
-  decelerateModifier: 0
   turboFillDuration: 1
   myID: 0
   isDeath: 0
