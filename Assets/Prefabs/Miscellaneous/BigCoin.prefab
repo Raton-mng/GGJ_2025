@@ -103,7 +103,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 25
-  value: 1
+  value: 5
   type: 1
   coinEvent:
     Guid:

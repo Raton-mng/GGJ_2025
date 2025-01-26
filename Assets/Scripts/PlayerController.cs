@@ -56,6 +56,14 @@ public class PlayerController : MonoBehaviour
         return _hud;
     }
     
+    public void SetHUD(GameObject hud)
+    {
+        _hud = hud;
+        _healthManager = _hud.GetComponentInChildren<HealthManager>();
+        _turboManager = _hud.GetComponentInChildren<TurboManager>();
+        coinManager = _hud.GetComponentInChildren<CoinManager>();
+    }
+    
     public HealthManager GetHealthManager()
     {
         return _healthManager;
