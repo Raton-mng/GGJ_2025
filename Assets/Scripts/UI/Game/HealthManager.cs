@@ -39,6 +39,7 @@ public class HealthManager : MonoBehaviour
             _health[_currentHealth].SetActive(false);
             if(_currentHealth == 0)
             {
+                AudioManager.Instance.EndMusic();
                 return true;
             }
         }
