@@ -101,7 +101,8 @@ public class SingleContract : MonoBehaviour
     
     private void MoreLife(int playerID)
     {
-        
+        PlayerController player =  _playerManager.GetPlayer(playerID);
+        player._hud.GetComponentInChildren<HealthManager>();
     }
     
     private void ReverseControls(int playerID)
@@ -109,7 +110,7 @@ public class SingleContract : MonoBehaviour
         List<PlayerController> otherPlayers = _playerManager.GetOtherPlayers(playerID);
         foreach (PlayerController otherPlayer in otherPlayers)
         {
-            
+            StartCoroutine(otherPlayer.InverseControls(6));
         }
     }
     

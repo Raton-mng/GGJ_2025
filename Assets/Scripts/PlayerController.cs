@@ -50,19 +50,19 @@ public class PlayerController : MonoBehaviour
 
         spriteRenderer = GetComponent<SpriteRenderer>();
         Debug.Log(myID);
-        if (myID == 0){
+        if (myID == 1){
             spriteRenderer.sprite = cursor1;
             playerHUD.transform.position = new Vector3(283, 895, 0);
         }
-        else if (myID == 1){
+        else if (myID == 2){
             spriteRenderer.sprite = cursor2;
             playerHUD.transform.position = new Vector3(1618, 914, 0);
         }
-        else if (myID == 2){
+        else if (myID == 3){
             spriteRenderer.sprite = cursor3;
             playerHUD.transform.position = new Vector3(283, 145, 0);
         }
-        else if (myID == 3){
+        else if (myID == 4){
             spriteRenderer.sprite = cursor4;
             playerHUD.transform.position = new Vector3(1618, 145, 0);
         }
@@ -192,6 +192,11 @@ public class PlayerController : MonoBehaviour
         _isInversed = true;
         yield return new WaitForSeconds(timer);
         _isInversed = false;
+    }
+
+    public void AddHealth()
+    {
+        
     }
 
     private void DieUp(){

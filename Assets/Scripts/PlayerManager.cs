@@ -36,10 +36,11 @@ public class PlayerManager : MonoBehaviour
     private void OnLoad(Scene scene, LoadSceneMode lsm)
     {
         //Debug.Log(_players.Count);
-        for (int i = 0; i < _players.Count; i++)
+        List<GameObject> playersCopy = new List<GameObject>(_players);
+        foreach (GameObject player in playersCopy)
         {
-            //Debug.Log(_players.Count + "; i = " + i);
-            GameObject player = _players[i];
+            //Debug.Log("_players : " + _players.Count);
+            //Debug.Log("playersCopy : " + playersCopy.Count);
             Transform playerChild = player.transform.GetChild(0);
             if (playerChild.TryGetComponent(out PlayerStartController psc))
             {
@@ -61,6 +62,8 @@ public class PlayerManager : MonoBehaviour
                 player.transform.GetChild(1).gameObject.SetActive(false);
             }
         }
+        //Debug.Log("_players : " + _players.Count);
+        //Debug.Log("playersCopy : " + playersCopy.Count);
     }
 
     public void OnAddPlayer(PlayerInput newInput)
