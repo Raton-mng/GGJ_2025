@@ -52,7 +52,7 @@ public class PlayerController : MonoBehaviour
         currentTurningSpeed = baseTurningSpeed;
 
         spriteRenderer = GetComponent<SpriteRenderer>();
-        Debug.Log(myID);
+        //Debug.Log(myID);
         if (myID == 1){
             spriteRenderer.sprite = cursor1;
             playerHUD.transform.position = new Vector3(283, 895, 0);

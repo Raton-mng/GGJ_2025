@@ -31,8 +31,9 @@ public class CoinController : MonoBehaviour
     }
 
     void OnTriggerEnter(Collider col){
-        PlayerController player = col.GetComponent<PlayerController>();
-        CoinManager wallet = player.coinManager;
+        col.TryGetComponent(typeof(PlayerController), out Component player);
+        if (!player) return;
+        CoinManager wallet = ((PlayerController) player).coinManager;
         wallet.EarnCoins(value);
         PlayCoinSound();
         Destroy(gameObject);

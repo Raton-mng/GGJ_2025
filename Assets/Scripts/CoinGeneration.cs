@@ -29,8 +29,8 @@ public class CoinGeneration : MonoBehaviour
     {
         while(true)
         {
-            yield return new WaitForSeconds(Random.Range(1, 5));
-            CreateCurve(5, 0.4f, Random.value, curve1, 0.3f, 0.5f);
+            yield return new WaitForSeconds(Random.Range(2, 5));
+            CreateCurve(5, 0.4f, Random.value, curve1, 0.3f, .1f);
         }
     }
 
