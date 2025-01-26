@@ -91,6 +91,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   outline: {fileID: 9169565074885151954}
+  outlinesPlayerList:
+  - {fileID: 3553346464115712515, guid: 1765fd23f80816e47be6c2906f2895ff, type: 3}
+  - {fileID: 7675826601332790545, guid: d09cde417bbed664bb552db0b77b759b, type: 3}
+  - {fileID: 7675826601332790545, guid: c9951385e3577674790dadfa000bb92c, type: 3}
+  - {fileID: 7675826601332790545, guid: eed2fe10c888b944abf17d9dbce23787, type: 3}
 --- !u!1 &6695155146957283792
 GameObject:
   m_ObjectHideFlags: 0
@@ -330,6 +335,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1909510855518787007, guid: 2d270c246f9c6e6438029dba8dfff599, type: 3}
+      propertyPath: m_Type
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1909510855518787007, guid: 2d270c246f9c6e6438029dba8dfff599, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 3553346464115712515, guid: 1765fd23f80816e47be6c2906f2895ff, type: 3}
     - target: {fileID: 7363195571956366839, guid: 2d270c246f9c6e6438029dba8dfff599, type: 3}
       propertyPath: m_Name
       value: CellOutline
