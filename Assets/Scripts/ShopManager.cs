@@ -47,7 +47,7 @@ public class ShopManager : MonoBehaviour
     private bool contractsReady = false;
     private readonly List<ContractEffect> assignedEffects = new();
     private Coroutine autoHideCoroutine; // Référence à la coroutine de disparition automatique
-    private int playerCount = 2; // Nombre de joueurs (variable static du script PlayerController)
+    private int playerCount; // Nombre de joueurs (variable static du script PlayerController)
     private int votedPlayer = 0; // Joueur qui a voté
     public static bool ShopActive { get; set;}
 
@@ -66,6 +66,7 @@ public class ShopManager : MonoBehaviour
     private void Start()
     {
         StartCoroutine(LoopContractApparance());
+        playerCount = PlayerManager.Instance.GetPlayerCount();
     }
 
     private IEnumerator LoopContractApparance()
@@ -77,20 +78,19 @@ public class ShopManager : MonoBehaviour
         StartCoroutine(LoopContractApparance());
     }
 
-    public void MoveCursor(int playerIndex, bool moveUp)
+    public void MoveCursor(int playerIndex, float moveUp)
     {
+
         if (!contractsReady) return; // Vérifier si les contrats sont prêts à être sélectionnés
 
         if (playerIndex < 0 || playerIndex >= cursors.Length || cursors[playerIndex] == null) return; // Validation de l'index et vérification du curseur
-
         // Calcul du nouvel indice sélectionné
-        int direction = moveUp ? -1 : 1; // Haut (-1) ou bas (+1)
-        int newIndex = (selectedIndices[playerIndex] + direction + numberOfContracts) % numberOfContracts;
+        int newIndex = (selectedIndices[playerIndex] + (int)moveUp + numberOfContracts) % numberOfContracts;
 
         // Vérifier si le contrat à l'index nouvellement calculé est détruit
         while (contracts[newIndex] == null)
         {
-            newIndex = (newIndex + direction + numberOfContracts) % numberOfContracts; // Passer au prochain contrat
+            newIndex = (newIndex + (int)moveUp + numberOfContracts) % numberOfContracts; // Passer au prochain contrat
         }
 
         selectedIndices[playerIndex] = newIndex; // Mettre à jour l'indice sélectionné
@@ -101,6 +101,8 @@ public class ShopManager : MonoBehaviour
 
     public void ActivateCardEffect(int playerIndex)
     {
+        print(playerIndex);
+
         if (!contractsReady) return; // Vérifier si les contrats sont prêts à être sélectionnés
 
         if (playerIndex < 0 || playerIndex >= cursors.Length || cursors[playerIndex] == null) return; // Validation de l'index et vérification du curseur
@@ -129,7 +131,7 @@ public class ShopManager : MonoBehaviour
             {
                 if (i != playerIndex && selectedIndices[i] == selectedIndex)
                 {
-                    MoveCursor(i, true); // Déplace le curseur vers le haut
+                    MoveCursor(i, 1); // Déplace le curseur vers le haut
                 }
             }
 
@@ -212,7 +214,6 @@ public class ShopManager : MonoBehaviour
         }
 
         // Créer les curseurs
-        playerCount = 2;
         votedPlayer = 0; // Réinitialiser le joueur qui a voté
         cursors = new GameObject[playerCount];
         selectedIndices = new int[playerCount];

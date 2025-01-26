@@ -91,8 +91,8 @@ public class RandomCurves : MonoBehaviour
     private IEnumerator IncreaseParameters()
     {
         yield return new WaitForSeconds(6f);
-        maxSlope += 0.5f;
-        segmentWidth += 0.5f;
+        maxSlope += 2f;
+        segmentWidth += 0f;
     }
 
 

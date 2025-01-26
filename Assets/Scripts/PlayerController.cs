@@ -182,26 +182,18 @@ public class PlayerController : MonoBehaviour
 
     public void OnSelectMenu(InputAction.CallbackContext context)
     {
-        Debug.Log("test ");
-        print(context.action.WasPerformedThisFrame());
-        //ShopManager.Instance.MoveCursor(myID, context.action.WasPerformedThisFrame());
+        if (context.phase == InputActionPhase.Started)
+        {
+            ShopManager.Instance.ActivateCardEffect(myID);
+        }
     }
 
     public void OnNavigateMenu(InputAction.CallbackContext context)
     {
         if (context.phase == InputActionPhase.Started)
         {
-            float value = context.action.ReadValue<float>();
             //print(value);
-
-            if (value > 0)
-            {
-                ShopManager.Instance.MoveCursor(myID, true);
-            }
-            else if (value < 0)
-            {
-                ShopManager.Instance.MoveCursor(myID, false);
-            }
+            ShopManager.Instance.MoveCursor(myID, context.action.ReadValue<float>());
         }
     }
 

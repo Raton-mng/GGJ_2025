@@ -16,16 +16,16 @@ public class PlayerCurb : MonoBehaviour
         
         switch (playerId) // Ajout des parenthèses autour de l'expression
         {
-            case 1:
+            case 0:
                 lineMaterial.color = UnityEngine.Color.blue;
                 break;
-            case 2:
+            case 1:
                 lineMaterial.color = UnityEngine.Color.green;
                 break;
-            case 3:
+            case 2:
                 lineMaterial.color = UnityEngine.Color.magenta;
                 break;
-            case 4:
+            case 3:
                 lineMaterial.color = UnityEngine.Color.red;
                 break;
             default:

@@ -52,13 +52,13 @@ public class PlayerManager : MonoBehaviour
                 player.transform.GetChild(1).gameObject.SetActive(true);
                 PlayerController pc = player.transform.GetChild(1).GetComponent<PlayerController>();
                 //Debug.Log(pc);
-                pc.myID = _players.Count;
+                pc.myID = _players.Count-1;
             }
             else
             {
                 playerChild.gameObject.SetActive(true);
                 PlayerController pc = playerChild.GetComponent<PlayerController>();
-                pc.myID = _players.Count;
+                pc.myID = _players.Count-1;
                 player.transform.GetChild(1).gameObject.SetActive(false);
             }
         }
