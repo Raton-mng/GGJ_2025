@@ -97,7 +97,6 @@ public class CoinGeneration : MonoBehaviour
     }
 
     void CreateCoins(float[] coins, float probabilityBig){
-        Debug.Log(probabilityBig);
         for (int i = 0; i < coins.Length; i++){
             CreateCoin(coins[i], probabilityBig);
         }

@@ -15,21 +15,14 @@ public class PlayerController : MonoBehaviour
     public CoinManager coinManager;
     
     [SerializeField] private float baseHorizontalSpeed;
-    [SerializeField] private float baseVerticalSpeed;
     [SerializeField] private float baseTurningSpeed;
-    private float currentHorizontalSpeed;
-    private float currentVerticalSpeed;
-    private float currentTurningSpeed;
 
     [SerializeField] private float accelerateModifier;
     [SerializeField] private float turboFillDuration;
 
     private bool _isGoingUp;
-    private float _boostingUse;
 
     private bool _isInversed;
-    private bool _isPushedUpward;
-    private float _pushForce;
     
     private bool _isDead;
     
@@ -44,7 +37,28 @@ public class PlayerController : MonoBehaviour
     [SerializeField] Sprite cursor4;
     [SerializeField] private SpriteRenderer spriteRenderer;
 
-    private bool hasMadeFirstMove = false;
+
+    [Header("Mouvement Vertical")]
+    public float baseVerticalSpeed = 5f; // Vitesse de base
+    public float investmentMultiplier = 0.1f; // Influence de l'investissement sur la vitesse
+
+    [Header("Mouvement Horizontal (Boost)")]
+    public float horizontalSpeed = 5f;
+    public float returnSpeed = 2f; // Vitesse de retour vers X=0
+
+    [Header("Rotation")]
+    public float rotationAngle = 20f; // Angle d'inclinaison max
+    public float rotationSpeed = 10f; // Vitesse de rotation
+
+    [Header("Take Damage")]
+    public float takeDamageDuration = 1f;
+    public float blinkDamageDuration = 0.1f;
+
+    private bool isMovingUp = false;
+    private bool hasMoved = false; // Indique si OnMove a été utilisé
+    private float currentX = 0f;
+    private float currentRotation = 0f;
+    private float horizontalInput = 0f;
 
     private void Awake()
     {
@@ -66,11 +80,6 @@ public class PlayerController : MonoBehaviour
     }
 
     void Start(){
-        currentHorizontalSpeed = baseHorizontalSpeed;
-        currentVerticalSpeed = baseVerticalSpeed;
-        currentTurningSpeed = baseTurningSpeed;
-        //Debug.Log(myID);
-
 
         if (myID == 0)
         {
@@ -107,13 +116,15 @@ public class PlayerController : MonoBehaviour
         }
         if(RandomCurves.Instance.IsPlayerBelowUpperCurve(transform.position))
         {
-            if(_healthManager.TakeDamage())
+            StartCoroutine(BlinkTakeDamage());
+            if (_healthManager.TakeDamage())
             {
                 DieUp();
             }
         }
         else if(RandomCurves.Instance.IsPlayerAboveLowerCurve(transform.position))
         {
+            StartCoroutine(BlinkTakeDamage());
             if (_healthManager.TakeDamage())
             {
                 DieDown();
@@ -123,73 +134,59 @@ public class PlayerController : MonoBehaviour
         {
             _turboManager.GainTurbo(Time.deltaTime / turboFillDuration);
         }
-        if (_boostingUse>0.03 && _turboManager.GetTurbo() > 0){
-            Accelerate(baseHorizontalSpeed*10);
-            _turboManager.UseTurbo();
-        } 
-        else if (_boostingUse<-0.03 && _turboManager.GetTurbo() > 0)
+        // Calcul de la vitesse ajustée par l'investissement
+        float adjustedVerticalSpeed = baseVerticalSpeed * (1 + InvestmentManager.Instance.GetInvestAmountByPlayer(myID) * investmentMultiplier);
+
+        // Mouvement vertical instantané
+        float verticalMove = 0f;
+        if (hasMoved)
         {
-            Accelerate(baseHorizontalSpeed*0.1f);
-            _turboManager.UseTurbo();
-        } 
-        else 
+            verticalMove = isMovingUp ? adjustedVerticalSpeed : -adjustedVerticalSpeed;
+        }
+
+        transform.position += new Vector3(0, verticalMove * Time.deltaTime, 0);
+
+        // Gérer la rotation (inclinaison vers le haut/bas)
+        float targetRotation = 0f;
+        if (hasMoved)
         {
-            if (transform.localPosition.x < -0.1){
-                currentHorizontalSpeed = baseHorizontalSpeed*5f;
-            } 
-            else if (transform.localPosition.x > 0.1){
-                currentHorizontalSpeed = baseHorizontalSpeed*0.2f;
-            } 
-            else {   
-                currentHorizontalSpeed = baseHorizontalSpeed;
-                Vector3 pos = transform.localPosition;
-                pos.x = 0f;
-                transform.localPosition = pos;
+            targetRotation = isMovingUp ? rotationAngle : -rotationAngle;
+        }
+        currentRotation = Mathf.Lerp(currentRotation, targetRotation, Time.deltaTime * rotationSpeed);
+        transform.rotation = Quaternion.Euler(0, 0, currentRotation);
+
+        // Mouvement horizontal fluide
+        if (_turboManager.GetTurbo() > 0)
+        {
+            currentX += horizontalInput * horizontalSpeed * Time.deltaTime;
+            if(horizontalInput != 0)
+            {
+                _turboManager.UseTurbo();
             }
         }
-        if (_isGoingUp)
-        {
-            hasMadeFirstMove = true;
-            GoUp(currentHorizontalSpeed, currentVerticalSpeed);
-        } else {
-            if(hasMadeFirstMove)
-                GoDown(currentHorizontalSpeed, currentVerticalSpeed);
+        if(Mathf.Abs(horizontalInput) < 0.01f) {
+            
+
+            // Retour progressif vers X=0
+            if(Mathf.Abs(currentX) > 0.01f)
+            {
+                float returnDirection = -Mathf.Sign(currentX); // Vers 0
+                float returnAmount = returnSpeed * Time.deltaTime;
+
+                if (Mathf.Abs(currentX) < returnAmount) currentX = 0f;
+                else currentX += returnDirection * returnAmount;
+            }
         }
 
-        Vector3 tempPos = transform.localPosition;
-        tempPos.x += (currentHorizontalSpeed - baseHorizontalSpeed) * Time.deltaTime;
-        print(currentHorizontalSpeed);
-        print("oui :" + baseHorizontalSpeed);
-        transform.localPosition = tempPos;
-        print(transform.localPosition.x);
+        // Appliquer le mouvement horizontal
+        transform.position = new Vector3(currentX, transform.position.y, transform.position.z);
 
 
-    }
-
-
-    public bool GoUp(float dx, float dy){
-        float targetAngle = Mathf.Atan(dy/dx) * 180 / Mathf.PI;
-        LookTo(targetAngle, currentTurningSpeed);
-
-        Vector3 pos = transform.localPosition;
-        pos.y += dy * Time.deltaTime;
-
-        if (_isPushedUpward) pos.y += _pushForce * Time.deltaTime;
         
-        transform.localPosition = pos;
-        
-        return false;
-    }
-
-    public bool GoDown(float dx, float dy){
-        return GoUp(dx, -dy);
     }
 
 
-    public void Accelerate(float newSpeed){
-        currentHorizontalSpeed = newSpeed;
-
-    }
+    
 
 
     public void OnPauseMenu(InputAction.CallbackContext context)
@@ -197,22 +194,17 @@ public class PlayerController : MonoBehaviour
         if (context.phase == InputActionPhase.Started) Pause.Instance.OnPauseButton();
     }
 
-    public void LookTo(float target, float speed){
-        transform.rotation = Quaternion.RotateTowards(
-            transform.rotation,
-            Quaternion.Euler(0f, 0f, target),
-            speed * Time.deltaTime
-        );
-    }
-
     public void OnMove(InputAction.CallbackContext context)
     {
-        _isGoingUp = _isInversed ? !context.action.WasPerformedThisFrame() : context.action.WasPerformedThisFrame();
+        isMovingUp = _isInversed ? !context.action.WasPerformedThisFrame() : context.action.WasPerformedThisFrame();
+        hasMoved = true; // Dès qu'on appuie sur OnMove, on considère que le joueur a commencé à jouer
+
     }
 
     public void OnBoosting(InputAction.CallbackContext context)
     {
-        _boostingUse = context.action.ReadValue<float>();
+        horizontalInput = context.ReadValue<float>();
+           
     }
 
     public void OnSelectMenu(InputAction.CallbackContext context)
@@ -251,13 +243,13 @@ public class PlayerController : MonoBehaviour
         _isInversed = false;
     }
 
-    public IEnumerator PushUp(float timer, float pushForce)
+    /*public IEnumerator PushUp(float timer, float pushForce)
     {
         _isPushedUpward = true;
         _pushForce = pushForce;
         yield return new WaitForSeconds(timer);
         _isPushedUpward = false;
-    }
+    }*/
 
     private void DieUp(){
         isDeath = true;
@@ -335,5 +327,22 @@ public class PlayerController : MonoBehaviour
         deathUpCurve.AddKey(key2);      // t=1, valeur=1
         deathUpCurve.AddKey(key3);      // t=1, valeur=1
         deathUpCurve.AddKey(key4);      // t=1, valeur=1
+    }
+
+    private IEnumerator BlinkTakeDamage()
+    {
+        float elapsed = 0f;
+        float blinkDuration = 0f;
+        while (elapsed < takeDamageDuration)
+        {
+            elapsed += Time.deltaTime;
+            blinkDuration += Time.deltaTime;
+            if (blinkDuration >= blinkDamageDuration)
+            {
+                blinkDuration = 0f;
+                spriteRenderer.enabled = !spriteRenderer.enabled;
+            }
+            yield return null;
+        }
     }
 }

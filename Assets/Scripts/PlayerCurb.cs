@@ -7,6 +7,7 @@ public class PlayerCurb : MonoBehaviour
 {
     [SerializeField] private float speed = 0.5f;
     [SerializeField] private LineRenderer lineRenderer;
+    [SerializeField] private float removalOffset = 10f; // Distance à partir de laquelle les points sont supprimés
     private List<Vector3> curvePoints = new(); // Points de la courbe supérieure
 
     private void Start()
@@ -43,6 +44,9 @@ public class PlayerCurb : MonoBehaviour
     {
         curvePoints.Add(transform.position);
 
+        // Supprimer les points hors champ
+        RemoveOutOfBoundsSegments();
+
         MoveCurvesBackward();
         // Mettre à jour les LineRenderers
         RenderCurves();
@@ -72,5 +76,14 @@ public class PlayerCurb : MonoBehaviour
         lineRenderer.positionCount = curvePoints.Count;
         lineRenderer.SetPositions(curvePoints.ToArray());
 
+    }
+
+    void RemoveOutOfBoundsSegments()
+    {
+        // Supprimer les points qui sont hors du champ de jeu (trop à gauche)
+        while (curvePoints.Count > 0 && curvePoints[0].x < -removalOffset)
+        {
+            curvePoints.RemoveAt(0);
+        }
     }
 }

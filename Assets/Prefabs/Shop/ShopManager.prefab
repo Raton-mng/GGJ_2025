@@ -124,9 +124,9 @@ MonoBehaviour:
   contractPrefab: {fileID: 6421635082057920429, guid: 20e536cf84c915b44a3f65ab7bf8d246, type: 3}
   cursorPrefab: {fileID: 6421635082057920429, guid: ebefc3f3826d3ce45bd8bcb71fa00b6e, type: 3}
   numberOfContracts: 3
-  autoHideDelay: 10
-  timeBetweenContracts: 15
-  firstApparitionTime: 5
+  autoHideDelay: 5
+  timeBetweenContracts: 20
+  firstApparitionTime: 20
   effectSprites:
   - {fileID: 3329863921455595519, guid: 5ea7c8581bd00a34ca79e35fd6ce4e0c, type: 3}
   - {fileID: -6505513120015752476, guid: 5ea7c8581bd00a34ca79e35fd6ce4e0c, type: 3}

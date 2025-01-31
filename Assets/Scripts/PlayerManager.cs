@@ -8,7 +8,6 @@ using SceneManager = UnityEngine.SceneManagement.SceneManager;
 public class PlayerManager : MonoBehaviour
 {
     public static PlayerManager Instance;
-    public Transform canvas; 
 
     private List<GameObject> _players;
 

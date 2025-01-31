@@ -365,10 +365,9 @@ MonoBehaviour:
   _hud: {fileID: 6946062309060156438}
   coinManager: {fileID: 0}
   baseHorizontalSpeed: 10
-  baseVerticalSpeed: 10
   baseTurningSpeed: 600
   accelerateModifier: 0
-  turboFillDuration: 5
+  turboFillDuration: 1
   myID: 0
   isDeath: 0
   cursor1: {fileID: 7675826601332790545, guid: 61c8826f3806b9245916bc65e5d177ba, type: 3}
@@ -376,6 +375,12 @@ MonoBehaviour:
   cursor3: {fileID: 7675826601332790545, guid: a14927499ff68564386097d2a22f718a, type: 3}
   cursor4: {fileID: 7675826601332790545, guid: 11007a76dd606644e8a2043d02f33966, type: 3}
   spriteRenderer: {fileID: 4998970912893147736}
+  baseVerticalSpeed: 10
+  investmentMultiplier: 0.01
+  horizontalSpeed: 20
+  returnSpeed: 2
+  rotationAngle: 40
+  rotationSpeed: 10
 --- !u!135 &5320624549198004774
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -395,8 +400,8 @@ SphereCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Radius: 0.067567565
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Radius: 0.39826605
+  m_Center: {x: -0.22588687, y: 0, z: 0}
 --- !u!54 &2916082296978926396
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -438,6 +443,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 25
   lineRenderer: {fileID: 2929404483738300769}
+  removalOffset: 80
 --- !u!212 &4998970912893147736
 SpriteRenderer:
   m_ObjectHideFlags: 0

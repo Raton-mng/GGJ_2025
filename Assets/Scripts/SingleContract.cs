@@ -50,9 +50,9 @@ public class SingleContract : MonoBehaviour
             case ContractEffect.ReverseControls :
                 ReverseControls(playerID);
                 break;
-            case ContractEffect.PushEveryoneUp :
+           /* case ContractEffect.PushEveryoneUp :
                 PushEveryoneUp(playerID);
-                break;
+                break;*/
             case ContractEffect.ImmediateJumpUp :
                 ImmediateJumpUp(playerID);
                 break;
@@ -114,14 +114,14 @@ public class SingleContract : MonoBehaviour
         }
     }
     
-    private void PushEveryoneUp(int playerID)
+    /*private void PushEveryoneUp(int playerID)
     {
         List<PlayerController> otherPlayers = _playerManager.GetOtherPlayers(playerID);
         foreach (PlayerController otherPlayer in otherPlayers)
         {
             StartCoroutine(otherPlayer.PushUp(6, 2));
         }
-    }
+    }*/
     
     private void ImmediateJumpUp(int playerID)
     {

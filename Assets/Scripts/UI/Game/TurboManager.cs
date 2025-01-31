@@ -38,14 +38,23 @@ public class TurboManager : MonoBehaviour
 
     public void GainTurbo(float t)
     {
-        _turbo += t;
+        if(_turbo + t > _maxTurbo)
+        {
+            _turbo = _maxTurbo;
+        }
+        else
+        {
+            _turbo += t;
+        }
 
         if (_turbo < _consumption * Time.deltaTime)
         {
+            print("isMin");
             _turboAnimator.SetBool("isMin", false);
         }
         if (_turbo == _maxTurbo)
         {
+            print("isMax");
             _turboAnimator.SetBool("isMax", true);
         }
     }
@@ -53,12 +62,12 @@ public class TurboManager : MonoBehaviour
     public void UseTurbo()
     {
         if(_turbo == _maxTurbo)
-        {
+        {print("isMax");
             _turboAnimator.SetBool("isMax", false);
         }
         _turbo -= _consumption * Time.deltaTime;
         if(_turbo < _consumption * Time.deltaTime)
-        {
+        {print("isMin");
             _turboAnimator.SetBool("isMin", true);
         }
     }

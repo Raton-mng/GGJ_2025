@@ -621,7 +621,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _bar: {fileID: 1022151836833552977}
-  _maxTurbo: 1
+  _maxTurbo: 2
   _consumption: 1
 --- !u!1 &8092953961921642342
 GameObject:
@@ -844,7 +844,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 0}
+  m_Sprite: {fileID: 405379566776695792, guid: 07d74740d8d844a41bb21e8c576fb14b, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1

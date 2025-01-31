@@ -42,6 +42,11 @@ public class InvestmentManager : MonoBehaviour
 
     }
 
+    public int GetInvestAmountByPlayer(int playerId)
+    {
+        return moneyInvestByPLayer[playerId];
+    }
+
     public void InitiateInvestment()
     {
         // Initialisation des curseurs
