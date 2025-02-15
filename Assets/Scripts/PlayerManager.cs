@@ -2,18 +2,20 @@ using System.Collections.Generic;
 using UI.Menu;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using UnityEngine.SceneManagement;
-using SceneManager = UnityEngine.SceneManagement.SceneManager;
 
 public class PlayerManager : MonoBehaviour
 {
     public static PlayerManager Instance;
 
+    private PlayerInputManager playerInputManager;
+
+    public static int playerCount = 0;
+
     private List<GameObject> _players;
 
     private void Awake()
     {
-        PlayerInputManager playerInputManager = GetComponent<PlayerInputManager>();
+        playerInputManager = GetComponent<PlayerInputManager>();
 
         if (Instance == null)
         {
@@ -21,10 +23,8 @@ public class PlayerManager : MonoBehaviour
             DontDestroyOnLoad(gameObject);
             _players = new List<GameObject>();
         
-            playerInputManager.playerJoinedEvent.AddListener(OnAddPlayer);
             playerInputManager.playerLeftEvent.AddListener(OnRemovePlayer);
 
-            SceneManager.sceneLoaded += OnLoad;
         }
         else if (Instance != this)
         {
@@ -32,34 +32,36 @@ public class PlayerManager : MonoBehaviour
         }
     }
 
-    private void OnLoad(Scene scene, LoadSceneMode lsm)
+    public void SetupPlayerForGame()
     {
-        //Debug.Log(_players.Count);
+        playerInputManager.DisableJoining();
         for (int i = 0; i < _players.Count; i++)
         {
             GameObject player = _players[i];
-            //Debug.Log("_players : " + _players.Count);
-            //Debug.Log("playersCopy : " + playersCopy.Count);
-            Transform playerChild = player.transform.GetChild(0);
-            if (playerChild.TryGetComponent(out PlayerStartController psc))
-            {
-                playerChild.gameObject.SetActive(false);
-                player.transform.GetChild(1).gameObject.SetActive(true);
-                PlayerController pc = player.transform.GetChild(1).GetComponent<PlayerController>();
-                pc.myID = i;
-            }
-            else //ne se passe pas normalement
-            {
-                playerChild.gameObject.SetActive(true);
-                PlayerController pc = playerChild.GetComponent<PlayerController>();
-                pc.myID = i;
-                player.transform.GetChild(1).gameObject.SetActive(false);
-            }
             player.GetComponent<PlayerInput>().actions.FindActionMap("Player").Enable();
             player.GetComponent<PlayerInput>().actions.FindActionMap("PlayerUI").Disable();
+            player.transform.GetChild(0).gameObject.SetActive(false);
+            player.transform.GetChild(1).gameObject.SetActive(true);
+            player.GetComponentInChildren<PlayerController>().myID = i;
+            player.transform.GetChild(1).transform.position = new Vector3(0, i * 4, 0);
+
         }
-        //Debug.Log("_players : " + _players.Count);
-        //Debug.Log("playersCopy : " + playersCopy.Count);
+    }
+
+    public void SetupPlayerForUI()
+    {
+        playerInputManager.EnableJoining();
+        foreach (GameObject player in _players)
+        {
+            player.GetComponent<PlayerInput>().actions.FindActionMap("Player").Disable();
+            player.GetComponent<PlayerInput>().actions.FindActionMap("PlayerUI").Enable();
+            player.transform.GetChild(0).gameObject.SetActive(true);
+            player.transform.GetChild(1).gameObject.SetActive(false);
+
+            PlayerStartController playerStartController = player.transform.GetChild(0).GetComponent<PlayerStartController>();
+            CellManager.Instance.players.Add(playerStartController);
+        }
+
     }
 
     public void OnAddPlayer(PlayerInput newInput)
@@ -72,13 +74,16 @@ public class PlayerManager : MonoBehaviour
         //player.transform.SetParent(transform);
         
        _players.Add(player);
-        //Debug.Log("PrTOUTE " + _players.Count);
+        player.GetComponentInChildren<PlayerStartController>().SetID(playerCount);
+        playerCount++;
 
     }
 
     public void OnRemovePlayer(PlayerInput removedInput)
     {
         _players.Remove(removedInput.gameObject);
+        Destroy(removedInput.gameObject);
+        playerCount--;
     }
 
     public PlayerController GetPlayer(int playerID)
@@ -127,10 +132,11 @@ public class PlayerManager : MonoBehaviour
     public void SomeoneDied(GameObject died)
     {
         _players.Remove(died);
-        if (_players.Count <= 1)
+        playerCount--;
+        if (playerCount <= 1)
         {
             AudioManager.Instance.EndMusic();
-            MenuManager.Instance.MenuFin.OnGameEnd();
+            MenuManager.Instance.OnGameEnd();
         }
     }
 

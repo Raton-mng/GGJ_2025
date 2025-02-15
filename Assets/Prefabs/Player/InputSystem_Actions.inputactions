@@ -311,7 +311,7 @@
                     "path": "<Keyboard>/escape",
                     "interactions": "",
                     "processors": "",
-                    "groups": "",
+                    "groups": ";Keyboard1",
                     "action": "PauseMenu",
                     "isComposite": false,
                     "isPartOfComposite": false
@@ -486,7 +486,7 @@
                 {
                     "name": "",
                     "id": "f377cad5-5bb4-4bde-9665-3a591eb7b4ff",
-                    "path": "<Keyboard>/z",
+                    "path": "<Keyboard>/w",
                     "interactions": "",
                     "processors": "",
                     "groups": ";Keyboard1",

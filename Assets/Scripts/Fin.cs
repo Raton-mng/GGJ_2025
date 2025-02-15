@@ -3,13 +3,9 @@ using UnityEngine;
 
 public class Fin : MonoBehaviour
 {
-    public static Fin Instance;
 
-    [SerializeField] private GameObject finMenu;
-
-    public void OnGameEnd()
+    public void Start()
     {
-        finMenu.SetActive(true);
         Time.timeScale = 0;
     }
 

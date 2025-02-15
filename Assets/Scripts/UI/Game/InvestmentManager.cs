@@ -19,8 +19,11 @@ public class InvestmentManager : MonoBehaviour
     private int[] moneyInvestByPLayer; // Indices sélectionnés pour chaque joueur
     private int playerCount;       // Nombre de joueurs
 
+    private Vector3[] cursorPositions; // Positions des curseurs
+
     private void Awake()
     {
+        cursorPositions = new Vector3[] { new Vector3(1625, 940, 0), new Vector3(280, 940, 0), new Vector3(728, 940, 0), new Vector3(1176, 940, 0) };
         cursors = new GameObject[4];
         hudList = new GameObject[4];
         selectedIndices = new int[4];
@@ -57,8 +60,8 @@ public class InvestmentManager : MonoBehaviour
             selectedIndices[i] = i;
             GameObject cursor = Instantiate(selectPlayerPrefab);
             cursors[i] = cursor;
-            cursor.transform.SetParent(hudList[i].transform);
-            cursor.GetComponent<RectTransform>().anchoredPosition = Vector3.zero;
+            cursor.transform.parent = hudList[i].transform;
+            cursor.GetComponent<RectTransform>().anchoredPosition = cursorPositions[i];
             cursor.GetComponent<Animator>().runtimeAnimatorController = selectorSprites[i];
         }
         moneyInvestByPLayer = new int[playerCount];
@@ -67,7 +70,6 @@ public class InvestmentManager : MonoBehaviour
 
     public void MoveCursor(int playerIndex, float moveUp)
     {
-        print("MoveCursor");
         if (playerIndex < 0 || playerIndex >= cursors.Length || cursors[playerIndex] == null) return; // Validation de l'index et vérification du curseur
 
         // Calcul du nouvel indice sélectionné
@@ -81,12 +83,11 @@ public class InvestmentManager : MonoBehaviour
         selectedIndices[playerIndex] = newIndex; // Mettre à jour l'indice sélectionné
 
         // Mettre à jour la position du curseur
-        cursors[playerIndex].transform.parent = hudList[newIndex].transform;
+        cursors[playerIndex].GetComponent<RectTransform>().anchoredPosition = cursorPositions[newIndex];
     }
 
     public void InvestInPLayer(int playerIndex)
     {
-        print("InvestInPLayer");
         if (playerIndex < 0 || playerIndex >= cursors.Length || cursors[playerIndex] == null) return; // Validation de l'index et vérification du curseur
 
         int selectedIndex = selectedIndices[playerIndex];

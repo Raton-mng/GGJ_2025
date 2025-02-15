@@ -22,11 +22,13 @@ namespace UI.Menu
 
         public static void StartGame()
         {
+            PlayerManager.Instance.SetupPlayerForGame();
             UnityEngine.SceneManagement.SceneManager.LoadScene("_Main");
         }
 
         public static void MainMenu()
         {
+            PlayerManager.Instance.SetupPlayerForUI();
             UnityEngine.SceneManagement.SceneManager.LoadScene("_Menu");
         }
     }

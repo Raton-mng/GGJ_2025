@@ -24,7 +24,6 @@ public class Pause : MonoBehaviour
     // Executé quand le binding de pause est trigger
     public void OnPauseButton()
     {
-        Debug.Log("OnPauseButton");
         if (!isPaused)
         {
             isPaused = true;

@@ -12,32 +12,41 @@ namespace UI.Menu
         [SerializeField] private int cellColumnCount;
         [SerializeField] private GameObject cellPrefab;
 
-        private GameObject cellOutline;
         public List<PlayerStartController> players;
 
         public static CellManager Instance;
-
-        private int nbPlayerJoined = 0;
-
 
         public List<Cell> cellList = new ();
         
         private void Awake()
         {
-            if (Instance == null) Instance = this;
+            Instance = this;
             
+            cellList.Clear();
+
             for(int i = 0; i < cellNumber; i++)
             {
                 cellList.Add(Instantiate(cellPrefab, transform).GetComponent<Cell>());
             }
+            
+        }
 
-            players = new List<PlayerStartController>();
+        private void Start()
+        {
+            foreach (GameObject player in PlayerManager.Instance.GetPlayers())
+            {
+                PlayerStartController playerStartController = player.transform.GetChild(0).GetComponent<PlayerStartController>();
+                players.Add(playerStartController);
+                UpdateCellOutlinePosition(playerStartController.currentCellID, playerStartController.currentCellID, playerStartController.GetID());
+
+            }
         }
 
         public void UpdateCellOutlinePosition(int previousCellIndex, int currentCellID, int playerID)
         {
             if (currentCellID > cellList.Count)
                 return;
+
             if (!IsCellActive(previousCellIndex))
             {
                 cellList[previousCellIndex].SetOutlineActive(false);
@@ -79,11 +88,6 @@ namespace UI.Menu
         public void SetCellText(int cellID, string text)
         {
             cellList[cellID].SetText(text);
-        }
-
-        public void AssignPlayerID(PlayerInput playerInput)
-        {
-            playerInput.gameObject.GetComponentInChildren<PlayerStartController>().SetID(nbPlayerJoined++);
         }
         
     }

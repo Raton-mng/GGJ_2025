@@ -131,11 +131,13 @@ MonoBehaviour:
   - {fileID: 3329863921455595519, guid: 5ea7c8581bd00a34ca79e35fd6ce4e0c, type: 3}
   - {fileID: -6505513120015752476, guid: 5ea7c8581bd00a34ca79e35fd6ce4e0c, type: 3}
   - {fileID: -3969541181175262118, guid: 5ea7c8581bd00a34ca79e35fd6ce4e0c, type: 3}
-  effectCoast: 0f0000000f0000000f000000
+  - {fileID: -3969541181175262118, guid: 5ea7c8581bd00a34ca79e35fd6ce4e0c, type: 3}
+  effectCoast: 0f0000000f0000000f00000032000000
   effectWeights:
-  - 1
-  - 1
-  - 1
+  - 0
+  - 0
+  - 0
+  - 1000
   allowDuplicateEffects: 1
   cursorSprites:
   - {fileID: 9100000, guid: c43c9808d5d99f44392bf632ef1f24e7, type: 2}

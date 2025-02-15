@@ -57,6 +57,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1085e9436396a03419d2c020b88b8d47, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  llll: 0
   m_NotificationBehavior: 2
   m_MaxPlayerCount: 4
   m_AllowJoining: 1
@@ -64,9 +65,9 @@ MonoBehaviour:
   m_PlayerJoinedEvent:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: UI.Menu.CellManager, Assembly-CSharp
-        m_MethodName: AssignPlayerID
+      - m_Target: {fileID: 3679394165856730245}
+        m_TargetAssemblyTypeName: PlayerManager, Assembly-CSharp
+        m_MethodName: OnAddPlayer
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -88,7 +89,23 @@ MonoBehaviour:
       m_Id: abaf4599-3ed4-4679-9a9c-251f4492acb5
       m_Processors: 
       m_Interactions: 
-      m_SingletonActionBindings: []
+      m_SingletonActionBindings:
+      - m_Name: 
+        m_Id: bc17843e-4f55-438d-a14f-baa7b2a235b1
+        m_Path: <Keyboard>/space
+        m_Interactions: 
+        m_Processors: 
+        m_Groups: 
+        m_Action: Join
+        m_Flags: 0
+      - m_Name: 
+        m_Id: cdbf2c2b-9faa-42f6-839a-cebf5ba8d3ff
+        m_Path: <Gamepad>/buttonEast
+        m_Interactions: 
+        m_Processors: 
+        m_Groups: 
+        m_Action: Join
+        m_Flags: 0
       m_Flags: 0
     m_Reference: {fileID: 0}
   m_PlayerPrefab: {fileID: 7862405144417517733, guid: 9b8e481c491d45544b09c1985ababdaf, type: 3}

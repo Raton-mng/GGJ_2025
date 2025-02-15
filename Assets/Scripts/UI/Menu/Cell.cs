@@ -8,7 +8,7 @@ namespace UI.Menu
     public class Cell : MonoBehaviour
     {
         
-        [SerializeField] private GameObject outline;
+        [SerializeField] public GameObject outline;
 
         [SerializeField] private List<Sprite> outlinesPlayerList;
 
@@ -17,9 +17,11 @@ namespace UI.Menu
     
         private void Awake()
         {
+
             SetOutlineActive(false);
             inputField = GetComponentInChildren<TextMeshProUGUI>();
             oultineImage = outline.GetComponentInChildren<Image>();
+
         }
 
         public void SetOutlineActive(bool active)

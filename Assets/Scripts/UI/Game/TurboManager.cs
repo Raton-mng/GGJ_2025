@@ -49,25 +49,22 @@ public class TurboManager : MonoBehaviour
 
         if (_turbo < _consumption * Time.deltaTime)
         {
-            print("isMin");
             _turboAnimator.SetBool("isMin", false);
         }
         if (_turbo == _maxTurbo)
         {
-            print("isMax");
             _turboAnimator.SetBool("isMax", true);
         }
     }
 
     public void UseTurbo()
     {
-        if(_turbo == _maxTurbo)
-        {print("isMax");
+        if(_turbo == _maxTurbo) { 
             _turboAnimator.SetBool("isMax", false);
         }
         _turbo -= _consumption * Time.deltaTime;
         if(_turbo < _consumption * Time.deltaTime)
-        {print("isMin");
+        {
             _turboAnimator.SetBool("isMin", true);
         }
     }

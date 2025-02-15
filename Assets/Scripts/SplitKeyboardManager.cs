@@ -8,9 +8,11 @@ public class SharedDeviceInputManager : PlayerInputManager
     private string[] controlScheme = new string[] { "Keyboard1", "Keyboard2" };
 
     private int playerIndex = 0;
+    private int keyboardPlayer = 0;
 
     public override void JoinPlayerFromActionIfNotAlreadyJoined(InputAction.CallbackContext context)
     {
+
         if (!CheckIfPlayerCanJoin())
             return;
 
@@ -20,13 +22,14 @@ public class SharedDeviceInputManager : PlayerInputManager
         {
             if (PlayerInput.FindFirstPairedToDevice(device) != null)
                 return;
+            JoinPlayer(pairWithDevice: device);
         }
-            
-        var p = JoinPlayer(pairWithDevice: device);
-
-        if (device is Keyboard)
+        else
         {
-            RebindPlayer(p);
+            keyboardPlayer++;
+            if(keyboardPlayer > 2)
+                return;
+            RebindPlayer(JoinPlayer(pairWithDevice: device));
         }
     }
 
@@ -34,6 +37,5 @@ public class SharedDeviceInputManager : PlayerInputManager
     {
         obj.SwitchCurrentControlScheme(controlScheme[playerIndex], Keyboard.current);
         playerIndex++;
-        Debug.Log(playerIndex);
     }
 }

@@ -8,7 +8,6 @@ namespace UI.Menu
     public class PlayerStartController : MonoBehaviour
     {
         private Vector2 _moveDirection;
-        private CellManager _cellManager;
         public int currentCellID = 0;
         
         [SerializeField] private float moveTimer;
@@ -18,57 +17,35 @@ namespace UI.Menu
 
         private int playerID;
 
-        private void Start()
+        private void Awake()
         {
-            _cellManager = CellManager.Instance;
-            currentCellID = 0;
-            _cellManager.UpdateCellOutlinePosition(currentCellID, currentCellID, playerID);
-            _cellManager.players.Add(this);
+            CellManager.Instance.players.Add(this);
             _buttonCell = FindObjectsByType<ButtonCells>(FindObjectsSortMode.None)[0];
         }
 
-        private void Update()
+        private void Start()
         {
-            if (_moveDelayed) return;
-            
-            if (_moveDirection.x > 0.5)
-            {
-                if (currentCellID + _cellManager.cellRowCount < _cellManager.cellList.Count)
-                {
-                    currentCellID += _cellManager.cellRowCount;
-                    _cellManager.UpdateCellOutlinePosition(currentCellID - _cellManager.cellRowCount, currentCellID, playerID);
-                    StartCoroutine(DontMoveTooFast());
-                }
-            }
+            CellManager.Instance.UpdateCellOutlinePosition(currentCellID, currentCellID, playerID);
+            _moveDelayed = false;
+        }
 
-            if (_moveDirection.x < -0.5)
+        private void OnEnable()
+        {
+            if (playerID == 0)
             {
-                if (currentCellID - _cellManager.cellRowCount >= 0)
-                {
-                    currentCellID -= _cellManager.cellRowCount;
-                    _cellManager.UpdateCellOutlinePosition(currentCellID + _cellManager.cellRowCount, currentCellID, playerID);
-                    StartCoroutine(DontMoveTooFast());
-                } 
+                currentCellID = 0;
             }
-            
-            if (_moveDirection.y > 0.5)
+            else if (playerID == 1)
             {
-                if (currentCellID % _cellManager.cellRowCount > 0)
-                {
-                    currentCellID -= 1;
-                    _cellManager.UpdateCellOutlinePosition(currentCellID + 1, currentCellID, playerID);
-                    StartCoroutine(DontMoveTooFast());
-                } 
+                currentCellID = CellManager.Instance.cellRowCount - 1;
             }
-            
-            if (_moveDirection.y < -0.5)
+            else if (playerID == 2)
             {
-                if (currentCellID % _cellManager.cellRowCount < _cellManager.cellRowCount - 1 && currentCellID + 1 < _cellManager.cellList.Count)
-                {
-                    currentCellID += 1;
-                    _cellManager.UpdateCellOutlinePosition(currentCellID - 1, currentCellID, playerID);
-                    StartCoroutine(DontMoveTooFast());
-                } 
+                currentCellID = CellManager.Instance.cellList.Count - CellManager.Instance.cellRowCount;
+            }
+            else if (playerID == 3)
+            {
+                currentCellID = CellManager.Instance.cellList.Count - 1;
             }
         }
 
@@ -80,14 +57,68 @@ namespace UI.Menu
         public void SetID(int id)
         {
             playerID = id;
+
+            if (id == 0)
+            {
+                currentCellID = 0;
+            }
+            else if (id == 1)
+            {
+                currentCellID = CellManager.Instance.cellRowCount - 1;
+            }
+            else if (id == 2)
+            {
+                currentCellID = CellManager.Instance.cellList.Count - CellManager.Instance.cellRowCount;
+            }
+            else if (id == 3)
+            {
+                currentCellID = CellManager.Instance.cellList.Count - 1;
+            }
         }
 
         public void OnMenuMove(InputAction.CallbackContext context)
         {
-            //Vector2 oldDirection = _moveDirection;
             _moveDirection = context.action.ReadValue<Vector2>();
-            //if ((oldDirection.x - _moveDirection.x > 0.1) &&  (oldDirection.y - _moveDirection.y > 0.1)) _moveDelayed = false;
-            //_moveDelayed = false;
+
+            if (context.phase == InputActionPhase.Performed)
+            {
+                if (_moveDirection.x > 0.5)
+                {
+                    if (currentCellID + CellManager.Instance.cellRowCount < CellManager.Instance.cellList.Count)
+                    {
+                        currentCellID += CellManager.Instance.cellRowCount;
+                        CellManager.Instance.UpdateCellOutlinePosition(currentCellID - CellManager.Instance.cellRowCount, currentCellID, playerID);
+                    }
+                }
+
+                if (_moveDirection.x < -0.5)
+                {
+                    if (currentCellID - CellManager.Instance.cellRowCount >= 0)
+                    {
+                        currentCellID -= CellManager.Instance.cellRowCount;
+                        CellManager.Instance.UpdateCellOutlinePosition(currentCellID + CellManager.Instance.cellRowCount, currentCellID, playerID);
+                    }
+                }
+
+                if (_moveDirection.y > 0.5)
+                {
+                    if (currentCellID % CellManager.Instance.cellRowCount > 0)
+                    {
+                        currentCellID -= 1;
+                        CellManager.Instance.UpdateCellOutlinePosition(currentCellID + 1, currentCellID, playerID);
+                    }
+                }
+
+                if (_moveDirection.y < -0.5)
+                {
+                    if (currentCellID % CellManager.Instance.cellRowCount < CellManager.Instance.cellRowCount - 1 && currentCellID + 1 < CellManager.Instance.cellList.Count)
+                    {
+                        currentCellID += 1;
+                        CellManager.Instance.UpdateCellOutlinePosition(currentCellID - 1, currentCellID, playerID);
+                    }
+                }
+            }
+
         }
 
         public void OnSelect(InputAction.CallbackContext context)
@@ -104,13 +135,6 @@ namespace UI.Menu
             {
                 _buttonCell.CloseMenu();
             }
-        }
-
-        private IEnumerator DontMoveTooFast()
-        {
-            _moveDelayed = true;
-            yield return new WaitForSeconds(moveTimer);
-            _moveDelayed = false;
         }
     }
 }

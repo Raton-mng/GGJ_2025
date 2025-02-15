@@ -26,6 +26,12 @@ namespace UI.Menu
             cellManager.SetCellText(PlayCellID, "Play");
             cellManager.SetCellText(OptionsCellID, "Options");
             cellManager.SetCellText(QuitCellID, "Quit");
+            cellManager.SetCellText(2, "X/UpArrow : Rise");
+            cellManager.SetCellText(5, "W/LefArrow : Slow");
+            cellManager.SetCellText(8, "C/RightArrow : Speed");
+            cellManager.SetCellText(42, "AE/KM : Move Menu");
+            cellManager.SetCellText(45, "Z/L : Select Menu");
+            cellManager.SetCellText(48, "Escape : Quit");
         }
 
         public void Select(int cellID)

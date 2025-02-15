@@ -4,8 +4,9 @@ public class MenuManager : MonoBehaviour
 {
 
     public Pause MenuPause;
-    public Fin MenuFin;
-    
+    [SerializeField] private GameObject finMenu;
+
+
     public static MenuManager Instance;
     
     private void Awake()
@@ -19,5 +20,11 @@ public class MenuManager : MonoBehaviour
             Instance = this;
         }
     }
-    
+
+    public void OnGameEnd()
+    {
+        Instantiate(finMenu);
+
+    }
+
 }

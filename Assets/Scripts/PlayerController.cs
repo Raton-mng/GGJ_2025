@@ -106,11 +106,17 @@ public class PlayerController : MonoBehaviour
             _hud.GetComponent<RectTransform>().anchoredPosition = new Vector3(1176, 940, 0);
 
         }
+        transform.position = new Vector3(0, myID * 4, 0);
 
         InitDeathCurve();
     }
 
-   void Update(){
+    private void OnEnable()
+    {
+        spriteRenderer.enabled = true;
+    }
+
+    void Update(){
         if (isDeath){
             return;
         }
@@ -184,9 +190,6 @@ public class PlayerController : MonoBehaviour
 
         
     }
-
-
-    
 
 
     public void OnPauseMenu(InputAction.CallbackContext context)
@@ -264,10 +267,12 @@ public class PlayerController : MonoBehaviour
     IEnumerator ExplodeUp(){
         float currentTime = 0f;
         float startY = transform.localPosition.y;
-        float duration = deathUpCurve.keys[deathUpCurve.keys.Length - 1].time - deathUpCurve.keys[0].time;
         float top = 3.5f;
         
-        while (true){
+        float timeBeforeDisappear = 6f;
+
+        while (timeBeforeDisappear > 0){
+            timeBeforeDisappear -= Time.deltaTime;
             if (currentTime >=1f){
                 transform.Rotate(new Vector3(0f, 0, 500f) * Time.deltaTime);  
             }
@@ -275,11 +280,9 @@ public class PlayerController : MonoBehaviour
             transform.localPosition = new Vector3(transform.localPosition.x-Time.deltaTime*2f, startY + deathUpCurve.Evaluate(currentTime)*top, transform.localPosition.z);
             yield return null;
             currentTime += Time.deltaTime;
-            if (currentTime > duration){
-                Destroy(gameObject);
-                break;
-            }
         }
+        PlayerManager.Instance.SomeoneDied(gameObject);
+
     }
 
     IEnumerator ExplodeDown(){
@@ -288,7 +291,10 @@ public class PlayerController : MonoBehaviour
         float currentY = transform.localPosition.y;
         float currentZ = transform.localPosition.z;
         
-        while (true){
+        float timeBeforeDisappear = 6f;
+
+        while (timeBeforeDisappear > 0){
+            timeBeforeDisappear -= Time.deltaTime;
             transform.localPosition = new Vector3(currentX, currentY, currentZ);
             if (currentTime >=1f){
                 currentY -= Time.deltaTime * 4f; 
@@ -300,10 +306,9 @@ public class PlayerController : MonoBehaviour
             yield return null;
             currentTime += Time.deltaTime;
             currentX -= Time.deltaTime*2f;
-            if (currentTime > 6f){
-                break;
-            }
+            
         }
+        PlayerManager.Instance.SomeoneDied(gameObject);
     }
 
 
